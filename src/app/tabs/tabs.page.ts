@@ -1,6 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {IonTabs} from '@ionic/angular';
 
+
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
@@ -9,6 +10,7 @@ import {IonTabs} from '@ionic/angular';
 export class TabsPage {
   @ViewChild(IonTabs) tabs: IonTabs;
   selected = '';
+  progress = 47;
 
   constructor() {}
 
