@@ -11,7 +11,7 @@
     </ion-col>
 
     <!-- Horizontal scroll view -->
-    <ion-slides [options]="opts">
+    <ion-slides [options]="optsHorizontalScroll">
       <ion-slide *ngFor="let album of entry.albums" tappable (click)="openAlbum(album)">
         <img [src]="'/assets/images/albums/'+dasherize(album.image)+'.jpg'">
         <span class="title">{{ album.title }}</span>
