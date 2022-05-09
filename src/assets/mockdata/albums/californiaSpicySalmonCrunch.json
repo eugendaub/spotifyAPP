@@ -1,0 +1,13 @@
+{
+  "artist": "California Spicy Salmon Crunch",
+  "backgroundColor": "#0d2157",
+  "image": "CaliforniaSpicySalmonCrunch",
+  "released": 2022,
+  "title": "California Spicy Salmon Crunch",
+  "tracks": [
+    { "title": "8x California Rolle mit Lachs", "seconds": 251 },
+    { "title": "Avocado, Gurke", "seconds": 248 },
+    { "title": "Röstzwiebeln und scharfer Sriracha Sauce", "seconds": 320 }
+  ]
+}
+

@@ -1,6 +1,6 @@
 {
-	"appId": "io.ionic.starter",
-	"appName": "devdacticSpotify",
-	"webDir": "www",
-	"bundledWebRuntime": false
+  "appId": "io.ionic.spotifyApp",
+  "appName": "devDacSpotify",
+  "webDir": "www",
+  "bundledWebRuntime": false
 }

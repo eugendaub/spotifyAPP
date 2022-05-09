@@ -1,0 +1,18 @@
+{
+  "artist": "Soulfood Box Vegan",
+  "backgroundColor": "#0d2157",
+  "image": "soulfoodBoxVegan",
+  "released": 2022,
+  "title": "Soulfood Box Vegan",
+  "tracks": [
+    { "title": "4 x California Vegan Rucola", "seconds": 251 },
+    { "title": "4 x Rainbow Vegan Mango", "seconds": 248 },
+    { "title": "2 x Maki Gurke", "seconds": 320 },
+    { "title": "2 x Maki Paprika", "seconds": 403 },
+    { "title": "2 x Maki Mango", "seconds": 282 },
+    { "title": "2 x Maki Avocado", "seconds": 328 },
+    { "title": "1 Nigiri Inari", "seconds": 294 },
+    { "title": "1 Nigiri Avocado", "seconds": 257 }
+  ]
+}
+
