@@ -12,10 +12,35 @@ export class TabsPage {
   selected = '';
   progress = 47;
 
+  waiteTime = 100;
+  timeLeft: number = this.waiteTime;
+  interval;
+  orderSet: boolean =false;
+
+
+
+
   constructor() {}
 
   setSelectedTab(){
       console.log('CALLED');
       this.selected = this.tabs.getSelected();
+  }
+
+  async orderTimerPause() {
+    this.orderSet = true;
+    this.interval = setInterval(() => {
+      if(this.timeLeft > 0) {
+        this.timeLeft = this.timeLeft-10;
+      } else {
+        this.pauseOrderTimer();
+      }
+    },1000);
+  }
+
+  pauseOrderTimer() {
+    this.orderSet= false;
+    this.timeLeft = this.waiteTime;
+    clearInterval(this.interval);
   }
 }

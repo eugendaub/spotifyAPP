@@ -1,0 +1,10 @@
+[
+  { "id": 1, "image": "la-nig", "title": "Lachsavokado Nigiri" },
+  { "id": 2, "image": "nigirimenu", "title": "Nigiri Menü" },
+  { "id": 3, "image": "maguroImg", "title": "Maguro" },
+  {
+    "id": 4,
+    "image": "tako",
+    "title": "Tako"
+  }
+]

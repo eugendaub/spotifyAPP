@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
-import recentlyPlayed from '../../assets/mockdata/recentlyPlayed.json';
-import heavyRotation from '../../assets/mockdata/heavyRotation.json';
+import suggestedSushi from '../../assets/mockdata/suggestedSushi.json';
+import nigiriSushi from '../../assets/mockdata/nigiriSushi.json';
 import jumpBackIn from '../../assets/mockdata/jumpBackIn.json';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-tab1',
@@ -14,15 +14,15 @@ export class Tab1Page {
 
   data =[
     {
-      title: 'Recently Player',
-      albums: recentlyPlayed
+      title: 'Suggested Sushi',
+      albums: suggestedSushi
     },
     {
-      title: 'Heavy rotation',
-      albums: heavyRotation
+      title: 'Nigiri Sushi',
+      albums: nigiriSushi
     },
     {
-      title: 'Jump back in',
+      title: 'Ura Maki',
       albums: jumpBackIn
     }
   ];

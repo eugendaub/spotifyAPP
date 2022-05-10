@@ -1,9 +1,24 @@
+
+<ion-content>
+
+  <!-- fab placed to the (vertical) center and end -->
+
+  <ion-fab  horizontal="end" slot="fixed" >
+    <ion-fab-button [disabled]="orderSet">
+      <button (click)="orderTimerPause()" >{{timeLeft}}</button>
+      <ion-icon name="restaurant"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+</ion-content>
 <ion-tabs (ionTabsDidChange)="setSelectedTab()">
 
   <div class="player">
     <div class="progress-bar">
-      <div class="progress" [style.width]="progress + '%'" ></div>
+      <div class="progress" [style.width]="timeLeft + '%'" ></div>
     </div>
+    <!--
     <ion-row class="ion-no-padding">
       <ion-col size="2" class="ion-no-padding">
         <img src="/assets/images/albums/when-we-all-fall-asleep.jpg">
@@ -15,13 +30,18 @@
       <ion-col size="2" class="ion-text-center ion-no-padding ion-align-self-center">
         <ion-icon name="play" color="light" size="large"></ion-icon>
       </ion-col>
-    </ion-row>
+    </ion-row>-->
+
+
+    <!--<button (click)='pauseOrderTimer()'>Pause</button>-->
+
+    <!--<p>{{timeLeft}} Seconds Left....</p>-->
   </div>
   <!-- The Ionic tab bar -->
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="tab1">
-      <ion-icon [name]="selected === 'tab1' ? 'home' : 'home-outline'"></ion-icon>
-      <ion-label>Home</ion-label>
+      <ion-icon [name]="selected === 'tab1' ? 'restaurant' : 'restaurant-outline'"></ion-icon>
+      <ion-label>Sushi</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="tab2">
@@ -30,8 +50,8 @@
     </ion-tab-button>
 
     <ion-tab-button tab="tab3">
-      <ion-icon [name]="selected === 'tab3' ? 'library' : 'library-outline'"></ion-icon>
-      <ion-label>Library</ion-label>
+      <ion-icon [name]="selected === 'tab3' ? 'cart' : 'cart-outline'"></ion-icon>
+      <ion-label>My Order</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 

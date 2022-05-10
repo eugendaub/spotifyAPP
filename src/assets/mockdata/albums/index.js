@@ -10,6 +10,11 @@ import wishYouWereHere from './wishYouWereHere.json';
 import soulfoodBoxVegan from './soulfoodBoxVegan.json';
 import FuyoSpicyYuna from './fuyoSpicyYuna.json';
 import CaliforniaSpicySalmonCrunch from './californiaSpicySalmonCrunch.json';
+import nigiriMenue from './nigirimenu.json';
+import maguro from './maguro.json';
+import lachsavokadoNigiri from './la-nig.json';
+import tako from './tako.json';
+
 
 export default {
   'Born To Die': bornToDie,
@@ -23,5 +28,9 @@ export default {
   'Wish You Were Here': wishYouWereHere,
   'Soulfood Box Vegan': soulfoodBoxVegan,
   'Fuyo Spicy Yuna': FuyoSpicyYuna,
-  'California Spicy Salmon Crunch': CaliforniaSpicySalmonCrunch
+  'California Spicy Salmon Crunch': CaliforniaSpicySalmonCrunch,
+  'Nigiri Menue' : nigiriMenue,
+  'Maguro' : maguro,
+  'Lachsavokado Nigiri' : lachsavokadoNigiri,
+  'Tako' : tako
 };

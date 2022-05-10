@@ -1,0 +1,11 @@
+{
+  "artist": "Tako",
+  "backgroundColor": "#0d2157",
+  "image": "tako",
+  "released": "3,50 €",
+  "title": "Nigiri",
+  "tracks": [
+    { "title": "Avocado, Gurke", "seconds": 248 }
+  ]
+}
+

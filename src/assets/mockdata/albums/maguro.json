@@ -1,0 +1,11 @@
+{
+  "artist": "Maguro",
+  "backgroundColor": "#0d2157",
+  "image": "maguroImg",
+  "released": 2022,
+  "title": "Maguro",
+  "tracks": [
+    { "title": "8x California Rolle mit Lachs", "seconds": 251 }
+  ]
+}
+
