@@ -1,14 +1,26 @@
 
 <ion-content>
 
-  <!-- fab placed to the (vertical) center and end -->
 
-  <ion-fab  horizontal="end" slot="fixed" >
-    <ion-fab-button [disabled]="orderSet">
-      <button (click)="orderTimerPause()" >{{timeLeft}}</button>
-      <ion-icon name="restaurant"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+  <div class="container" *ngIf="orderSet ;then orderGiven; else noOrder">
+  </div>
+  <ng-template #orderGiven>
+    <ion-fab  horizontal="end" slot="fixed" >
+      <ion-fab-button [disabled]="orderSet" fab-but="button">
+        <div>
+            <ion-icon name="restaurant-outline"></ion-icon>
+            <label>{{timeLeft}}</label>
+        </div>
+      </ion-fab-button>
+    </ion-fab>
+  </ng-template>
+  <ng-template #noOrder>
+    <ion-fab  horizontal="end" slot="fixed" >
+      <ion-fab-button [disabled]="orderSet" fab-but="button" (click)="orderTimerPause()">
+            <ion-icon name="restaurant-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </ng-template>
 
 
 </ion-content>
