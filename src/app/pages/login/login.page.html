@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>ADD Table Nr</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form (ngSubmit)="login()" [formGroup]="credentialsForm">
+    <ion-item>
+      <ion-input type="email" placeholder="Email"
+                 name="email" formControlName="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="password" placeholder="Password"
+                 name="password" formControlName="password"></ion-input>
+    </ion-item>
+
+    <ion-button color="primary" expand="full" type="submit" [disabled]="!credentialsForm.valid">
+      Login
+    </ion-button>
+    <ion-button color="secondary" expand="full" type="button" (click)="register()" [disabled]="!credentialsForm.valid">
+      Create Account
+    </ion-button>
+
+  </form>
+
+
+
+
+</ion-content>

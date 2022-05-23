@@ -4,6 +4,8 @@ import suggestedSushi from '../../assets/mockdata/suggestedSushi.json';
 import nigiriSushi from '../../assets/mockdata/nigiriSushi.json';
 import jumpBackIn from '../../assets/mockdata/jumpBackIn.json';
 import {Router} from '@angular/router';
+import {AuthService} from "../services/auth.service";
+import {DataService} from "../services/data.service";
 
 @Component({
   selector: 'app-tab1',
@@ -34,7 +36,7 @@ export class Tab1Page {
     freeMode: true
   };
 
-  constructor(private router:Router) {}
+  constructor(private router: Router, private authService: AuthService, private dataService: DataService) {}
 
   openAlbum(album) {
     const titleEscaped = encodeURIComponent(album.title);
@@ -51,4 +53,12 @@ export class Tab1Page {
       return (index !== 0 ? '-' : '') + char.toLowerCase();
     });
   };
+  logout(){
+    this.authService.logout();
+  }
+  deleteUser(){
+    const userId = this.authService.getUserId();
+    this.authService.deleteUser();
+    this.dataService.deleteUserDocument(userId);
+  }
 }
