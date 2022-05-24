@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-
 import suggestedSushi from '../../assets/mockdata/suggestedSushi.json';
 import nigiriSushi from '../../assets/mockdata/nigiriSushi.json';
-import jumpBackIn from '../../assets/mockdata/jumpBackIn.json';
+import uraMaki from '../../assets/mockdata/uraMaki.json';
+import specialRolls from '../../assets/mockdata/specialRolls.json';
 import {Router} from '@angular/router';
-import {AuthService} from "../services/auth.service";
-import {DataService} from "../services/data.service";
+import {AuthService} from '../services/auth.service';
+import {DataService} from '../services/data.service';
 
 @Component({
   selector: 'app-tab1',
@@ -25,7 +25,11 @@ export class Tab1Page {
     },
     {
       title: 'Ura Maki',
-      albums: jumpBackIn
+      albums: uraMaki
+    },
+    {
+      title: 'Special Rolls',
+      albums: specialRolls
     }
   ];
   // mehrere Bilder pro Seite darstellen

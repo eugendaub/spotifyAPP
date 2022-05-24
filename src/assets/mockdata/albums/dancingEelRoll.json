@@ -1,0 +1,11 @@
+{
+  "artist": "Dancing Eel Roll",
+  "backgroundColor": "#0d1057",
+  "image": "dancingEelRoll",
+  "released": "12,50 €",
+  "title": "Dancing Eel Roll",
+  "tracks": [
+    { "title": "Aalscheiben, Sesam on top", "seconds": 251 },
+    { "title": "Rolle mit Surimi, Gurke, Avokado.", "seconds": 251 }
+  ]
+}

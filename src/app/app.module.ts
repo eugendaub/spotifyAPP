@@ -12,6 +12,7 @@ import {getAuth, provideAuth} from '@angular/fire/auth';
 import {getStorage, provideStorage} from '@angular/fire/storage';
 import {environment} from '../environments/environment';
 import {HttpClientModule} from '@angular/common/http';
+import {SwiperModule} from 'swiper/angular';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,7 +22,7 @@ import {HttpClientModule} from '@angular/common/http';
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
     provideStorage(() => getStorage()),
-    HttpClientModule
+    HttpClientModule, SwiperModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

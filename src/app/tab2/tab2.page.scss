@@ -1,0 +1,40 @@
+ion-slides {
+  height: 100%;
+}
+ion-title, ion-content{
+  color: #fff;
+  font-family: 'Spotify';
+}
+.select-header {
+  color: #fff;
+  font-family: 'Spotify';
+  font-weight: bold;
+  margin-left: 20px;
+  margin-bottom: 30px;
+}
+
+
+ion-slides {
+  margion-buttom: 20px;
+}
+
+.title {
+  color: #fff;
+  font-family: 'Spotify';
+  font-size: small;
+}
+
+ion-slide {
+  display: block;
+  text-align: left;
+}
+ion-list {
+  --ion-background-color: var(--ion-color-dark);
+}
+ion-item {
+  --ion-item-background: transparent;
+  color: #fff;
+  p{
+    color: #949494;
+  }
+}

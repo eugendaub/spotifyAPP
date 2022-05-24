@@ -1,0 +1,14 @@
+{
+  "artist": "Futomaki",
+  "backgroundColor": "#a11704",
+  "image": "futomakiImg",
+  "released": "5,50 €",
+  "title": "Futomaki",
+  "tracks": [
+    { "title": "8x California Rolle mit Lachs", "seconds": 251 },
+    { "title": "Avocado, Gurke", "seconds": 248 },
+    { "title": "Röstzwiebeln und scharfer Sriracha Sauce", "seconds": 320 },
+    { "title": "Avocado, Gurke", "seconds": 248 }
+  ]
+}
+

@@ -1,0 +1,11 @@
+{
+  "artist": "Grilled Salmon Roll",
+  "backgroundColor": "#0d1057",
+  "image": "GrilledSalmonRoll",
+  "released": "12,50 €",
+  "title": "Grilled Salmon Roll",
+  "tracks": [
+    { "title": "Rolle gefüllt mit Spargel und geb. Tempuragarnelen.", "seconds": 251 },
+    { "title": "Rolle mit Surimi, Gurke, Avokado Flambierter Lachs mit Teriyaki Soße on top.", "seconds": 251 }
+  ]
+}

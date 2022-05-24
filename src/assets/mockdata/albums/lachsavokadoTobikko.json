@@ -1,9 +1,9 @@
 {
-  "artist": "California Spicy Salmon Crunch",
-  "backgroundColor": "#c96a2b",
-  "image": "CaliforniaSpicySalmonCrunch",
-  "released": "5,20 €",
-  "title": "California Spicy Salmon Crunch",
+  "artist": "Lachsavokado Tobikko",
+  "backgroundColor": "#fa7f09",
+  "image": "lachsavokado",
+  "released": "9,60 €",
+  "title": "Lachsavokado Tobikko",
   "tracks": [
     { "title": "8x California Rolle mit Lachs", "seconds": 251 },
     { "title": "Avocado, Gurke", "seconds": 248 },

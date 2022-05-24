@@ -7,8 +7,8 @@
   <ng-template #orderGiven>
     <ion-fab  horizontal="end" slot="fixed" >
       <ion-fab-button [disabled]="orderSet" fab-but="button">
-        <div>
-            <ion-icon name="restaurant-outline"></ion-icon>
+        <div >
+            <ion-icon color="light" name="restaurant"></ion-icon>
             <label>{{timeLeft}}</label>
         </div>
       </ion-fab-button>
@@ -17,7 +17,7 @@
   <ng-template #noOrder>
     <ion-fab  horizontal="end" slot="fixed" >
       <ion-fab-button [disabled]="orderSet" fab-but="button" (click)="orderTimerPause()">
-            <ion-icon name="restaurant-outline"></ion-icon>
+            <ion-icon color="light" name="restaurant-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab>
   </ng-template>
@@ -57,8 +57,8 @@
     </ion-tab-button>
 
     <ion-tab-button tab="tab2">
-      <ion-icon [name]="selected === 'tab2' ? 'search' : 'search-outline'"></ion-icon>
-      <ion-label>Search</ion-label>
+      <ion-icon [name]="selected === 'tab2' ? 'beer' : 'beer-outline'"></ion-icon>
+      <ion-label>Drink</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="tab3">
