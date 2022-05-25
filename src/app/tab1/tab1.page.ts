@@ -44,7 +44,7 @@ export class Tab1Page {
 
   openAlbum(album) {
     const titleEscaped = encodeURIComponent(album.title);
-    console.log('titleEscape ', titleEscaped);
+    //console.log('titleEscape ', titleEscaped);
     this.router.navigateByUrl(`/tabs/tab1/${titleEscaped}`);
   }
 

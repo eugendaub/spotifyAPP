@@ -3,6 +3,9 @@ import {ActivatedRoute} from '@angular/router';
 import albums from '../../assets/mockdata/albums';
 import {AuthService} from '../services/auth.service';
 import {DataService} from '../services/data.service';
+import {ToastController} from '@ionic/angular';
+import {Vibration} from '@ionic-native/vibration/ngx';
+
 
 @Component({
   selector: 'app-album',
@@ -11,15 +14,17 @@ import {DataService} from '../services/data.service';
 })
 export class AlbumPage implements OnInit {
   data = null;
-  sushiImageLink = '';
 
-  constructor(private activatedRoute: ActivatedRoute, private authService: AuthService, private dataService: DataService) { }
+
+  constructor(private activatedRoute: ActivatedRoute, private authService: AuthService,
+              private dataService: DataService, private toastCtrl: ToastController,
+              private vibration: Vibration) { }
 
   ngOnInit() {
     const title = this.activatedRoute.snapshot.paramMap.get('title');
     const decodedTitle = decodeURIComponent(title);
     this.data = albums [decodedTitle];
-    console.log('this: ', decodedTitle);
+    //console.log('this: ', decodedTitle);
   }
 
   // Helper function for image names
@@ -33,14 +38,31 @@ export class AlbumPage implements OnInit {
   placeAnOrder(order){
     const logInUserEmail = this.authService.getUserEmail();
     const logInUserId= this.authService.getUserId();
-    const titleEscaped = encodeURIComponent(order.title);
-    console.log('titleEscape ', titleEscaped);;
     const img= this.dasherize(order.image);
-    console.log('funktion IMF:', img);
-    this.sushiImageLink = order.image;
-
-    console.log('image Link: ', this.sushiImageLink);
+    //this.presentToast();
+    this.displayToast();
     this.dataService.addOrderToUser(logInUserId, logInUserEmail,  order.title,  order.title , img);
+  }
+
+  async presentToast() {
+    this.vibration.vibrate(150);
+    const toast = await this.toastCtrl.create({
+      message: ' Ordered !',
+      duration: 300
+    });
+    toast.present();
+  }
+
+  displayToast() {
+    this.toastCtrl.create({
+      message: 'Added order!',
+      position: 'top',
+      duration: 300,
+      cssClass: 'toast-custom-class',
+
+    }).then((toast) => {
+      toast.present();
+    });
   }
 
 }

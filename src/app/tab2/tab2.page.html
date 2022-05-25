@@ -5,9 +5,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="swiper-slide">
   <ion-slides pager="true" [options]="slideOpts">
-    <ion-slide>
+    <ion-slide >
       <div *ngFor="let softDrink of softDrinkCollections">
         <h2 class="select-header" >{{softDrink.title}}</h2>
         <ion-list *ngFor="let album of softDrink.albums">

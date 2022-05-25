@@ -13,6 +13,7 @@ import {getStorage, provideStorage} from '@angular/fire/storage';
 import {environment} from '../environments/environment';
 import {HttpClientModule} from '@angular/common/http';
 import {SwiperModule} from 'swiper/angular';
+import {Vibration} from '@ionic-native/vibration/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +25,7 @@ import {SwiperModule} from 'swiper/angular';
     provideStorage(() => getStorage()),
     HttpClientModule, SwiperModule
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [Vibration,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -34,8 +34,8 @@ export class DataService {
 
   deleteOrderAndUserOrders(note) {
     const userId = this.auth.getUserId();
-    console.log('uerID: ', userId);
-    console.log('note: ', note);
+    //console.log('uerID: ', userId);
+    //console.log('note: ', note);
 
     const orderRef = doc(this.firestore, `orders/${note.id}`);
     return deleteDoc(orderRef)
@@ -59,7 +59,7 @@ export class DataService {
     };
 
     return addDoc(chatsRef, userOrder).then( res => {
-      console.log('created order ADDDOC: ', res);
+     // console.log('created order ADDDOC: ', res);
       const groupID = res.id;
       const promises = [];
 

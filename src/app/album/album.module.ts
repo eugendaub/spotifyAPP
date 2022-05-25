@@ -9,6 +9,8 @@ import { AlbumPageRoutingModule } from './album-routing.module';
 import { AlbumPage } from './album.page';
 import {SharedDirectivesModule} from '../directives/shared-directives.module';
 
+
+
 @NgModule({
   imports: [
     CommonModule,

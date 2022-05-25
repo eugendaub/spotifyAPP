@@ -47,3 +47,16 @@ ion-content {
   font-weight: 300;
   src: url('/assets/fonts/spotify-light.ttf');
 }
+
+
+.toast-custom-class {
+  --color:#ffffff;
+  --border-color:#000000;
+  --border-radius:3px;
+  --border-style:solid;
+  --border-width:1px;
+  --background: var(--ion-color-dark);
+  --button-color:#ffffff;
+  --width: 115px;
+  --max-hight: 10px;
+}

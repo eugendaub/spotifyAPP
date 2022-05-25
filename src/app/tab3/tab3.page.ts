@@ -26,7 +26,7 @@ export class Tab3Page {
 
   deleteOrder(order){
 
-    console.log('order: ', order);
+    //console.log('order: ', order);
     this.dataService.deleteOrderAndUserOrders(order);
   }
 }

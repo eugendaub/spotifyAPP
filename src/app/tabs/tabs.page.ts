@@ -15,7 +15,7 @@ export class TabsPage {
   waiteTime = 100;
   timeLeft: number = this.waiteTime;
   interval;
-  orderSet: boolean =false;
+  orderSet =false;
 
 
 

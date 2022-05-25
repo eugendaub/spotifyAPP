@@ -4,7 +4,7 @@ import SwiperCore from 'swiper';
 import softDrinks from '../../assets/mockdata/softDrinkCollections.json';
 import sakeDrinks from '../../assets/mockdata/sakeCollections.json';
 import beerDrinks from '../../assets/mockdata/beerCollections.json';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 
 
@@ -13,12 +13,13 @@ import {Router} from "@angular/router";
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page {
 
+export class Tab2Page {
   slideOpts = {
     initialSlide: 1,
     speed: 400
   };
+  drinkName = '';
 
   softDrinkCollections = [
     {
@@ -59,7 +60,7 @@ export class Tab2Page {
   };
   openAlbum(album) {
     const titleEscaped = encodeURIComponent(album.title);
-    console.log('titleEscape ', titleEscaped);
+    //console.log('titleEscape ', titleEscaped);
     this.router.navigateByUrl(`/tabs/tab1/${titleEscaped}`);
   }
 
