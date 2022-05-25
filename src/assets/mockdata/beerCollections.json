@@ -1,4 +1,14 @@
 [
-  { "id": 1, "image": "LechBier", "title": "Lech" }
+  { "id": 1, "image": "LechBier", "title": "Lech" },
+  { "id": 2, "image": "asahiDryBlack", "title": "Asahi Dry Black" },
+  { "id": 3, "image": "bira91Blonde", "title": "Bira 91 Blonde" },
+  { "id": 4, "image": "kirinIchiban", "title": "Kirin Ichiban" },
+  {
+    "id": 5,
+    "image": "saigonOriginal",
+    "title": "Saigon Original"
+  },
+  { "id": 6, "image": "saigonSpecial", "title": "Saigon Special" },
+  { "id": 7, "image": "sapporoPremiumBier", "title": "Sapporo Premium Bier" }
 
 ]

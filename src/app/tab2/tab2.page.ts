@@ -4,6 +4,7 @@ import SwiperCore from 'swiper';
 import softDrinks from '../../assets/mockdata/softDrinkCollections.json';
 import sakeDrinks from '../../assets/mockdata/sakeCollections.json';
 import beerDrinks from '../../assets/mockdata/beerCollections.json';
+import {Router} from "@angular/router";
 
 
 
@@ -39,7 +40,7 @@ export class Tab2Page {
   ];
 
 
-  constructor() {}
+  constructor( private router: Router) {}
 
   onSwiper([swiper]) {
     console.log(swiper);
@@ -56,5 +57,10 @@ export class Tab2Page {
       return (index !== 0 ? '-' : '') + char.toLowerCase();
     });
   };
+  openAlbum(album) {
+    const titleEscaped = encodeURIComponent(album.title);
+    console.log('titleEscape ', titleEscaped);
+    this.router.navigateByUrl(`/tabs/tab1/${titleEscaped}`);
+  }
 
 }

@@ -11,7 +11,7 @@
       <div *ngFor="let softDrink of softDrinkCollections">
         <h2 class="select-header" >{{softDrink.title}}</h2>
         <ion-list *ngFor="let album of softDrink.albums">
-            <ion-item>
+            <ion-item button="" (click)="openAlbum(album)">
               <ion-col size="2" class="ion-no-padding" >
                 <img [src]="'/assets/images/albums/'+dasherize(album.image)+'.jpg'">
               </ion-col>
@@ -27,8 +27,8 @@
     <ion-slide>
       <div *ngFor="let softDrink of sakeCollections">
         <h2 class="select-header" >{{softDrink.title}}</h2>
-        <ion-list *ngFor="let album of softDrink.albums">
-          <ion-item>
+        <ion-list *ngFor="let album of softDrink.albums" >
+          <ion-item button="" (click)="openAlbum(album)">
             <ion-col size="2" class="ion-no-padding" >
               <img [src]="'/assets/images/albums/'+dasherize(album.image)+'.jpg'">
             </ion-col>
@@ -41,11 +41,11 @@
         </ion-list>
       </div>
     </ion-slide>
-    <ion-slide>
+    <ion-slide tappable="">
       <div *ngFor="let softDrink of beerCollections">
         <h2 class="select-header" >{{softDrink.title}}</h2>
-        <ion-list *ngFor="let album of softDrink.albums">
-          <ion-item>
+        <ion-list *ngFor="let album of softDrink.albums"  >
+          <ion-item button="" (click)="openAlbum(album)">
             <ion-col size="2" class="ion-no-padding" >
               <img [src]="'/assets/images/albums/'+dasherize(album.image)+'.jpg'">
             </ion-col>
