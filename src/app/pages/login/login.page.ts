@@ -14,6 +14,7 @@ export class LoginPage implements OnInit {
 
   credentialsForm: FormGroup;
 
+
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -24,6 +25,8 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.credentialsForm = this.fb.group({
+      tableNr: ['44'],
+      guests: ['2'],
       email: ['a@a.de', [Validators.email, Validators.required]],
       password: ['111111', [Validators.minLength(6), Validators.required]]
     });
@@ -33,6 +36,7 @@ export class LoginPage implements OnInit {
     const loading = await this.loadingCtrl.create();
     await loading.present();
 
+    console.log('Register');
     this.authService.signup(this.credentialsForm.value).then(_ => {
       loading.dismiss();
       this.router.navigateByUrl('/tabs', { replaceUrl: true });
@@ -71,5 +75,6 @@ export class LoginPage implements OnInit {
       await alert.present();
     });
   }
+
 
 }

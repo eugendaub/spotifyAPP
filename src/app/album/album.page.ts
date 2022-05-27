@@ -14,17 +14,20 @@ import {Vibration} from '@ionic-native/vibration/ngx';
 })
 export class AlbumPage implements OnInit {
   data = null;
+  userOrderCount = this.authService.getGuestsNumber();
 
 
   constructor(private activatedRoute: ActivatedRoute, private authService: AuthService,
               private dataService: DataService, private toastCtrl: ToastController,
-              private vibration: Vibration) { }
+              private vibration: Vibration) {
+    console.log('album construktor ');
+  }
 
   ngOnInit() {
     const title = this.activatedRoute.snapshot.paramMap.get('title');
     const decodedTitle = decodeURIComponent(title);
     this.data = albums [decodedTitle];
-    //console.log('this: ', decodedTitle);
+    console.log('album ngininit ');
   }
 
   // Helper function for image names
@@ -38,32 +41,46 @@ export class AlbumPage implements OnInit {
   placeAnOrder(order){
     const logInUserEmail = this.authService.getUserEmail();
     const logInUserId= this.authService.getUserId();
+    const usertTableNr = this.authService.getUserTableNr();
+    const guestsNumber = this.authService.getGuestsNumber();
     const img= this.dasherize(order.image);
-    //this.presentToast();
-    this.displayToast();
-    this.dataService.addOrderToUser(logInUserId, logInUserEmail,  order.title,  order.title , img);
+    if(this.userOrderCount !==0){
+      this.orderToast();
+      this.userOrderCount--;
+      console.log('guestsNumber', guestsNumber);
+      console.log('userOrderCount', this.userOrderCount);
+    }else{
+      this.orderFullToast();
+    }
+
+
+    this.dataService.addOrderToUser(logInUserId, logInUserEmail,  order.title,  order.title , img, usertTableNr);
   }
 
-  async presentToast() {
-    this.vibration.vibrate(500);
-    const toast = await this.toastCtrl.create({
-      message: ' Ordered !',
-      duration: 300
-    });
-    toast.present();
-  }
-
-  displayToast() {
+  orderToast() {
     this.vibration.vibrate(75);
     this.toastCtrl.create({
-      message: 'Added order!',
+      message: 'Added order! still '+ this.userOrderCount,
       position: 'top',
-      duration: 300,
+      duration: 800,
+      cssClass: 'toast-custom-class-order',
+
+    }).then((toast) => {
+      toast.present();
+    });
+  }
+  orderFullToast() {
+    this.vibration.vibrate(75);
+    this.toastCtrl.create({
+      message: 'Order Full!',
+      position: 'top',
+      duration: 2500,
       cssClass: 'toast-custom-class',
 
     }).then((toast) => {
       toast.present();
     });
+    this.userOrderCount = this.authService.getGuestsNumber();
   }
 
 }

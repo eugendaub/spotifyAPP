@@ -47,11 +47,12 @@ export class DataService {
       });
   }
 
-  addOrderToUser(logInUserId,logInUserEmail, text, title, sushiImageLink){
+  addOrderToUser(logInUserId,logInUserEmail, text, title, sushiImageLink, usertTableNr){
     const chatsRef = collection(this.firestore, 'orders');
     const userOrder = {
       userid: logInUserId,
       userEmail: logInUserEmail,
+      userTableNr: usertTableNr,
       title,
       text,
       createdAt: serverTimestamp(),

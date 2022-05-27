@@ -57,6 +57,17 @@ ion-content {
   --border-width:1px;
   --background: var(--ion-color-dark);
   --button-color:#ffffff;
-  --width: 115px;
+  --width: 100px;
+  --max-hight: 10px;
+}
+.toast-custom-class-order {
+  --color:#ffffff;
+  --border-color:#000000;
+  --border-radius:3px;
+  --border-style:solid;
+  --border-width:1px;
+  --background: var(--ion-color-dark);
+  --button-color:#ffffff;
+  --width: 150px;
   --max-hight: 10px;
 }

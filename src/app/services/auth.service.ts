@@ -33,12 +33,13 @@ export class AuthService {
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  async signup({email, password}): Promise<UserCredential> {
+  async signup({tableNr, guests, email, password}): Promise<UserCredential> {
     try {
       const credentials = await createUserWithEmailAndPassword(this.auth, email, password);
       const userDoc = doc(this.firestore, `users/${credentials.user.uid}`);
-      await setDoc(userDoc, {email, order: []});
 
+      await setDoc(userDoc, {email, tableNr, guests});
+      console.log('signup');
       return credentials;
     } catch (err) {
       throw(err);
@@ -68,5 +69,11 @@ export class AuthService {
 
   getUserEmail() {
     return this.currentUserData.email;
+  }
+  getUserTableNr() {
+    return this.currentUserData.tableNr;
+  }
+  getGuestsNumber() {
+    return this.currentUserData.guests;
   }
 }

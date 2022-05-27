@@ -14,6 +14,7 @@ import {environment} from '../environments/environment';
 import {HttpClientModule} from '@angular/common/http';
 import {SwiperModule} from 'swiper/angular';
 import {Vibration} from '@ionic-native/vibration/ngx';
+import {LoginPage} from "./pages/login/login.page";
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,7 +26,7 @@ import {Vibration} from '@ionic-native/vibration/ngx';
     provideStorage(() => getStorage()),
     HttpClientModule, SwiperModule
   ],
-  providers: [Vibration,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [Vibration,LoginPage, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
