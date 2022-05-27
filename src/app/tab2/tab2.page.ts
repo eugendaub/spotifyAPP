@@ -61,7 +61,7 @@ export class Tab2Page {
   openAlbum(album) {
     const titleEscaped = encodeURIComponent(album.title);
     //console.log('titleEscape ', titleEscaped);
-    this.router.navigateByUrl(`/tabs/tab1/${titleEscaped}`);
+    this.router.navigateByUrl(`/tabs/tab2/${titleEscaped}`);
   }
 
 }

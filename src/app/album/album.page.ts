@@ -45,7 +45,7 @@ export class AlbumPage implements OnInit {
   }
 
   async presentToast() {
-    this.vibration.vibrate(150);
+    this.vibration.vibrate(500);
     const toast = await this.toastCtrl.create({
       message: ' Ordered !',
       duration: 300
@@ -54,6 +54,7 @@ export class AlbumPage implements OnInit {
   }
 
   displayToast() {
+    this.vibration.vibrate(75);
     this.toastCtrl.create({
       message: 'Added order!',
       position: 'top',

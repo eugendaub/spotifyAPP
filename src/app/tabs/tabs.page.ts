@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {IonTabs} from '@ionic/angular';
+import {IonTabs, NavController} from '@ionic/angular';
 
 
 @Component({
@@ -16,14 +16,12 @@ export class TabsPage {
   timeLeft: number = this.waiteTime;
   interval;
   orderSet =false;
+  selectedTab='';
 
 
-
-
-  constructor() {}
+  constructor(private navCtrl: NavController) {}
 
   setSelectedTab(){
-      console.log('CALLED');
       this.selected = this.tabs.getSelected();
   }
 
@@ -42,5 +40,11 @@ export class TabsPage {
     this.orderSet= false;
     this.timeLeft = this.waiteTime;
     clearInterval(this.interval);
+  }
+  openTab1(){
+    this.navCtrl.navigateRoot('/tabs/tab1');
+  }
+  openTab2(){
+    this.navCtrl.navigateRoot('/tabs/tab2');
   }
 }

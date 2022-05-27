@@ -24,6 +24,10 @@ const routes: Routes = [
         loadChildren: () => import('../album/album.module').then( m => m.AlbumPageModule)
       },
       {
+        path: 'tab2/:title',
+        loadChildren: () => import('../album/album.module').then( m => m.AlbumPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'
