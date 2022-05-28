@@ -35,9 +35,10 @@ ion-row {
   z-index: 2;
   background: linear-gradient(var(--custombg) 20%, var(--ion-color-dark) 30%);
 }
-
-ion-content{
-  z-index: 2;
-  --background: linear-gradient( #121212FF 400%, var(--custombg) 400%);
+.button-order {
+  position: fixed;
+  left: 5px;
+  bottom: 10px;
+  right: 5px;
+  color: #fff;
 }
-

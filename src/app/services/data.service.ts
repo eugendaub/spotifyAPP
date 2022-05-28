@@ -1,24 +1,29 @@
 import { Injectable } from '@angular/core';
-import {
-  Firestore,
-  collection,
-  collectionData,
-  doc,
-  addDoc,
-  deleteDoc,
-  updateDoc,
-  arrayUnion,
-  arrayRemove,
-  serverTimestamp,
-  query, orderBy
+import {Firestore, collection, collectionData, doc, addDoc, deleteDoc, updateDoc, arrayUnion, arrayRemove,
+  serverTimestamp, query, orderBy
 } from '@angular/fire/firestore';
 import {AuthService} from './auth.service';
+
+
+
+export interface IUserOrder {
+  userid: string;
+  userEmail: string;
+  userTableNr: string;
+  ti: string;
+  tex: string;
+  createdAt: string;
+  imageLink: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class DataService {
   userOrderId= null;
+  orderCount=0;
+  private tempOrder: IUserOrder[]=[];
 
   constructor(private firestore: Firestore, private auth: AuthService ) { }
 
@@ -75,6 +80,40 @@ export class DataService {
       return Promise.all(promises);
     });
   }
+  addTempOrder(logInUserId,logInUserEmail, text, title, sushiImageLink, usertTableNr){
+    const chatsRef = collection(this.firestore, 'orders');
+    const order: IUserOrder = {
+      userid: logInUserId,
+      userEmail: logInUserEmail,
+      userTableNr: usertTableNr,
+      ti: title,
+      tex: text,
+      createdAt: ''+serverTimestamp(),
+      imageLink: sushiImageLink
+    };
+    console.log('orderCount: ',this.orderCount );
+    this.tempOrder.push(order);
+    //this.tempOrderArray(this.userOrder[this.orderCount]);
+    console.log('Array: ', this.tempOrder);
+    this.orderCount++;
+
+    /*
+    return addDoc(chatsRef, userOrder).then( res => {
+      // console.log('created order ADDDOC: ', res);
+      const groupID = res.id;
+      const promises = [];
+
+      // In der DB muss für jeden user der DB eintrag angepasst werden
+      // (in diesem Fall in welchen Chats befindet sich der User)
+
+      const userChatsRef = doc(this.firestore, `users/${logInUserId}`);
+      const update = updateDoc(userChatsRef, {
+        userOrders: arrayUnion(groupID)
+      });
+      promises.push(update);
+      return Promise.all(promises);
+    });*/
+  }
 
   createOrderForUser(logInUserId,logInUserEmail){
     const chatsRef = collection(this.firestore, 'orders');
@@ -104,5 +143,8 @@ export class DataService {
     const messages = collection(this.firestore, `orders`);
     const q = query(messages, orderBy('createdAt'));
     return collectionData(q, {idField: 'id'});
+  }
+  getTemporaraOrder(): IUserOrder[]{
+    return this.tempOrder;
   }
 }

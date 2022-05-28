@@ -14,7 +14,7 @@ import {Vibration} from '@ionic-native/vibration/ngx';
 })
 export class AlbumPage implements OnInit {
   data = null;
-  userOrderCount = this.authService.getGuestsNumber();
+  //userOrderCount = this.authService.getGuestsNumber();
 
 
   constructor(private activatedRoute: ActivatedRoute, private authService: AuthService,
@@ -44,23 +44,33 @@ export class AlbumPage implements OnInit {
     const usertTableNr = this.authService.getUserTableNr();
     const guestsNumber = this.authService.getGuestsNumber();
     const img= this.dasherize(order.image);
-    if(this.userOrderCount !==0){
+    /*if(this.userOrderCount !==0){
       this.orderToast();
       this.userOrderCount--;
       console.log('guestsNumber', guestsNumber);
       console.log('userOrderCount', this.userOrderCount);
     }else{
       this.orderFullToast();
-    }
-
-
+    }*/
+    this.orderToast();
     this.dataService.addOrderToUser(logInUserId, logInUserEmail,  order.title,  order.title , img, usertTableNr);
+  }
+  placeAnOrderTemp(order){
+    const logInUserEmail = this.authService.getUserEmail();
+    const logInUserId= this.authService.getUserId();
+    const usertTableNr = this.authService.getUserTableNr();
+    const guestsNumber = this.authService.getGuestsNumber();
+    const img= this.dasherize(order.image);
+    this.orderToast();
+
+
+    this.dataService.addTempOrder(logInUserId, logInUserEmail,  order.title,  order.title , img, usertTableNr);
   }
 
   orderToast() {
     this.vibration.vibrate(75);
     this.toastCtrl.create({
-      message: 'Added order! still '+ this.userOrderCount,
+      message: 'Added order!',
       position: 'top',
       duration: 800,
       cssClass: 'toast-custom-class-order',
@@ -80,7 +90,7 @@ export class AlbumPage implements OnInit {
     }).then((toast) => {
       toast.present();
     });
-    this.userOrderCount = this.authService.getGuestsNumber();
+   // this.userOrderCount = this.authService.getGuestsNumber();
   }
 
 }

@@ -5,7 +5,7 @@
   <div class="container" *ngIf="orderSet ;then orderGiven; else noOrder">
   </div>
   <ng-template #orderGiven>
-    <ion-fab  horizontal="end" slot="fixed" >
+    <ion-fab  horizontal="end" vertical="top" slot="fixed" >
       <ion-fab-button [disabled]="orderSet" fab-but="button">
         <div >
             <ion-icon color="light" name="restaurant"></ion-icon>
@@ -15,12 +15,17 @@
     </ion-fab>
   </ng-template>
   <ng-template #noOrder>
-    <ion-fab  horizontal="end" slot="fixed" >
+    <ion-fab  horizontal="end" vertical="top" slot="fixed" >
       <ion-fab-button [disabled]="orderSet" fab-but="button" (click)="orderTimerPause()">
             <ion-icon color="light" name="restaurant-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab>
   </ng-template>
+  <ion-fab  horizontal="center" vertical="top" slot="fixed" >
+    <ion-fab-button  fab-but="button" (click)="temOrderView()">
+      <ion-icon color="light" name="clipboard-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 
 </ion-content>

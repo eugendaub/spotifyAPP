@@ -14,7 +14,12 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'tempOrderView',
+    loadChildren: () => import('./pages/temp-order-view/temp-order-view.module').then( m => m.TempOrderViewPageModule)
   }
+
 ];
 @NgModule({
   imports: [
