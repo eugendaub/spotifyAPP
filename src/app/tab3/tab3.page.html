@@ -9,7 +9,7 @@
 <ion-content [fullscreen]="true">
 
 
-  <div *ngFor="let order of allOrdersByTime">
+  <div *ngFor="let order of allOrders">
 
     <ion-list>
       <ion-item-sliding>
@@ -21,9 +21,9 @@
             <ion-label>
               {{ order.title }}
               <p>Table: {{order.userTableNr}}</p>
-              <div class="time ion-text-right">
+             <!-- <div class="time ion-text-right">
                 {{order.createdAt?.toMillis() | date:'short'}}
-              </div>
+              </div>-->
             </ion-label>
 
           </ion-col>
