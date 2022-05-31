@@ -27,7 +27,7 @@ export class TabsPage {
   }
 
   async orderTimerPause() {
-    console.log('PAUSE');
+    console.log('PAUSE'   );
     this.orderSet = true;
     this.interval = setInterval(() => {
       if(this.timeLeft > 0) {
