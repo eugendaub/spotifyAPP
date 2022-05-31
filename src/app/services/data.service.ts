@@ -95,10 +95,10 @@ export class DataService {
       //createdAt: serverTimestamp(),
       imageLink: sushiImageLink
     };
-    console.log('orderCount: ',this.orderCount );
+    //console.log('orderCount: ',this.orderCount );
     this.tempOrder.push(order);
     //this.tempOrderArray(this.userOrder[this.orderCount]);
-    console.log('Array: ', this.tempOrder);
+    //console.log('Array: ', this.tempOrder);
     this.orderCount++;
 
     /*
@@ -126,27 +126,9 @@ export class DataService {
     }
     console.log('After Delete Temp Array: ', this.tempOrder);
   }
-  async deleteCompleteTempOrder() {
 
-    console.log('Array lenght: ',this.tempOrder.length );
-    let count = 0;
-    for(const input of this.tempOrder){
-      if(count < this.tempOrder.length){
-        console.log('count: ', count);
-          this.tempOrder.splice(count, 1);
-          count++;
-      }
-    }
-    /*
-    for(let i=0 ; i < this.tempOrder.length; i++) {
-    console.log('i: ', i);
-      const index = this.tempOrder.findIndex((obj) => obj.tempId === i);
-      console.log('index:', index);
-      if (index > -1) {
-        this.tempOrder.splice(index, 1);
-      }
-   }*/
-    console.log('After Delete Temp Array: ', this.tempOrder);
+  async deleteCompleteTempOrder() {
+    this.tempOrder=[];
   }
 
   async addTempOrderToDB(){

@@ -21,6 +21,7 @@ export class AuthService {
         docData(userDoc, {idField: 'id'}).pipe(
           takeUntil(this.logout$)
         ).subscribe(data => {
+          //console.log('currentUserData');
           this.currentUserData = data;
         });
       } else {

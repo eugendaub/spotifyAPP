@@ -14,20 +14,20 @@ import {Vibration} from '@ionic-native/vibration/ngx';
 })
 export class AlbumPage implements OnInit {
   data = null;
-  //userOrderCount = this.authService.getGuestsNumber();
+  oneRoundNumber = 2;
+  userOrderCount = 0;
+  orderButtonDisabled = false;
 
 
   constructor(private activatedRoute: ActivatedRoute, private authService: AuthService,
               private dataService: DataService, private toastCtrl: ToastController,
-              private vibration: Vibration) {
-    console.log('album construktor ');
-  }
+              private vibration: Vibration) {}
 
   ngOnInit() {
     const title = this.activatedRoute.snapshot.paramMap.get('title');
     const decodedTitle = decodeURIComponent(title);
     this.data = albums [decodedTitle];
-    console.log('album ngininit ');
+
   }
 
   // Helper function for image names
@@ -42,12 +42,12 @@ export class AlbumPage implements OnInit {
     const logInUserEmail = this.authService.getUserEmail();
     const logInUserId= this.authService.getUserId();
     const usertTableNr = this.authService.getUserTableNr();
-    const guestsNumber = this.authService.getGuestsNumber();
     const img= this.dasherize(order.image);
-    /*if(this.userOrderCount !==0){
+    /*
+    if(this.userOrderCount !==0){
       this.orderToast();
       this.userOrderCount--;
-      console.log('guestsNumber', guestsNumber);
+      console.log('oneOrderTotalNumber', this.oneOrderTotalNumber);
       console.log('userOrderCount', this.userOrderCount);
     }else{
       this.orderFullToast();
@@ -59,12 +59,27 @@ export class AlbumPage implements OnInit {
     const logInUserEmail = this.authService.getUserEmail();
     const logInUserId= this.authService.getUserId();
     const usertTableNr = this.authService.getUserTableNr();
-    const guestsNumber = this.authService.getGuestsNumber();
     const img= this.dasherize(order.image);
-    this.orderToast();
+    this.countOrders();
 
 
     this.dataService.addTempOrder(logInUserId, logInUserEmail,  order.title,  order.title , img, usertTableNr);
+  }
+
+  countOrders(){
+    const userOrderCount = this.authService.getGuestsNumber();
+    const oneOrderTotalNumber = userOrderCount * this.oneRoundNumber -1;
+    if( oneOrderTotalNumber > this.userOrderCount){
+      this.orderToast();
+      this.userOrderCount++;
+    }else{
+      this.userOrderCount=0;
+      this.orderFullToast();
+      this.orderButtonDisabled=true;
+    }
+  }
+  orderButtonEnable(set: boolean){
+    this.orderButtonDisabled= set;
   }
 
   orderToast() {

@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {IonTabs, NavController} from '@ionic/angular';
 import {Router} from '@angular/router';
 
@@ -10,28 +10,31 @@ import {Router} from '@angular/router';
 })
 export class TabsPage {
   @ViewChild(IonTabs) tabs: IonTabs;
+  @ViewChild('clip', {static: false, read: ElementRef})fab: ElementRef;
   selected = '';
   progress = 47;
-
   waiteTime = 100;
   timeLeft: number = this.waiteTime;
   interval;
-  orderSet =false;
-  selectedTab='';
-
+  orderSet = false;
+  selectedTab = '';
 
   constructor(private navCtrl: NavController, private router: Router) {}
+
 
   setSelectedTab(){
       this.selected = this.tabs.getSelected();
   }
 
   async orderTimerPause() {
+    console.log('PAUSE');
     this.orderSet = true;
     this.interval = setInterval(() => {
       if(this.timeLeft > 0) {
+        console.log('time: ', this.timeLeft);
         this.timeLeft = this.timeLeft-10;
       } else {
+        console.log('else Pause');
         this.pauseOrderTimer();
       }
     },1000);
@@ -43,6 +46,7 @@ export class TabsPage {
     this.timeLeft = this.waiteTime;
     clearInterval(this.interval);
   }
+
   openTab1(){
     this.navCtrl.navigateRoot('/tabs/tab1');
   }
@@ -50,6 +54,8 @@ export class TabsPage {
     this.navCtrl.navigateRoot('/tabs/tab2');
   }
   temOrderView(){
+    //this.orderSet=true;
       this.router.navigateByUrl(`/tempOrderView`);
   }
+
 }

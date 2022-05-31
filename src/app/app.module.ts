@@ -14,7 +14,9 @@ import {environment} from '../environments/environment';
 import {HttpClientModule} from '@angular/common/http';
 import {SwiperModule} from 'swiper/angular';
 import {Vibration} from '@ionic-native/vibration/ngx';
-import {LoginPage} from "./pages/login/login.page";
+import {LoginPage} from './pages/login/login.page';
+import {AlbumPage} from './album/album.page';
+import {TabsPage} from './tabs/tabs.page';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,7 +28,7 @@ import {LoginPage} from "./pages/login/login.page";
     provideStorage(() => getStorage()),
     HttpClientModule, SwiperModule
   ],
-  providers: [Vibration,LoginPage, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [Vibration,LoginPage, AlbumPage, TabsPage, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {DataService} from '../../services/data.service';
 import {NavController} from '@ionic/angular';
+import {AlbumPage} from '../../album/album.page';
+import {TabsPage} from '../../tabs/tabs.page';
 
 @Component({
   selector: 'app-temp-order-view',
@@ -10,7 +12,8 @@ import {NavController} from '@ionic/angular';
 export class TempOrderViewPage implements OnInit {
   allTempOrders = [];
 
-  constructor(private dataService: DataService, private navCtrl: NavController) {
+  constructor(private dataService: DataService, private navCtrl: NavController, private albumPage: AlbumPage,
+              private tabsPage: TabsPage) {
     //Get All Temporary Orders now
       this.allTempOrders = this.dataService.getTemporaraOrder();
   }
@@ -20,15 +23,19 @@ export class TempOrderViewPage implements OnInit {
   placeAnOrder(){
     this.dataService.addTempOrderToDB();
     this.dataService.deleteCompleteTempOrder();
+    //this.albumPage.orderButtonEnable(true);
     this.openTab1();
+
   }
 
   deleteOneOrder(order){
     console.log('ID :', order.tempId);
+
     this.dataService.deleteTempOrder(order.tempId);
   }
 
   openTab1(){
+    //this.tabsPage.orderTimerPause();
     this.navCtrl.navigateRoot('/tabs/tab1');
   }
 
