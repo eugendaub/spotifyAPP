@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import {Firestore, collection, collectionData, doc, addDoc, deleteDoc, updateDoc, arrayUnion, arrayRemove,
-  serverTimestamp, query, orderBy
+import {
+  Firestore, collection, collectionData, doc, addDoc, deleteDoc, updateDoc, arrayUnion, arrayRemove,
+  serverTimestamp, query, orderBy, docData, where,documentId
 } from '@angular/fire/firestore';
 import {AuthService} from './auth.service';
+import {switchMap,take} from 'rxjs/operators';
 
 
 
@@ -33,6 +35,21 @@ export class DataService {
   getAllOrderId(){
     const notesRef = collection(this.firestore, 'orders');
     return collectionData(notesRef, { idField: 'id'});
+  }
+
+  getAllUserOrders(){
+    const userId= this.authService.getUserId();
+    const userRef = doc(this.firestore, `users/${userId}`);
+    return docData(userRef).pipe(
+      switchMap(data => {
+        console.log('Data: ', data.userOrders);
+        const userOrders = data.userOrders;
+        const chatsRef = collection(this.firestore, 'orders');
+        const q = query(chatsRef, where(documentId(), 'in', userOrders));
+        return collectionData(q, { idField: 'id' });
+      }),
+      take(1)
+    );
   }
 
   deleteUserDocument(userId) {
@@ -84,7 +101,7 @@ export class DataService {
     });
   }
   addTempOrder(logInUserId,logInUserEmail, text, title, sushiImageLink, userTableNr){
-    const chatsRef = collection(this.firestore, 'orders');
+    //const chatsRef = collection(this.firestore, 'orders');
     const order: IUserOrder = {
       tempId: this.orderCount,
       userid: logInUserId,

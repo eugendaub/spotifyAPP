@@ -20,6 +20,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/temp-order-view/temp-order-view.module').then( m => m.TempOrderViewPageModule)
   }
 
+
 ];
 @NgModule({
   imports: [

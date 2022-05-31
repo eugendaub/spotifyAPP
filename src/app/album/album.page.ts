@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import albums from '../../assets/mockdata/albums';
 import {AuthService} from '../services/auth.service';
@@ -76,6 +76,7 @@ export class AlbumPage implements OnInit {
       this.userOrderCount=0;
       this.orderFullToast();
       this.orderButtonDisabled=true;
+
     }
   }
   orderButtonEnable(set: boolean){
@@ -107,5 +108,7 @@ export class AlbumPage implements OnInit {
     });
    // this.userOrderCount = this.authService.getGuestsNumber();
   }
+
+
 
 }

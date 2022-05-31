@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {IonTabs, NavController} from '@ionic/angular';
 import {Router} from '@angular/router';
 
@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
 })
 export class TabsPage {
   @ViewChild(IonTabs) tabs: IonTabs;
-  @ViewChild('clip', {static: false, read: ElementRef})fab: ElementRef;
+
   selected = '';
   progress = 47;
   waiteTime = 100;
@@ -27,6 +27,7 @@ export class TabsPage {
   }
 
   async orderTimerPause() {
+    this.temOrderView();
     console.log('PAUSE'   );
     this.orderSet = true;
     this.interval = setInterval(() => {

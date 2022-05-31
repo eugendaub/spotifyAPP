@@ -3,6 +3,7 @@ import {DataService} from '../../services/data.service';
 import {NavController} from '@ionic/angular';
 import {AlbumPage} from '../../album/album.page';
 import {TabsPage} from '../../tabs/tabs.page';
+import {Tab4Page} from '../../tab4/tab4.page';
 
 @Component({
   selector: 'app-temp-order-view',
@@ -13,7 +14,7 @@ export class TempOrderViewPage implements OnInit {
   allTempOrders = [];
 
   constructor(private dataService: DataService, private navCtrl: NavController, private albumPage: AlbumPage,
-              private tabsPage: TabsPage) {
+              private tabsPage: TabsPage, private tab4Page: Tab4Page) {
     //Get All Temporary Orders now
       this.allTempOrders = this.dataService.getTemporaraOrder();
   }
@@ -25,6 +26,7 @@ export class TempOrderViewPage implements OnInit {
     this.dataService.deleteCompleteTempOrder();
     //this.albumPage.orderButtonEnable(true);
     this.openTab1();
+    this.tab4Page.getUserOrders();
 
   }
 

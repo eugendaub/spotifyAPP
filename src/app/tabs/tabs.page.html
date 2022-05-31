@@ -21,11 +21,11 @@
       </ion-fab-button>
     </ion-fab>
   </ng-template>
-  <ion-fab  horizontal="center" vertical="top" slot="fixed" >
-    <ion-fab-button  fab-but="button" (click)="temOrderView()"#clip>
+  <!--<ion-fab  horizontal="center" vertical="top" slot="fixed" >
+    <ion-fab-button  fab-but="button" (click)="temOrderView()">
       <ion-icon color="light" name="clipboard-outline"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
+  </ion-fab>-->
 
 
 </ion-content>
@@ -65,6 +65,11 @@
     <ion-tab-button tab="tab2" (click)="openTab2()">
       <ion-icon [name]="selected === 'tab2' ? 'beer' : 'beer-outline'"></ion-icon>
       <ion-label>Drink</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab4">
+      <ion-icon [name]="selected === 'tab4' ? 'cart' : 'cart-outline'"></ion-icon>
+      <ion-label>All orders</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="tab3">

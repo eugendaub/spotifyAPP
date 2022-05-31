@@ -17,6 +17,7 @@ import {Vibration} from '@ionic-native/vibration/ngx';
 import {LoginPage} from './pages/login/login.page';
 import {AlbumPage} from './album/album.page';
 import {TabsPage} from './tabs/tabs.page';
+import {Tab4Page} from './tab4/tab4.page';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,7 +29,7 @@ import {TabsPage} from './tabs/tabs.page';
     provideStorage(() => getStorage()),
     HttpClientModule, SwiperModule
   ],
-  providers: [Vibration,LoginPage, AlbumPage, TabsPage, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [Vibration,LoginPage, AlbumPage, TabsPage, Tab4Page, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
