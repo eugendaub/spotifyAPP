@@ -12,6 +12,7 @@ export class Tab3Page {
 
   constructor(private dataService: DataService) {
 
+    console.log('constructor tab 3');
     //Get All Order ID
     this.dataService.getAllOrderId().subscribe(res => {
       this.allOrders = res;

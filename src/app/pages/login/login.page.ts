@@ -36,7 +36,7 @@ export class LoginPage implements OnInit {
     const loading = await this.loadingCtrl.create();
     await loading.present();
 
-    console.log('Register');
+    //console.log('Register');
     this.authService.signup(this.credentialsForm.value).then(_ => {
       loading.dismiss();
       this.router.navigateByUrl('/tabs', { replaceUrl: true });

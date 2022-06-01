@@ -27,6 +27,7 @@ export class AlbumPage implements OnInit {
     const title = this.activatedRoute.snapshot.paramMap.get('title');
     const decodedTitle = decodeURIComponent(title);
     this.data = albums [decodedTitle];
+    console.log('COUNT', this.userOrderCount);
 
   }
 
@@ -72,6 +73,7 @@ export class AlbumPage implements OnInit {
     if( oneOrderTotalNumber > this.userOrderCount){
       this.orderToast();
       this.userOrderCount++;
+      console.log('user order count', this.userOrderCount);
     }else{
       this.userOrderCount=0;
       this.orderFullToast();

@@ -26,7 +26,7 @@ export class TempOrderViewPage implements OnInit {
     this.dataService.deleteCompleteTempOrder();
     //this.albumPage.orderButtonEnable(true);
     this.openTab1();
-    this.tab4Page.getUserOrders();
+    //this.tab4Page.getUserOrders();
 
   }
 

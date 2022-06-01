@@ -11,11 +11,12 @@ export class Tab4Page implements OnInit {
   allUserOrders: any = [];
 
 
-  constructor(private dataService: DataService) {  }
+  constructor(private dataService: DataService) {
+    console.log('constructor tab 4');
+    this.getUserOrders();
+  }
 
   ngOnInit() {
-    console.log('ngInit');
-    this.getUserOrders();
   }
 
   getUserOrders(){

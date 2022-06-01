@@ -43,12 +43,12 @@ export class DataService {
     return docData(userRef).pipe(
       switchMap(data => {
         console.log('Data: ', data.userOrders);
-        const userOrders = data.userOrders;
-        const chatsRef = collection(this.firestore, 'orders');
-        const q = query(chatsRef, where(documentId(), 'in', userOrders));
+        const allUserOrders = data.allUserOrders;
+        const chatsRef = collection(this.firestore, 'userOrders');
+        const q = query(chatsRef, where(documentId(), 'in', allUserOrders));
         return collectionData(q, { idField: 'id' });
       }),
-      take(1)
+      //take(1)
     );
   }
 
@@ -148,19 +148,46 @@ export class DataService {
     this.tempOrder=[];
   }
 
-  async addTempOrderToDB(){
-    const chatsRef = collection(this.firestore, 'orders');
-    const logInUserId= this.authService.getUserId();
-    this.orderCount=0;
-    this.count=0;
+  async addTempOrderToDB() {
+    const ordersRef = collection(this.firestore, 'orders');
+    //const userOrdersRef = collection(this.firestore, 'userOrders');
+    const logInUserId = this.authService.getUserId();
 
-    for(const order of this.tempOrder) {
-      this.count++;
+    for (const order of this.tempOrder) {
       //console.log('count: ', this.count);
       //console.log('ORDER:', order);
       //order.createdAt='datre'+serverTimestamp();
 
-      addDoc(chatsRef, order).then(res => {
+      addDoc(ordersRef, order).then(res => {
+        // console.log('created order ADDDOC: ', res);
+        const groupID = res.id;
+        const promises = [];
+        //addDoc(userOrdersRef,order);
+
+        // In der DB muss für jeden user der DB eintrag angepasst werden
+        // (in diesem Fall in welchen Chats befindet sich der User)
+
+        const userChatsRef = doc(this.firestore, `users/${logInUserId}`);
+        const update = updateDoc(userChatsRef, {
+          userOrders: arrayUnion(groupID)
+        });
+        promises.push(update);
+        return Promise.all(promises);
+      });
+    }
+    this.addTempUserOrdersToDB();
+  }
+
+  async addTempUserOrdersToDB(){
+    const ordersRef = collection(this.firestore, 'userOrders');
+    const logInUserId= this.authService.getUserId();
+
+    for(const order of this.tempOrder) {
+      //console.log('count: ', this.count);
+      //console.log('ORDER:', order);
+      //order.createdAt='datre'+serverTimestamp();
+
+      addDoc(ordersRef, order).then(res => {
         // console.log('created order ADDDOC: ', res);
         const groupID = res.id;
         const promises = [];
@@ -170,7 +197,7 @@ export class DataService {
 
         const userChatsRef = doc(this.firestore, `users/${logInUserId}`);
         const update = updateDoc(userChatsRef, {
-          userOrders: arrayUnion(groupID)
+          allUserOrders: arrayUnion(groupID)
         });
         promises.push(update);
         return Promise.all(promises);
