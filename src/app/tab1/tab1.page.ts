@@ -40,7 +40,10 @@ export class Tab1Page {
     freeMode: true
   };
 
-  constructor(private router: Router, private authService: AuthService, private dataService: DataService) {}
+  constructor(private router: Router, private authService: AuthService, private dataService: DataService) {
+    console.log('TAB 1 Constructor:');
+    this.authService.ngInit();
+  }
 
   openAlbum(album) {
     const titleEscaped = encodeURIComponent(album.title);

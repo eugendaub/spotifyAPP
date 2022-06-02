@@ -15,6 +15,9 @@ export class AuthService {
 
   constructor(private auth: Auth, private firestore: Firestore, private router: Router
   ) {
+    this.ngInit();
+  }
+  ngInit(){
     onAuthStateChanged(this.auth, user => {
       if (user) {
         const userDoc = doc(this.firestore, `users/${user.uid}`);
@@ -65,7 +68,9 @@ export class AuthService {
   }
 
   getUserId() {
-    return this.auth.currentUser.uid;
+    //console.log('get User: ', this.auth.currentUser.uid);
+    return (this.auth.currentUser.uid ===null ? null: this.auth.currentUser.uid);
+    //return this.auth.currentUser.uid;
   }
 
   getUserEmail() {

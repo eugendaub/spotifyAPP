@@ -34,6 +34,8 @@ export class TempOrderViewPage implements OnInit {
     console.log('ID :', order.tempId);
 
     this.dataService.deleteTempOrder(order.tempId);
+    this.dataService.oneOrderDeleteMinusCount();
+
   }
 
   openTab1(){

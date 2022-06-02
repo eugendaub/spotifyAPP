@@ -5,6 +5,8 @@ import {
 } from '@angular/fire/firestore';
 import {AuthService} from './auth.service';
 import {switchMap,take} from 'rxjs/operators';
+import {ToastController} from '@ionic/angular';
+import {Vibration} from '@ionic-native/vibration/ngx';
 
 
 
@@ -25,24 +27,96 @@ export interface IUserOrder {
 })
 
 export class DataService {
+
   userOrderId= null;
   orderCount=0;
   count =0;
+  oneRoundNumber = 2;
+  userOrderCount = 0;
   private tempOrder: IUserOrder[]=[];
+  guestsNumber ;
+  oneOrderTotalNumber;
 
-  constructor(private firestore: Firestore, private authService: AuthService ) { }
+  constructor(private firestore: Firestore, private authService: AuthService,
+              private toastCtrl: ToastController,
+              private vibration: Vibration) { }
 
   getAllOrderId(){
     const notesRef = collection(this.firestore, 'orders');
     return collectionData(notesRef, { idField: 'id'});
   }
 
+  addUpUserOrder(){
+
+    this.guestsNumber = this.authService.getGuestsNumber();
+    this.oneOrderTotalNumber = this.guestsNumber * this.oneRoundNumber -1;
+    if( this.oneOrderTotalNumber > this.userOrderCount){
+      this.orderToast();
+      this.userOrderCount++;
+      console.log('user order count', this.userOrderCount);
+      return false;
+    }else{
+      //this.userOrderCount=0;
+      this.userOrderCount++;
+      this.orderFullToast();
+     return true;
+    }
+  }
+  oneOrderDeleteMinusCount(){
+    console.log('count for --',this.userOrderCount);
+    this.userOrderCount--;
+    console.log('count nach --',this.userOrderCount);
+  }
+
+  placeAnOrderButtonStatus(){
+    this.guestsNumber = this.authService.getGuestsNumber();
+    this.oneOrderTotalNumber = this.guestsNumber * this.oneRoundNumber -1;
+    console.log('placeAnOrderButtonStatus userOrderCount: ', this.userOrderCount);
+    console.log('placeAnOrderButtonStatus oneOrderTotalNumber: ', this.oneOrderTotalNumber);
+    if(this.userOrderCount <= this.oneOrderTotalNumber){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  orderToast() {
+    this.oneOrderTotalNumber = (this.guestsNumber * this.oneRoundNumber -1) - (this.userOrderCount) ;
+    this.vibration.vibrate(75);
+    this.toastCtrl.create({
+      message: 'Added order! still: '+ this.oneOrderTotalNumber,
+      position: 'top',
+      duration: 800,
+      cssClass: 'toast-custom-class-order',
+
+    }).then((toast) => {
+      toast.present();
+    });
+  }
+  orderFullToast() {
+    this.vibration.vibrate(75);
+    this.toastCtrl.create({
+      message: 'Order Full!',
+      position: 'top',
+      duration: 2500,
+      cssClass: 'toast-custom-class',
+
+    }).then((toast) => {
+      toast.present();
+    });
+    // this.userOrderCount = this.authService.getGuestsNumber();
+  }
+
   getAllUserOrders(){
+    console.log('getAllUserOrders');
     const userId= this.authService.getUserId();
     const userRef = doc(this.firestore, `users/${userId}`);
     return docData(userRef).pipe(
       switchMap(data => {
         console.log('Data: ', data.userOrders);
+        if(!data){
+          console.log('Data leer: ');
+        }
         const allUserOrders = data.allUserOrders;
         const chatsRef = collection(this.firestore, 'userOrders');
         const q = query(chatsRef, where(documentId(), 'in', allUserOrders));
@@ -146,6 +220,7 @@ export class DataService {
 
   async deleteCompleteTempOrder() {
     this.tempOrder=[];
+    this.userOrderCount=0;
   }
 
   async addTempOrderToDB() {

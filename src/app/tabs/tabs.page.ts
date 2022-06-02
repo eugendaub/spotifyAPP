@@ -2,6 +2,8 @@ import {Component, ViewChild} from '@angular/core';
 import {IonTabs, NavController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {Tab4Page} from '../tab4/tab4.page';
+import {AuthService} from '../services/auth.service';
+import {DataService} from '../services/data.service';
 
 
 
@@ -21,7 +23,10 @@ export class TabsPage {
   orderSet = false;
   selectedTab = '';
 
-  constructor(private navCtrl: NavController, private router: Router, private tab4Page: Tab4Page) {}
+  constructor(private navCtrl: NavController, private router: Router, private tab4Page: Tab4Page,
+              private authService: AuthService , private dataService: DataService) {
+
+  }
 
 
   setSelectedTab(){
@@ -62,7 +67,7 @@ export class TabsPage {
   }
   openUserOrder(){
     console.log('Tab4');
-      //this.tab4Page.getUserOrders();
+      this.tab4Page.getUserOrders();
   }
 
 }

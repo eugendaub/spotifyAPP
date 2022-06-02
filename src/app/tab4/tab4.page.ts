@@ -12,8 +12,8 @@ export class Tab4Page implements OnInit {
 
 
   constructor(private dataService: DataService) {
-    console.log('constructor tab 4');
-    this.getUserOrders();
+    console.log('constructor tab 4 allUserOrders: ', this.allUserOrders );
+    //this.getUserOrders();
   }
 
   ngOnInit() {

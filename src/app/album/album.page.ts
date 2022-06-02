@@ -16,7 +16,7 @@ export class AlbumPage implements OnInit {
   data = null;
   oneRoundNumber = 2;
   userOrderCount = 0;
-  orderButtonDisabled = false;
+  orderButtonDisabled;
 
 
   constructor(private activatedRoute: ActivatedRoute, private authService: AuthService,
@@ -27,7 +27,8 @@ export class AlbumPage implements OnInit {
     const title = this.activatedRoute.snapshot.paramMap.get('title');
     const decodedTitle = decodeURIComponent(title);
     this.data = albums [decodedTitle];
-    console.log('COUNT', this.userOrderCount);
+    this.orderButtonDisabled = this.dataService.placeAnOrderButtonStatus();
+    console.log('button', this.orderButtonDisabled);
 
   }
 
@@ -61,8 +62,9 @@ export class AlbumPage implements OnInit {
     const logInUserId= this.authService.getUserId();
     const usertTableNr = this.authService.getUserTableNr();
     const img= this.dasherize(order.image);
-    this.countOrders();
-
+    //this.countOrders();
+    this.orderButtonDisabled=this.dataService.addUpUserOrder();
+    console.log('orderButtonDisabled:', this.orderButtonDisabled);
 
     this.dataService.addTempOrder(logInUserId, logInUserEmail,  order.title,  order.title , img, usertTableNr);
   }
