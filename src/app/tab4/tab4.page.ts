@@ -9,14 +9,17 @@ import {DataService} from '../services/data.service';
 })
 export class Tab4Page implements OnInit {
   allUserOrders: any = [];
+  events: any[] = [];
 
 
   constructor(private dataService: DataService) {
     console.log('constructor tab 4 allUserOrders: ', this.allUserOrders );
-    //this.getUserOrders();
+    //this.loadDates();
   }
 
   ngOnInit() {
+    console.log('ngOnInit');
+    this.loadDates();
   }
 
   getUserOrders(){
@@ -24,6 +27,15 @@ export class Tab4Page implements OnInit {
       this.allUserOrders = res;
       console.log('Get User:', this.allUserOrders);
     });
+  }
+  async loadDates() {
+    console.log('tab 4 loadDates');
+    this.events = await this.dataService.getData();
+  }
+
+  async removeItem(index) {
+    this.dataService.remvoveItem(index);
+    this.events.splice(index, 1);
   }
 
 }

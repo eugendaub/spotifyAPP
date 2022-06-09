@@ -24,8 +24,8 @@
       <span> {{ data.title }} · {{ data.released }}</span>
     </ion-col>
     <ion-col size="8" class="ion-text-left ion-no-padding">
-      <ion-button fill="clear" class="ion-no-margin" >
-        <ion-icon #heart name="heart-outline" color="light" slot="icon-only"></ion-icon>
+      <ion-button fill="clear" class="ion-no-margin" (click)="placeAnOrderInStorage(data)" >
+        <ion-icon  name="heart-outline" color="light" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-col>
     <ion-col size="4" class="ion-text-right ion-no-padding">

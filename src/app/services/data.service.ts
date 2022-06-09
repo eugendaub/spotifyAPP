@@ -7,8 +7,9 @@ import {AuthService} from './auth.service';
 import {switchMap,take} from 'rxjs/operators';
 import {ToastController} from '@ionic/angular';
 import {Vibration} from '@ionic-native/vibration/ngx';
+import { Storage } from '@ionic/storage-angular';
 
-
+const STORAGE_KEY = 'mylist';
 
 
 export interface IUserOrder {
@@ -34,12 +35,13 @@ export class DataService {
   oneRoundNumber = 2;
   userOrderCount = 0;
   private tempOrder: IUserOrder[]=[];
-  guestsNumber ;
+  guestsNumber;
   oneOrderTotalNumber;
 
   constructor(private firestore: Firestore, private authService: AuthService,
               private toastCtrl: ToastController,
-              private vibration: Vibration) { }
+              private vibration: Vibration,
+              private storage: Storage) { }
 
   getAllOrderId(){
     const notesRef = collection(this.firestore, 'orders');
@@ -174,6 +176,43 @@ export class DataService {
       return Promise.all(promises);
     });
   }
+
+  async addDate(logInUserId,logInUserEmail, text, title, sushiImageLink, userTableNr) {
+    const order: IUserOrder = {
+      tempId: this.orderCount,
+      userid: logInUserId,
+      userEmail: logInUserEmail,
+      userTableNr,
+      title,
+      text,
+      //createdAt: serverTimestamp(),
+      imageLink: sushiImageLink
+    };
+    const dates = await this.getData();
+    dates.push(order);
+    return this.storage.set(STORAGE_KEY, dates);
+  }
+
+  /*
+  async getDates(): Promise<IUserOrder[]> {
+    return this.storage.get(STORAGE_KEY).then((res: IUserOrder[]) =>
+      (res || []).map((entry) => {
+        return entry;
+      })
+    );
+  }*/
+
+  getData() {
+    return this.storage.get(STORAGE_KEY) || [];
+  }
+
+  async remvoveItem(index) {
+    const storedData = await this.storage.get(STORAGE_KEY) || [];
+    storedData.splice(index, 1);
+    return this.storage.set(STORAGE_KEY, storedData);
+  }
+
+
   addTempOrder(logInUserId,logInUserEmail, text, title, sushiImageLink, userTableNr){
     //const chatsRef = collection(this.firestore, 'orders');
     const order: IUserOrder = {

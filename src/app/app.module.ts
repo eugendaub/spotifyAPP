@@ -18,11 +18,15 @@ import {LoginPage} from './pages/login/login.page';
 import {AlbumPage} from './album/album.page';
 import {TabsPage} from './tabs/tabs.page';
 import {Tab4Page} from './tab4/tab4.page';
+import {IonicStorageModule} from '@ionic/storage-angular';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
+    IonicStorageModule.forRoot({
+      name: 'mydb' // This is optional!
+    }),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),

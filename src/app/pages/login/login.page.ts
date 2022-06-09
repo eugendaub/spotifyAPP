@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {AlertController, LoadingController} from '@ionic/angular';
 import {AuthService} from '../../services/auth.service';
 import {DataService} from '../../services/data.service';
+import {Storage} from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginPage implements OnInit {
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
     private dataService: DataService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private storage: Storage) { }
 
   ngOnInit() {
     this.credentialsForm = this.fb.group({
@@ -56,6 +58,7 @@ export class LoginPage implements OnInit {
   }
 
   async login() {
+    await this.storageCreate();
     const loading = await this.loadingCtrl.create();
     await loading.present();
 
@@ -74,6 +77,12 @@ export class LoginPage implements OnInit {
       });
       await alert.present();
     });
+  }
+
+  async storageCreate() {
+    console.log('create()');
+    await this.storage.create();
+    console.log('create() end');
   }
 
 

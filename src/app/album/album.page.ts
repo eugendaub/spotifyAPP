@@ -5,6 +5,8 @@ import {AuthService} from '../services/auth.service';
 import {DataService} from '../services/data.service';
 import {ToastController} from '@ionic/angular';
 import {Vibration} from '@ionic-native/vibration/ngx';
+import { Storage } from '@ionic/storage-angular';
+import {Tab4Page} from '../tab4/tab4.page';
 
 
 @Component({
@@ -17,11 +19,12 @@ export class AlbumPage implements OnInit {
   oneRoundNumber = 2;
   userOrderCount = 0;
   orderButtonDisabled;
+  events: any[] = [];
 
 
   constructor(private activatedRoute: ActivatedRoute, private authService: AuthService,
               private dataService: DataService, private toastCtrl: ToastController,
-              private vibration: Vibration) {}
+              private vibration: Vibration, private storage: Storage, private tab4Page: Tab4Page ) {}
 
   ngOnInit() {
     const title = this.activatedRoute.snapshot.paramMap.get('title');
@@ -30,7 +33,10 @@ export class AlbumPage implements OnInit {
     this.orderButtonDisabled = this.dataService.placeAnOrderButtonStatus();
     console.log('button', this.orderButtonDisabled);
 
+
   }
+
+
 
   // Helper function for image names
   dasherize(stri) {
@@ -57,6 +63,20 @@ export class AlbumPage implements OnInit {
     this.orderToast();
     this.dataService.addOrderToUser(logInUserId, logInUserEmail,  order.title,  order.title , img, usertTableNr);
   }
+  async placeAnOrderInStorage(order){
+    const logInUserEmail = this.authService.getUserEmail();
+    const logInUserId= this.authService.getUserId();
+    const usertTableNr = this.authService.getUserTableNr();
+    const img= this.dasherize(order.image);
+
+   await this.dataService.addDate(logInUserId, logInUserEmail,  order.title,  order.title , img, usertTableNr);
+    this.tab4Page.loadDates();
+  }
+  async loadDates() {
+    console.log('loadData');
+    this.events = await this.dataService.getData();
+  }
+
   placeAnOrderTemp(order){
     const logInUserEmail = this.authService.getUserEmail();
     const logInUserId= this.authService.getUserId();
