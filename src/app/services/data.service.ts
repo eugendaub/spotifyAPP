@@ -148,6 +148,8 @@ export class DataService {
       });
   }
 
+  deleteAllUserOrdersFromDB(){}
+
   addOrderToUser(logInUserId,logInUserEmail, text, title, sushiImageLink, usertTableNr){
     const chatsRef = collection(this.firestore, 'orders');
     const userOrder = {
@@ -188,7 +190,8 @@ export class DataService {
       //createdAt: serverTimestamp(),
       imageLink: sushiImageLink
     };
-    const dates = await this.getData();
+    console.log('Problemi');
+    const dates = await this.storage.get(STORAGE_KEY) || [];
     dates.push(order);
     return this.storage.set(STORAGE_KEY, dates);
   }
@@ -263,6 +266,7 @@ export class DataService {
   }
 
   async addTempOrderToDB() {
+
     const ordersRef = collection(this.firestore, 'orders');
     //const userOrdersRef = collection(this.firestore, 'userOrders');
     const logInUserId = this.authService.getUserId();
@@ -272,11 +276,13 @@ export class DataService {
       //console.log('ORDER:', order);
       //order.createdAt='datre'+serverTimestamp();
 
+
       addDoc(ordersRef, order).then(res => {
         // console.log('created order ADDDOC: ', res);
         const groupID = res.id;
         const promises = [];
         //addDoc(userOrdersRef,order);
+        this.addDats(order);
 
         // In der DB muss für jeden user der DB eintrag angepasst werden
         // (in diesem Fall in welchen Chats befindet sich der User)
@@ -289,9 +295,16 @@ export class DataService {
         return Promise.all(promises);
       });
     }
-    this.addTempUserOrdersToDB();
+    //this.addTempUserOrdersToDB();
   }
 
+  async addDats(order: IUserOrder) {
+
+    const dates = await this.storage.get(STORAGE_KEY) || [];
+    dates.push(order);
+    return this.storage.set(STORAGE_KEY, dates);
+  }
+/*
   async addTempUserOrdersToDB(){
     const ordersRef = collection(this.firestore, 'userOrders');
     const logInUserId= this.authService.getUserId();
@@ -317,7 +330,7 @@ export class DataService {
         return Promise.all(promises);
       });
     }
-  }
+  }*/
 
   createOrderForUser(logInUserId,logInUserEmail){
     const chatsRef = collection(this.firestore, 'orders');

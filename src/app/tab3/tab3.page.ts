@@ -30,4 +30,8 @@ export class Tab3Page {
     //console.log('order: ', order);
     this.dataService.deleteOrderAndUserOrders(order);
   }
+
+  deleteAllUserOrders(){
+    this.dataService.deleteAllUserOrdersFromDB();
+  }
 }

@@ -28,26 +28,39 @@
     </ion-list>
   </div>
 
-  <ion-list>
-    <ion-item-sliding *ngFor="let order of events; let i = index;">
 
-      <ion-item>
-        {{ order.title }}
-      </ion-item>
+  <div *ngFor="let order of events; let i = index;">
 
-      <ion-item-options side="end">
-        <ion-item-option (click)="removeItem(i)">
-          <ion-icon name="trash" slot="icon-only"></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
+    <ion-list>
+      <ion-item-sliding>
+        <ion-item>
+          <ion-col size="2" class="ion-no-padding">
+            <img [src]="'/assets/images/albums/'+order.imageLink+'.jpg'">
+          </ion-col>
+          <ion-col size="5">
+            <ion-label>
+              {{ order.title }}
+              <p>Table: {{order.userTableNr}}</p>
+              <!-- <div class="time ion-text-right">
+                 {{order.createdAt?.toMillis() | date:'short'}}
+               </div>-->
+            </ion-label>
 
-    </ion-item-sliding>
-  </ion-list>
+          </ion-col>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option (click)="removeItem(i)">
+            <ion-icon name="trash" slot="icon-only"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
 
-  <ion-fab vertical="top" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="loadDates()" color="secondary">
-      <ion-icon name="refresh"></ion-icon>
+  <!--<ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="resetLocalStorage()" color="secondary">
+      <ion-icon name="trash"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
+  </ion-fab>-->
 
 </ion-content>

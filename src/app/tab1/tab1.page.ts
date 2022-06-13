@@ -6,6 +6,7 @@ import specialRolls from '../../assets/mockdata/specialRolls.json';
 import {Router} from '@angular/router';
 import {AuthService} from '../services/auth.service';
 import {DataService} from '../services/data.service';
+import {Storage} from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-tab1',
@@ -40,7 +41,8 @@ export class Tab1Page {
     freeMode: true
   };
 
-  constructor(private router: Router, private authService: AuthService, private dataService: DataService) {
+  constructor(private router: Router, private authService: AuthService, private dataService: DataService,
+              private storage: Storage) {
     console.log('TAB 1 Constructor:');
     this.authService.ngInit();
   }
@@ -61,9 +63,13 @@ export class Tab1Page {
     });
   };
   logout(){
+    this.storage.clear();
+    this.dataService.deleteCompleteTempOrder();
     this.authService.logout();
   }
   deleteUser(){
+    this.dataService.deleteCompleteTempOrder();
+    this.storage.clear();
     const userId = this.authService.getUserId();
     this.authService.deleteUser();
     this.dataService.deleteUserDocument(userId);

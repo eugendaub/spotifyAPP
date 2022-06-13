@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {DataService} from '../services/data.service';
-
+import {Storage} from '@ionic/storage-angular';
+const STORAGE_KEY = 'mylist';
 
 @Component({
   selector: 'app-tab4',
@@ -12,14 +13,14 @@ export class Tab4Page implements OnInit {
   events: any[] = [];
 
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private storage: Storage) {
     console.log('constructor tab 4 allUserOrders: ', this.allUserOrders );
     //this.loadDates();
   }
 
   ngOnInit() {
     console.log('ngOnInit');
-    this.loadDates();
+    this.storageCreate();
   }
 
   getUserOrders(){
@@ -36,6 +37,21 @@ export class Tab4Page implements OnInit {
   async removeItem(index) {
     this.dataService.remvoveItem(index);
     this.events.splice(index, 1);
+  }
+  async ionViewWillEnter() {
+    console.log('ionViewWillEnter');
+    this.loadDates();
+  }
+  async storageCreate() {
+    console.log('create()');
+    await this.storage.create();
+    console.log('create() end');
+  }
+
+  resetLocalStorage(){
+    this.storage.clear();
+    this.storage.get(STORAGE_KEY);
+    this.loadDates();
   }
 
 }
