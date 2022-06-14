@@ -115,9 +115,9 @@ export class DataService {
     const userRef = doc(this.firestore, `users/${userId}`);
     return docData(userRef).pipe(
       switchMap(data => {
-        console.log('Data: ', data.userOrders);
+       // console.log('Data: ', data.userOrders);
         if(!data){
-          console.log('Data leer: ');
+          //console.log('Data leer: ');
         }
         const allUserOrders = data.allUserOrders;
         const chatsRef = collection(this.firestore, 'userOrders');
@@ -148,7 +148,25 @@ export class DataService {
       });
   }
 
-  deleteAllUserOrdersFromDB(){}
+  deleteAllUserOrdersFromDB(){
+    console.log('deleteAllUserOrdersFromDB');
+    const userId= this.authService.getUserId();
+    const userRef = doc(this.firestore, `users/${userId}`);
+    console.log('userId: ', userId);
+    return docData(userRef).pipe(
+      switchMap(data => {
+        console.log('Data: ', data.userOrders);
+        if(!data){
+          console.log('Data leer: ');
+        }
+        const allUserOrders = data.allUserOrders;
+        const chatsRef = collection(this.firestore, 'userOrders');
+        const q = query(chatsRef, where(documentId(), 'in', allUserOrders));
+        return collectionData(q, { idField: 'id' });
+      }),
+      //take(1)
+    );
+  }
 
   addOrderToUser(logInUserId,logInUserEmail, text, title, sushiImageLink, usertTableNr){
     const chatsRef = collection(this.firestore, 'orders');
