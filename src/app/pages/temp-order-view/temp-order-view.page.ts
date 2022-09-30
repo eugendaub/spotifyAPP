@@ -5,6 +5,7 @@ import {AlbumPage} from '../../album/album.page';
 import {TabsPage} from '../../tabs/tabs.page';
 import {Tab4Page} from '../../tab4/tab4.page';
 
+
 @Component({
   selector: 'app-temp-order-view',
   templateUrl: './temp-order-view.page.html',
@@ -12,6 +13,9 @@ import {Tab4Page} from '../../tab4/tab4.page';
 })
 export class TempOrderViewPage implements OnInit {
   allTempOrders = [];
+  waiteTime = 100;
+  timeLeft: number = this.waiteTime;
+  interval;
 
   constructor(private dataService: DataService, private navCtrl: NavController, private albumPage: AlbumPage,
               private tabsPage: TabsPage, private tab4Page: Tab4Page) {
@@ -22,12 +26,33 @@ export class TempOrderViewPage implements OnInit {
   ngOnInit() {
   }
   placeAnOrder(){
+    this.orderTimerPause();
     this.dataService.addTempOrderToDB();
     this.dataService.deleteCompleteTempOrder();
     //this.albumPage.orderButtonEnable(true);
-    this.openTab1();
+    //this.openTab1();
     //this.tab4Page.getUserOrders();
 
+  }
+
+  async orderTimerPause() {
+    console.log('PAUSE overview'   );
+    this.interval = setInterval(() => {
+      if(this.timeLeft > 0) {
+        console.log('time: ', this.timeLeft);
+        this.timeLeft = this.timeLeft-10;
+      } else {
+        console.log('else Pause');
+        this.pauseOrderTimer();
+      }
+    },1000);
+  }
+
+
+  pauseOrderTimer() {
+
+    this.timeLeft = this.waiteTime;
+    clearInterval(this.interval);
   }
 
   deleteOneOrder(order){
@@ -42,5 +67,6 @@ export class TempOrderViewPage implements OnInit {
     //this.tabsPage.orderTimerPause();
     this.navCtrl.navigateRoot('/tabs/tab1');
   }
+
 
 }

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 // import Swiper core and required modules
-import SwiperCore from 'swiper';
+import SwiperCore, { SwiperOptions,Pagination }  from 'swiper';
 import softDrinks from '../../assets/mockdata/softDrinkCollections.json';
 import sakeDrinks from '../../assets/mockdata/sakeCollections.json';
 import beerDrinks from '../../assets/mockdata/beerCollections.json';
 import {Router} from '@angular/router';
 
 
-
+SwiperCore.use([Pagination]);
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -17,8 +17,17 @@ import {Router} from '@angular/router';
 export class Tab2Page {
   slideOpts = {
     initialSlide: 1,
-    speed: 400
+    speed: 400,
+    pagination: { clickable: true },
+    scrollbar: { draggable: true },
   };
+
+  config: SwiperOptions = {
+    initialSlide:1,
+    speed: 400,
+    pagination: true
+  };
+
   drinkName = '';
 
   softDrinkCollections = [

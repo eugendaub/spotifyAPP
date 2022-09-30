@@ -25,6 +25,8 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+@import "~swiper/swiper-bundle.css";
+
 ion-content {
   --background: var(--ion-color-dark);
 }
@@ -71,3 +73,13 @@ ion-content {
   --width: 150px;
   --max-hight: 10px;
 }
+
+.swiper-pagination-bullet {
+  background-color: #57b660;
+}
+.swiper-pagination {
+  //top: 600px;
+  height: min-content;
+}
+
+

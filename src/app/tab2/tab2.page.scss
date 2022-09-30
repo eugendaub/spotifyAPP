@@ -1,6 +1,7 @@
-ion-slides {
+/*swiper {
   height: 100%;
-}
+}*/
+
 ion-title, ion-content{
   color: #fff;
   font-family: 'Spotify';
@@ -14,8 +15,8 @@ ion-title, ion-content{
 }
 
 
-ion-slides {
-  margion-buttom: 20px;
+swiper {
+  margion-buttom: 200px;
 }
 
 .title {
@@ -24,7 +25,7 @@ ion-slides {
   font-size: small;
 }
 
-ion-slide {
+ng-template {
   display: block;
   text-align: left;
 }
@@ -42,4 +43,7 @@ ion-item {
 .swiper-slide {
   overflow-y: scroll;
   display: block;
+}
+.swiper-pagination {
+  bottom: 95%;
 }
