@@ -57,6 +57,7 @@
   <!-- The Ionic tab bar -->
   <ion-tab-bar slot="bottom">
 
+    <!--
     <ion-tab-button tab="tab1" (click)="openTab1()" >
       <ion-icon [name]="selected === 'tab1' ? 'restaurant' : 'restaurant-outline'"></ion-icon>
       <ion-label>Sushi</ion-label>
@@ -75,6 +76,12 @@
     <ion-tab-button tab="tab3">
       <ion-icon [name]="selected === 'tab3' ? 'fast-food' : 'fast-food-outline'"></ion-icon>
       <ion-label>Kitchen order</ion-label>
+    </ion-tab-button>-->
+
+    <ion-tab-button *ngFor="let tab of selectedTabs" [tab]="tab.path" >
+    <!--  <ion-icon [name]="tab.icon"></ion-icon>-->
+      <ion-icon [name]="selected === tab.path ? tab.icon : tab.iconAlt"></ion-icon>
+      <ion-label>{{ tab.name }}</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 

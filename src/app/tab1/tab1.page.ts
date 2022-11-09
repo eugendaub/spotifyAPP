@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '../services/auth.service';
 import {DataService} from '../services/data.service';
 import {Storage} from '@ionic/storage-angular';
+import {UiService} from '../services/ui.service';
 
 @Component({
   selector: 'app-tab1',
@@ -15,6 +16,7 @@ import {Storage} from '@ionic/storage-angular';
 })
 export class Tab1Page {
 
+  allTabs= [];
   data =[
     {
       title: 'Suggested Sushi',
@@ -42,9 +44,22 @@ export class Tab1Page {
   };
 
   constructor(private router: Router, private authService: AuthService, private dataService: DataService,
-              private storage: Storage) {
+              private storage: Storage, private uiService: UiService) {
     console.log('TAB 1 Constructor:');
     this.authService.ngInit();
+    this.loadSettings();
+  }
+
+  async loadSettings() {
+    this.allTabs = await this.uiService.getAvailableTabs();
+    console.log('load Tabs ',this.allTabs);
+
+  }
+
+  saveTabSelection(){
+    const selected = this.allTabs.filter((tab)=>tab.selected);
+    this.uiService.setSelectedTabs(selected);
+    console.log('Save klick', selected);
   }
 
   openAlbum(album) {

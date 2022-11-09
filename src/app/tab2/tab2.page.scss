@@ -15,9 +15,8 @@ ion-title, ion-content{
 }
 
 
-swiper {
-  margion-buttom: 200px;
-}
+
+
 
 .title {
   color: #fff;
@@ -40,10 +39,30 @@ ion-item {
   }
 }
 
-.swiper-slide {
-  overflow-y: scroll;
-  display: block;
-}
-.swiper-pagination {
-  bottom: 95%;
+
+
+
+#introswiper {
+  &.swiper {
+    height: 100%;
+  }
+
+  .swiper-slide {
+    overflow-y: scroll;
+    display: block;
+  }
+  .swiper-pagination {
+    bottom: 95%;
+  }
+
+/*
+  .swiper-pagination-bullet {
+    background: #fff;
+    opacity: 0.6;
+  }
+
+  .swiper-pagination-bullet-active {
+    opacity: 1;
+    background-color: var(--ion-color-secondary);
+  }*/
 }

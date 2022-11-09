@@ -5,6 +5,8 @@ import {Tab4Page} from '../tab4/tab4.page';
 import {AuthService} from '../services/auth.service';
 import {DataService} from '../services/data.service';
 import {Storage} from '@ionic/storage-angular';
+import {UiService} from '../services/ui.service';
+import {filter} from 'rxjs/operators';
 
 
 
@@ -16,6 +18,8 @@ import {Storage} from '@ionic/storage-angular';
 export class TabsPage {
   @ViewChild(IonTabs) tabs: IonTabs;
 
+  selectedTabs = [];
+
   selected = '';
   progress = 47;
   waiteTime = 100;
@@ -25,8 +29,14 @@ export class TabsPage {
   selectedTab = '';
 
   constructor(private navCtrl: NavController, private router: Router, private tab4Page: Tab4Page,
-              private authService: AuthService , private dataService: DataService) {
+              private authService: AuthService , private dataService: DataService, private uiService: UiService) {
 
+    this.uiService
+      .getActiveTabs()
+      .pipe(filter((tabs) => !!tabs))
+      .subscribe((tabs) => {
+        this.selectedTabs = tabs;
+      });
 
   }
 

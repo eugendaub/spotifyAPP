@@ -19,10 +19,31 @@ ion-slides {
   font-family: 'Spotify';
   font-size: small;
 }
+.save-text {
+  color: #fff;
+  font-family: 'Spotify';
+}
 
 ion-slide {
   display: block;
   text-align: left;
   max-width:100%;
   max-height:100%;
+}
+ion-list {
+  --background: var(--ion-color-dark);
+}
+.dark {
+  background-color: #3f4041 !important;
+  color: #52c925;
+}
+.item-content {
+  background-color: #121212;
+}
+
+.save-button{
+  color: #fff;
+  font-family: 'Spotify';
+  font-weight: bold;
+
 }
