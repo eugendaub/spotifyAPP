@@ -28,6 +28,7 @@ export class TabsPage {
   orderSet = false;
   selectedTab = '';
 
+
   constructor(private navCtrl: NavController, private router: Router, private tab4Page: Tab4Page,
               private authService: AuthService , private dataService: DataService, private uiService: UiService) {
 
@@ -50,6 +51,7 @@ export class TabsPage {
   async orderTimerPause() {
     this.temOrderView();
     //console.log('PAUSE'   );
+
     this.orderSet = true;
     this.interval = setInterval(() => {
       if(this.timeLeft > 0) {
@@ -69,19 +71,29 @@ export class TabsPage {
     clearInterval(this.interval);
   }
 
-  openTab1(){
-    this.navCtrl.navigateRoot('/tabs/tab1');
-  }
-  openTab2(){
-    this.navCtrl.navigateRoot('/tabs/tab2');
-  }
+
   temOrderView(){
     //this.orderSet=true;
       this.router.navigateByUrl(`/tempOrderView`);
   }
-  openUserOrder(){
-    console.log('Tab4');
+
+  openTab(tabPath){
+    console.log('TAB:',tabPath );
+    if(tabPath==='tab1'){
+      this.navCtrl.navigateRoot('/tabs/tab1');
+    }else if(tabPath==='tab2'){
+      this.navCtrl.navigateRoot('/tabs/tab2');
+    }else if(tabPath==='tab3'){
+      this.router.navigateByUrl('/tabs/tab3');
+    }else if(tabPath==='tab4'){
       this.tab4Page.loadDates();
+    }
+  }
+
+  async tempOrederButtonEnDis(placeAnOrderTempButtonStatus: boolean){
+    console.log('placeAnOrderTempButtonStatus', placeAnOrderTempButtonStatus);
+    this.orderSet=placeAnOrderTempButtonStatus;
+    console.log('this.orderSet ist = ', this.orderSet);
   }
 
 }

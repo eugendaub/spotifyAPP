@@ -25,18 +25,18 @@ export class TempOrderViewPage implements OnInit {
 
   ngOnInit() {
   }
-  placeAnOrder(){
-    this.orderTimerPause();
+  async placeAnOrder(){
+    //this.orderTimerPause();
     this.dataService.addTempOrderToDB();
     this.dataService.deleteCompleteTempOrder();
     //this.albumPage.orderButtonEnable(true);
-    //this.openTab1();
+    this.openTab1();
     //this.tab4Page.getUserOrders();
-
+    this.tabsPage.tempOrederButtonEnDis(false);
   }
 
   async orderTimerPause() {
-    console.log('PAUSE overview'   );
+    console.log('PAUSE overview temp order'   );
     this.interval = setInterval(() => {
       if(this.timeLeft > 0) {
         console.log('time: ', this.timeLeft);
@@ -64,6 +64,7 @@ export class TempOrderViewPage implements OnInit {
   }
 
   openTab1(){
+    this.orderTimerPause();
     //this.tabsPage.orderTimerPause();
     this.navCtrl.navigateRoot('/tabs/tab1');
   }

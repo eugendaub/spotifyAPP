@@ -7,6 +7,7 @@ import {ToastController} from '@ionic/angular';
 import {Vibration} from '@ionic-native/vibration/ngx';
 import { Storage } from '@ionic/storage-angular';
 import {Tab4Page} from '../tab4/tab4.page';
+import {TabsPage} from '../tabs/tabs.page';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class AlbumPage implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute, private authService: AuthService,
               private dataService: DataService, private toastCtrl: ToastController,
-              private vibration: Vibration, private storage: Storage, private tab4Page: Tab4Page ) {}
+              private vibration: Vibration, private storage: Storage,
+              private tab4Page: Tab4Page , private tabsPage: TabsPage) {}
 
   ngOnInit() {
     const title = this.activatedRoute.snapshot.paramMap.get('title');
@@ -87,6 +89,7 @@ export class AlbumPage implements OnInit {
     console.log('orderButtonDisabled:', this.orderButtonDisabled);
 
     this.dataService.addTempOrder(logInUserId, logInUserEmail,  order.title,  order.title , img, usertTableNr);
+    this.tabsPage.tempOrederButtonEnDis(this.orderButtonDisabled);
   }
 
   countOrders(){
@@ -131,6 +134,7 @@ export class AlbumPage implements OnInit {
       toast.present();
     });
    // this.userOrderCount = this.authService.getGuestsNumber();
+
   }
 
 

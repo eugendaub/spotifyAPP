@@ -27,3 +27,36 @@ ion-tab-button{
     }
   }
 }
+
+.button-flash {
+  background-color: #c91c5e;
+  -webkit-border-radius: 60px;
+  border-radius: 60px;
+  border: none;
+  color: #eeeeee;
+  cursor: pointer;
+  display: inline-block;
+  font-family: sans-serif;
+  font-size: 15px;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  left: 10px;
+}
+@keyframes glowing {
+  0% {
+    background-color: #57b660;
+    box-shadow: 0 0 5px #57b660;
+  }
+  50% {
+    background-color: #20cb2a;
+    box-shadow: 0 0 5px #18831e;
+  }
+  100% {
+    background-color: #57b660;
+    box-shadow: 0 0 5px #57b660;
+  }
+}
+.button-flash {
+  animation: glowing 1000ms infinite;
+}

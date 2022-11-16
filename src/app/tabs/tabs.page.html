@@ -6,19 +6,21 @@
   </div>
   <ng-template #orderGiven>
     <ion-fab  horizontal="end" vertical="top" slot="fixed" >
+      <div class="button-flash">
       <ion-fab-button fab-but="button" (click)="orderTimerPause()">
-        <div >
-            <ion-icon color="light" name="restaurant"></ion-icon>
-          <ion-label color="light">{{timeLeft}}</ion-label>
-        </div>
+            <ion-icon color="light" name="restaurant-outline"></ion-icon>
+            <ion-label color="light">{{timeLeft}}</ion-label>
       </ion-fab-button>
+      </div>
     </ion-fab>
   </ng-template>
   <ng-template #noOrder>
     <ion-fab  horizontal="end" vertical="top" slot="fixed" >
-      <ion-fab-button [disabled]="orderSet" fab-but="button" (click)="orderTimerPause()" >
+      <div >
+      <ion-fab-button  [disabled]="orderSet" fab-but="button" (click)="orderTimerPause()" >
             <ion-icon color="light" name="restaurant-outline"></ion-icon>
       </ion-fab-button>
+      </div>
     </ion-fab>
   </ng-template>
   <!--<ion-fab  horizontal="center" vertical="top" slot="fixed" >
@@ -78,7 +80,7 @@
       <ion-label>Kitchen order</ion-label>
     </ion-tab-button>-->
 
-    <ion-tab-button *ngFor="let tab of selectedTabs" [tab]="tab.path" >
+    <ion-tab-button *ngFor="let tab of selectedTabs" [tab]="tab.path" (click)="openTab(tab.path)" >
     <!--  <ion-icon [name]="tab.icon"></ion-icon>-->
       <ion-icon [name]="selected === tab.path ? tab.icon : tab.iconAlt"></ion-icon>
       <ion-label>{{ tab.name }}</ion-label>

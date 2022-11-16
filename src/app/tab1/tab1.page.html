@@ -13,12 +13,7 @@
   </ion-header>
 
 
-    <ion-button class="save-text" (click)="deleteUser()" expand="full">
-      <ion-icon color="light" slot="start" name="skull-outline"></ion-icon>
-      <div slot="end" >
-        Kill current user
-      </div>
-    </ion-button>
+
 
 
 
@@ -34,10 +29,13 @@
   </ion-list>
 
 
-  <ion-button  (click)="saveTabSelection()" expand="full">
-    <div class="save-text">
-      Save tabs
-    </div></ion-button>
+  <ion-button  class="save-text"  (click)="saveTabSelection()" expand="full">
+    <ion-title size="small">Save tabs</ion-title></ion-button>
+  <ion-button class="save-text" (click)="deleteUser()" expand="full">
+    <ion-icon color="light" slot="start" name="skull"></ion-icon>
+    <ion-title size="small">Kill User</ion-title>
+  </ion-button>
+
 
 </ion-menu>
 

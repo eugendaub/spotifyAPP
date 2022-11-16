@@ -9,6 +9,7 @@ import {ToastController} from '@ionic/angular';
 import {Vibration} from '@ionic-native/vibration/ngx';
 import { Storage } from '@ionic/storage-angular';
 
+
 const STORAGE_KEY = 'mylist';
 
 
@@ -38,10 +39,8 @@ export class DataService {
   guestsNumber;
   oneOrderTotalNumber;
 
-  constructor(private firestore: Firestore, private authService: AuthService,
-              private toastCtrl: ToastController,
-              private vibration: Vibration,
-              private storage: Storage) { }
+  constructor(private firestore: Firestore, private authService: AuthService, private toastCtrl: ToastController,
+              private vibration: Vibration, private storage: Storage) { }
 
   getAllOrderId(){
     const notesRef = collection(this.firestore, 'orders');
