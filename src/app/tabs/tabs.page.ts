@@ -27,6 +27,7 @@ export class TabsPage {
   interval;
   orderSet = false;
   selectedTab = '';
+  restaurantFabButtonStatus='restaurantFabButtonNormal';
 
 
   constructor(private navCtrl: NavController, private router: Router, private tab4Page: Tab4Page,
@@ -52,7 +53,7 @@ export class TabsPage {
     this.temOrderView();
     //console.log('PAUSE'   );
 
-    this.orderSet = true;
+   /* this.orderSet = true;
     this.interval = setInterval(() => {
       if(this.timeLeft > 0) {
         //console.log('time: ', this.timeLeft);
@@ -61,7 +62,7 @@ export class TabsPage {
         //console.log('else Pause');
         this.pauseOrderTimer();
       }
-    },1000);
+    },1000);*/
   }
 
 
@@ -91,9 +92,10 @@ export class TabsPage {
   }
 
   async tempOrederButtonEnDis(placeAnOrderTempButtonStatus: boolean){
-    console.log('placeAnOrderTempButtonStatus', placeAnOrderTempButtonStatus);
-    this.orderSet=placeAnOrderTempButtonStatus;
-    console.log('this.orderSet ist = ', this.orderSet);
+    if(placeAnOrderTempButtonStatus===true){
+      console.log('placeAnOrderTempButtonStatus TRUE', placeAnOrderTempButtonStatus);
+      this.restaurantFabButtonStatus='restaurantFabButtonFull';
+    }
   }
 
 }

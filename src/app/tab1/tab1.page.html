@@ -30,7 +30,9 @@
 
 
   <ion-button  class="save-text"  (click)="saveTabSelection()" expand="full">
-    <ion-title size="small">Save tabs</ion-title></ion-button>
+    <ion-title size="small">Save tabs</ion-title>
+    <ion-icon color="light" slot="start" name="save"></ion-icon>
+  </ion-button>
   <ion-button class="save-text" (click)="deleteUser()" expand="full">
     <ion-icon color="light" slot="start" name="skull"></ion-icon>
     <ion-title size="small">Kill User</ion-title>
@@ -42,12 +44,12 @@
 <ion-header id="main-content">
   <ion-toolbar color="primary">
 
- <!--   <ion-buttons slot="start">
-      <ion-menu-button color="light"></ion-menu-button>
-      <ion-button (click)="deleteUser()">
-        <ion-icon color="light" slot="start" name="skull-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>-->
+    <!--  <ion-buttons slot="start">
+       <ion-menu-button color="light"></ion-menu-button>
+  -   <ion-button (click)="deleteUser()">
+         <ion-icon color="light" slot="start" name="skull-outline"></ion-icon>
+       </ion-button>
+     </ion-buttons>-->
     <ion-title color="light">Sushi</ion-title>
   </ion-toolbar>
 </ion-header>

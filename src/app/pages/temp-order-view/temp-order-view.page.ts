@@ -64,7 +64,7 @@ export class TempOrderViewPage implements OnInit {
   }
 
   openTab1(){
-    this.orderTimerPause();
+    //this.orderTimerPause();
     //this.tabsPage.orderTimerPause();
     this.navCtrl.navigateRoot('/tabs/tab1');
   }
