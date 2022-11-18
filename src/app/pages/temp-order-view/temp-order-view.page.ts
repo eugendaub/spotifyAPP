@@ -16,6 +16,7 @@ export class TempOrderViewPage implements OnInit {
   waiteTime = 100;
   timeLeft: number = this.waiteTime;
   interval;
+  orderNowButtonOnOff=false;
 
   constructor(private dataService: DataService, private navCtrl: NavController, private albumPage: AlbumPage,
               private tabsPage: TabsPage, private tab4Page: Tab4Page) {
@@ -29,10 +30,16 @@ export class TempOrderViewPage implements OnInit {
     //this.orderTimerPause();
     this.dataService.addTempOrderToDB();
     this.dataService.deleteCompleteTempOrder();
-    //this.albumPage.orderButtonEnable(true);
     this.openTab1();
     //this.tab4Page.getUserOrders();
-    this.tabsPage.tempOrederButtonEnDis(false);
+  }
+
+  setOrderNowButtonOnOff(onOff: boolean){
+    if(this.orderNowButtonOnOff===onOff){
+      this.orderNowButtonOnOff=true;
+    }else{
+      this.orderNowButtonOnOff=false;
+    }
   }
 
   async orderTimerPause() {

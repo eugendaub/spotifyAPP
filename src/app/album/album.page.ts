@@ -33,7 +33,7 @@ export class AlbumPage implements OnInit {
     const decodedTitle = decodeURIComponent(title);
     this.data = albums [decodedTitle];
     this.orderButtonDisabled = this.dataService.placeAnOrderButtonStatus();
-    console.log('button', this.orderButtonDisabled);
+    console.log('button in ngInit', this.orderButtonDisabled);
 
 
   }
@@ -85,11 +85,13 @@ export class AlbumPage implements OnInit {
     const usertTableNr = this.authService.getUserTableNr();
     const img= this.dasherize(order.image);
     //this.countOrders();
-    this.orderButtonDisabled=this.dataService.addUpUserOrder();
-    console.log('orderButtonDisabled:', this.orderButtonDisabled);
+    //console.log('orderButtonDisabled:', this.orderButtonDisabled);
 
     this.dataService.addTempOrder(logInUserId, logInUserEmail,  order.title,  order.title , img, usertTableNr);
-    this.tabsPage.tempOrederButtonEnDis(this.orderButtonDisabled);
+    this.orderButtonDisabled=this.dataService.addUpUserOrder();
+    if(this.orderButtonDisabled===true){
+     this.tabsPage.restaurantFabButtonNormalFullCountdown('restaurantFabButtonFull');
+    }
   }
 
   countOrders(){
@@ -105,9 +107,6 @@ export class AlbumPage implements OnInit {
       this.orderButtonDisabled=true;
 
     }
-  }
-  orderButtonEnable(set: boolean){
-    this.orderButtonDisabled= set;
   }
 
   orderToast() {

@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { TabsPageRoutingModule } from './tabs-routing.module';
 
 import { TabsPage } from './tabs.page';
+import {TempOrderViewPage} from '../pages/temp-order-view/temp-order-view.page';
 
 @NgModule({
   imports: [

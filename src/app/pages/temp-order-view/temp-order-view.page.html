@@ -29,6 +29,7 @@
     </ion-list>
   </div>
 
-  <ion-button class="button-order" expand="block" (click)="placeAnOrder()">Order Now
+  <ion-button class="button-order" [disabled]="orderNowButtonOnOff" expand="block" (click)="placeAnOrder()">
+    Order Now
     </ion-button>
 </ion-content>

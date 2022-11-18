@@ -10,6 +10,7 @@ import {filter} from 'rxjs/operators';
 
 
 
+
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
@@ -41,8 +42,6 @@ export class TabsPage {
       });
 
   }
-
-
 
 
   setSelectedTab(){
@@ -91,11 +90,35 @@ export class TabsPage {
     }
   }
 
-  async tempOrederButtonEnDis(placeAnOrderTempButtonStatus: boolean){
-    if(placeAnOrderTempButtonStatus===true){
+  async restaurantFabButtonNormalFullCountdown(placeAnOrderTempButtonStatus){
+    if(placeAnOrderTempButtonStatus === 'restaurantFabButtonFull'){
       console.log('placeAnOrderTempButtonStatus TRUE', placeAnOrderTempButtonStatus);
       this.restaurantFabButtonStatus='restaurantFabButtonFull';
+    }else if(this.restaurantFabButtonStatus === 'restaurantFabButtonNormal'){
+      this.restaurantFabButtonStatus='restaurantFabButtonNormal';
+    }else if(placeAnOrderTempButtonStatus === 'restaurantFabButtonCountDown'){
+      this.restaurantFabButtonStatus='restaurantFabButtonCountDown';
+      this.timerOrderWaitingTime();
     }
+  }
+
+  timerOrderWaitingTime(){
+    console.log('timer');
+    //this.tempOrderPage.setOrderNowButtonOnOff(true);
+    this.interval = setInterval(() => {
+      if(this.timeLeft > 0) {
+        console.log('time: ', this.timeLeft);
+        this.timeLeft = this.timeLeft-10;
+      } else {
+        console.log('else Pause',this.orderSet);
+        console.log('lenght',this.restaurantFabButtonStatus);
+        //this.orderSet='1';
+        this.restaurantFabButtonStatus='restaurantFabButtonNormal';
+        //this.tempOrderPage.setOrderNowButtonOnOff(false);
+        this.timeLeft = this.waiteTime;
+        clearInterval(this.interval);
+      }
+    },1000);
   }
 
 }

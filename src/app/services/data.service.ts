@@ -8,6 +8,7 @@ import {switchMap,take} from 'rxjs/operators';
 import {ToastController} from '@ionic/angular';
 import {Vibration} from '@ionic-native/vibration/ngx';
 import { Storage } from '@ionic/storage-angular';
+import {TabsPage} from '../tabs/tabs.page';
 
 
 const STORAGE_KEY = 'mylist';
@@ -38,6 +39,7 @@ export class DataService {
   private tempOrder: IUserOrder[]=[];
   guestsNumber;
   oneOrderTotalNumber;
+  restaurentFabButtonStatus: any;
 
   constructor(private firestore: Firestore, private authService: AuthService, private toastCtrl: ToastController,
               private vibration: Vibration, private storage: Storage) { }
@@ -57,28 +59,33 @@ export class DataService {
       console.log('user order count', this.userOrderCount);
       return false;
     }else{
-      //this.userOrderCount=0;
+      this.restaurentFabButtonStatus='restaurantFabButtonFull';
       this.userOrderCount++;
       this.orderFullToast();
      return true;
     }
   }
   oneOrderDeleteMinusCount(){
-    console.log('count for --',this.userOrderCount);
     this.userOrderCount--;
-    console.log('count nach --',this.userOrderCount);
+    this.restaurentFabButtonStatus='restaurantFabButtonNormal';
+    //this.tabsPage.restaurantFabButtonEnDis('restaurantFabButtonNormal');
+  }
+
+  getRestaurantFubButtonStatus(){
+    return this.restaurentFabButtonStatus;
   }
 
   placeAnOrderButtonStatus(){
     this.guestsNumber = this.authService.getGuestsNumber();
     this.oneOrderTotalNumber = this.guestsNumber * this.oneRoundNumber -1;
-    console.log('placeAnOrderButtonStatus userOrderCount: ', this.userOrderCount);
-    console.log('placeAnOrderButtonStatus oneOrderTotalNumber: ', this.oneOrderTotalNumber);
     if(this.userOrderCount <= this.oneOrderTotalNumber){
       return false;
     }else{
       return true;
     }
+  }
+  orderNowButtonStatus(){
+
   }
 
   orderToast() {

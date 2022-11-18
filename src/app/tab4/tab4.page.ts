@@ -19,7 +19,7 @@ export class Tab4Page implements OnInit {
   }
 
   ngOnInit() {
-    console.log('ngOnInit');
+    console.log('ngOnInit TAB 4', this.dataService.getRestaurantFubButtonStatus());
     this.storageCreate();
   }
 
@@ -43,9 +43,7 @@ export class Tab4Page implements OnInit {
     this.loadDates();
   }
   async storageCreate() {
-    console.log('create()');
     await this.storage.create();
-    console.log('create() end');
   }
 
   resetLocalStorage(){

@@ -8,6 +8,7 @@ import {AuthService} from '../services/auth.service';
 import {DataService} from '../services/data.service';
 import {Storage} from '@ionic/storage-angular';
 import {UiService} from '../services/ui.service';
+import {TabsPage} from '../tabs/tabs.page';
 
 @Component({
   selector: 'app-tab1',
@@ -44,7 +45,7 @@ export class Tab1Page {
   };
 
   constructor(private router: Router, private authService: AuthService, private dataService: DataService,
-              private storage: Storage, private uiService: UiService) {
+              private storage: Storage, private uiService: UiService, private tabsPage: TabsPage) {
     console.log('TAB 1 Constructor:');
     this.authService.ngInit();
     this.loadSettings();
