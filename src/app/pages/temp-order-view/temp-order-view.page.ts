@@ -27,7 +27,7 @@ export class TempOrderViewPage implements OnInit {
   ngOnInit() {
   }
   async placeAnOrder(){
-    //this.orderTimerPause();
+    this.orderTimerPause();
     this.dataService.addTempOrderToDB();
     this.dataService.deleteCompleteTempOrder();
     this.openTab1();

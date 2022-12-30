@@ -52,7 +52,7 @@ export class TabsPage {
     this.temOrderView();
     //console.log('PAUSE'   );
 
-   /* this.orderSet = true;
+    this.orderSet = true;
     this.interval = setInterval(() => {
       if(this.timeLeft > 0) {
         //console.log('time: ', this.timeLeft);
@@ -61,7 +61,7 @@ export class TabsPage {
         //console.log('else Pause');
         this.pauseOrderTimer();
       }
-    },1000);*/
+    },1000);
   }
 
 

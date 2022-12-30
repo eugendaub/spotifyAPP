@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Storage } from '@capacitor/storage';
+import { Preferences } from '@capacitor/preferences';
 import {BehaviorSubject} from 'rxjs';
 
 const STORAGE_TABS_KEY = 'selected-tabs';
@@ -58,7 +58,7 @@ export class UiService {
   }
 
   async getSelectedTabs() {
-    const { value } = await Storage.get({ key: STORAGE_TABS_KEY });
+    const { value } = await Preferences.get({ key: STORAGE_TABS_KEY });
 
     if (value) {
       return JSON.parse(value);
@@ -68,7 +68,7 @@ export class UiService {
   }
 
   async setSelectedTabs(tabs: any[]) {
-    await Storage.set({ key: STORAGE_TABS_KEY, value: JSON.stringify(tabs) });
+    await Preferences.set({ key: STORAGE_TABS_KEY, value: JSON.stringify(tabs) });
     this.tabsSubject.next(tabs);
   }
   getActiveTabs(){
