@@ -28,7 +28,9 @@ export class TabsPage {
   interval;
   orderSet = false;
   selectedTab = '';
+
   restaurantFabButtonStatus='restaurantFabButtonNormal';
+  processBarStartOrStop = 'stop';
 
 
   constructor(private navCtrl: NavController, private router: Router, private tab4Page: Tab4Page,
@@ -41,6 +43,15 @@ export class TabsPage {
         this.selectedTabs = tabs;
       });
 
+    this.dataService.processBar$.subscribe(status => {
+      this.processBarStartOrStop = status;
+    });
+
+    this.dataService.restaurantFabButtonStatus$.subscribe( status => {
+      this.restaurantFabButtonStatus = status;
+    });
+    console.log('TABS COSNTRUKTOR');
+
   }
 
 
@@ -50,9 +61,9 @@ export class TabsPage {
 
   async orderTimerPause() {
     this.temOrderView();
-    //console.log('PAUSE'   );
+    //console.log('PAUSE');
 
-    this.orderSet = true;
+    this.orderSet = true;/*
     this.interval = setInterval(() => {
       if(this.timeLeft > 0) {
         //console.log('time: ', this.timeLeft);
@@ -61,7 +72,22 @@ export class TabsPage {
         //console.log('else Pause');
         this.pauseOrderTimer();
       }
-    },1000);
+    },1000);*/
+  }
+
+  startExpiryTimer(){
+    console.log('Processbar Status: ', this.processBarStartOrStop);
+    if(this.processBarStartOrStop === 'start'){
+      this.interval = setInterval(() => {
+        if(this.timeLeft > 0) {
+          console.log('startExpiryTimer time left : ', this.timeLeft);
+          this.timeLeft = this.timeLeft-10;
+        } else {
+          //console.log('else Pause');
+          this.pauseOrderTimer();
+        }
+      },1000);
+    }
   }
 
 
@@ -69,6 +95,7 @@ export class TabsPage {
     this.orderSet= false;
     this.timeLeft = this.waiteTime;
     clearInterval(this.interval);
+    this.dataService.updateProcessBarStatus('stop');
   }
 
 

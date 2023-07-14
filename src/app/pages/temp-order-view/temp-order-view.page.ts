@@ -4,6 +4,7 @@ import {NavController} from '@ionic/angular';
 import {AlbumPage} from '../../album/album.page';
 import {TabsPage} from '../../tabs/tabs.page';
 import {Tab4Page} from '../../tab4/tab4.page';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class TempOrderViewPage implements OnInit {
   orderNowButtonOnOff=false;
 
   constructor(private dataService: DataService, private navCtrl: NavController, private albumPage: AlbumPage,
-              private tabsPage: TabsPage, private tab4Page: Tab4Page) {
+              private tabsPage: TabsPage, private tab4Page: Tab4Page, private router: Router) {
     //Get All Temporary Orders now
       this.allTempOrders = this.dataService.getTemporaraOrder();
   }
@@ -27,11 +28,16 @@ export class TempOrderViewPage implements OnInit {
   ngOnInit() {
   }
   async placeAnOrder(){
-    this.orderTimerPause();
+    //this.orderTimerPause();
+    this.startProcessBar('start');
     this.dataService.addTempOrderToDB();
     this.dataService.deleteCompleteTempOrder();
-    this.openTab1();
+    this.tabsPage.startExpiryTimer();
+    //this.openTab1();
     //this.tab4Page.getUserOrders();
+  }
+  startProcessBar(status) {
+      this.dataService.updateProcessBarStatus(status);
   }
 
   setOrderNowButtonOnOff(onOff: boolean){
@@ -57,23 +63,21 @@ export class TempOrderViewPage implements OnInit {
 
 
   pauseOrderTimer() {
-
     this.timeLeft = this.waiteTime;
     clearInterval(this.interval);
   }
 
   deleteOneOrder(order){
     console.log('ID :', order.tempId);
-
     this.dataService.deleteTempOrder(order.tempId);
     this.dataService.oneOrderDeleteMinusCount();
-
   }
 
   openTab1(){
     //this.orderTimerPause();
     //this.tabsPage.orderTimerPause();
-    this.navCtrl.navigateRoot('/tabs/tab1');
+    //this.navCtrl.navigateRoot('/tabs/tab1');
+    this.router.navigate(['/tabs/tab1']);
   }
 
 

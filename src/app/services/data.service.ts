@@ -9,6 +9,8 @@ import {ToastController} from '@ionic/angular';
 import {Vibration} from '@ionic-native/vibration/ngx';
 import { Storage } from '@ionic/storage-angular';
 import {TabsPage} from '../tabs/tabs.page';
+import {Observable} from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 
 const STORAGE_KEY = 'mylist';
@@ -37,9 +39,22 @@ export class DataService {
   oneRoundNumber = 2;
   userOrderCount = 0;
   private tempOrder: IUserOrder[]=[];
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   guestsNumber;
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   oneOrderTotalNumber;
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   restaurentFabButtonStatus: any;
+
+  // Charts render
+  private processBarSubject: BehaviorSubject<string> = new BehaviorSubject<string>('stop');
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  processBar$ = this.processBarSubject.asObservable();
+
+  //restaurant Fab-Button Status
+  private restaurantFabButtonSubject: BehaviorSubject<string> = new BehaviorSubject<string>('restaurantFabButtonNormal');
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  restaurantFabButtonStatus$ = this.restaurantFabButtonSubject.asObservable();
 
   constructor(private firestore: Firestore, private authService: AuthService, private toastCtrl: ToastController,
               private vibration: Vibration, private storage: Storage) { }
@@ -47,6 +62,12 @@ export class DataService {
   getAllOrderId(){
     const notesRef = collection(this.firestore, 'orders');
     return collectionData(notesRef, { idField: 'id'});
+  }
+  updateProcessBarStatus(status: string) {
+    this.processBarSubject.next(status);
+  }
+  updateRestaurantFabButtonStatus(status: string) {
+    this.restaurantFabButtonSubject.next(status);
   }
 
   addUpUserOrder(){
