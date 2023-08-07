@@ -71,6 +71,7 @@
       <ion-slide *ngFor="let album of entry.albums" tappable (click)="openAlbum(album)">
         <div class="image-box">
         <img [src]="'/assets/images/albums/'+dasherize(album.image)+'.jpg'">
+        <!-- ADD Button die bestellung über diesen Knopf funktioniert noch nicht
           <div>
           <ion-fab  horizontal="end" vertical="button"  >
             <div class="fab-button-footer">
@@ -79,7 +80,7 @@
               </ion-fab-button>
             </div>
           </ion-fab>
-        </div>
+        </div>-->
         </div>
         <span class="title">{{ album.title }}</span>
       </ion-slide>

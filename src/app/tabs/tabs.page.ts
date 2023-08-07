@@ -28,6 +28,7 @@ export class TabsPage {
   interval;
   orderSet = false;
   selectedTab = '';
+  timeLeftProgressBar;
 
   restaurantFabButtonStatus='restaurantFabButtonNormal';
   processBarStartOrStop = 'stop';
@@ -49,8 +50,13 @@ export class TabsPage {
 
     this.dataService.restaurantFabButtonStatus$.subscribe( status => {
       this.restaurantFabButtonStatus = status;
+      console.log('this.restaurantFabButtonStatus', this.restaurantFabButtonStatus );
     });
     console.log('TABS COSNTRUKTOR');
+
+    this.dataService.timer$.subscribe(status => {
+      this.timeLeftProgressBar = status;
+    });
 
   }
 

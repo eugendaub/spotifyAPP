@@ -8,8 +8,6 @@ import {switchMap,take} from 'rxjs/operators';
 import {ToastController} from '@ionic/angular';
 import {Vibration} from '@ionic-native/vibration/ngx';
 import { Storage } from '@ionic/storage-angular';
-import {TabsPage} from '../tabs/tabs.page';
-import {Observable} from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 
 
@@ -56,6 +54,16 @@ export class DataService {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   restaurantFabButtonStatus$ = this.restaurantFabButtonSubject.asObservable();
 
+  // Timer
+  private timerSubject: BehaviorSubject<string> = new BehaviorSubject<string>('100');
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  timer$ = this.timerSubject.asObservable();
+
+  // Order Button
+  private orderButtonSubject: BehaviorSubject<string> = new BehaviorSubject<string>('orderNowButtonOn');
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  orderButton$ = this.orderButtonSubject.asObservable();
+
   constructor(private firestore: Firestore, private authService: AuthService, private toastCtrl: ToastController,
               private vibration: Vibration, private storage: Storage) { }
 
@@ -68,6 +76,13 @@ export class DataService {
   }
   updateRestaurantFabButtonStatus(status: string) {
     this.restaurantFabButtonSubject.next(status);
+  }
+
+  updateTimerStatus(status) {
+    this.timerSubject.next(status);
+  }
+  updateOrderButtonStatus(status) {
+    this.orderButtonSubject.next(status);
   }
 
   addUpUserOrder(){
@@ -93,6 +108,7 @@ export class DataService {
   }
 
   getRestaurantFubButtonStatus(){
+    console.log('Funktion in DataService getRestaurantFubButtonStatus');
     return this.restaurentFabButtonStatus;
   }
 

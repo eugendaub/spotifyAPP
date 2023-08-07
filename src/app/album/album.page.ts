@@ -26,7 +26,9 @@ export class AlbumPage implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private authService: AuthService,
               private dataService: DataService, private toastCtrl: ToastController,
               private vibration: Vibration, private storage: Storage,
-              private tab4Page: Tab4Page , private tabsPage: TabsPage) {}
+              private tab4Page: Tab4Page , private tabsPage: TabsPage) {
+
+  }
 
   ngOnInit() {
     const title = this.activatedRoute.snapshot.paramMap.get('title');
@@ -71,7 +73,7 @@ export class AlbumPage implements OnInit {
     const usertTableNr = this.authService.getUserTableNr();
     const img= this.dasherize(order.image);
 
-   await this.dataService.addDate(logInUserId, logInUserEmail,  order.title,  order.title , img, usertTableNr);
+    await this.dataService.addDate(logInUserId, logInUserEmail,  order.title,  order.title , img, usertTableNr);
     this.tab4Page.loadDates();
   }
   async loadDates() {
@@ -90,7 +92,8 @@ export class AlbumPage implements OnInit {
     this.dataService.addTempOrder(logInUserId, logInUserEmail,  order.title,  order.title , img, usertTableNr);
     this.orderButtonDisabled=this.dataService.addUpUserOrder();
     if(this.orderButtonDisabled===true){
-     this.tabsPage.restaurantFabButtonNormalFullCountdown('restaurantFabButtonFull');
+      this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonFull');
+     //this.tabsPage.restaurantFabButtonNormalFullCountdown('restaurantFabButtonFull');
     }
   }
 

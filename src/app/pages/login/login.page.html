@@ -26,10 +26,10 @@
                  name="password" formControlName="password"></ion-input>
     </ion-item>
 
-    <ion-button color="primary" expand="full" type="submit" [disabled]="!credentialsForm.valid">
+    <ion-button color="primary" expand="full" type="submit" expand="block" [disabled]="!credentialsForm.valid">
       Login
     </ion-button>
-    <ion-button color="secondary" expand="full" type="button" (click)="register()" [disabled]="!credentialsForm.valid">
+    <ion-button color="secondary" expand="full" type="button" expand="block" (click)="register()" [disabled]="!credentialsForm.valid">
       Create Table
     </ion-button>
 

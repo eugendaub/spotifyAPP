@@ -23,28 +23,34 @@
     </ion-fab>
   </ng-template>-->
   <div class="fab-button" [ngSwitch]="restaurantFabButtonStatus">
-      <span *ngSwitchCase="'restaurantFabButtonNormal'">  <ion-fab  horizontal="end" vertical="end" slot="fixed" >
+      <span *ngSwitchCase="'restaurantFabButtonNormal'">
+        <ion-fab  horizontal="end" vertical="end" slot="fixed" >
         <div >
           <ion-fab-button  fab-but="button" (click)="orderTimerPause()" >
             <ion-icon color="light" name="restaurant-outline"></ion-icon>
           </ion-fab-button>
         </div>
-      </ion-fab></span>
-    <span *ngSwitchCase="'restaurantFabButtonFull'"> <ion-fab  horizontal="end" vertical="end" slot="fixed" >
+      </ion-fab>
+      </span>
+    <span *ngSwitchCase="'restaurantFabButtonFull'">
+      <ion-fab  horizontal="end" vertical="end" slot="fixed" >
       <div class="button-flash">
         <ion-fab-button fab-but="button" (click)="orderTimerPause()" >
           <ion-icon color="light" name="restaurant-outline"></ion-icon>
         </ion-fab-button>
       </div>
-    </ion-fab></span>
-    <span *ngSwitchCase="'restaurantFabButtonCountDown'">     <ion-fab  horizontal="end" vertical="end" slot="fixed" >
+    </ion-fab>
+    </span>
+    <span *ngSwitchCase="'restaurantFabButtonCountDown'">
+      <ion-fab  horizontal="end" vertical="end" slot="fixed" >
       <div >
         <ion-fab-button  fab-but="button" >
           <ion-icon color="light" name="restaurant" (click)="orderTimerPause()"></ion-icon>
-          <ion-label color="light">{{timeLeft}}</ion-label>
+          <ion-label color="light">{{timeLeftProgressBar}}</ion-label>
         </ion-fab-button>
       </div>
-    </ion-fab></span>
+    </ion-fab>
+    </span>
     <span *ngSwitchDefault> default</span>
   </div>
 
@@ -59,10 +65,10 @@
 
   <div class="player">
     <div class="progress-bar">
-      <div class="progress"  [style.width]="timeLeft + '%'" ></div>
+      <div class="progress"  [style.width]="timeLeftProgressBar + '%'" ></div>
     </div>
-
   </div>
+
   <!-- The Ionic tab bar -->
   <ion-tab-bar slot="bottom">
 
