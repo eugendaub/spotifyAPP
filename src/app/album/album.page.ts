@@ -36,9 +36,9 @@ export class AlbumPage implements OnInit {
   placeAnOrderTemp(order) {
     const logInUserEmail = this.authService.getUserEmail();
     const logInUserId = this.authService.getUserId();
-    const usertTableNr = this.authService.getUserTableNr();
+    const userTableNr = this.authService.getUserTableNr();
     const img = this.dasherize(order.image);
-    this.dataService.addTempOrder(logInUserId, logInUserEmail, order.title, order.title, img, usertTableNr);
+    this.dataService.addTempOrder(logInUserId, logInUserEmail, order.title, order.title, img, userTableNr);
     this.orderButtonDisabled = this.dataService.addUpUserOrder();
     if (this.orderButtonDisabled === true) {
       this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonFull');

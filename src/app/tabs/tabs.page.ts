@@ -4,7 +4,6 @@ import {Router} from '@angular/router';
 import {Tab4Page} from '../tab4/tab4.page';
 import {AuthService} from '../services/auth.service';
 import {DataService} from '../services/data.service';
-import {Storage} from '@ionic/storage-angular';
 import {UiService} from '../services/ui.service';
 import {filter} from 'rxjs/operators';
 
@@ -31,7 +30,6 @@ export class TabsPage {
   timeLeftProgressBar;
 
   restaurantFabButtonStatus='restaurantFabButtonNormal';
-  processBarStartOrStop = 'stop';
 
 
   constructor(private navCtrl: NavController, private router: Router, private tab4Page: Tab4Page,
@@ -43,10 +41,6 @@ export class TabsPage {
       .subscribe((tabs) => {
         this.selectedTabs = tabs;
       });
-
-    this.dataService.processBar$.subscribe(status => {
-      this.processBarStartOrStop = status;
-    });
 
     this.dataService.restaurantFabButtonStatus$.subscribe( status => {
       this.restaurantFabButtonStatus = status;
@@ -86,7 +80,6 @@ export class TabsPage {
     this.orderSet= false;
     this.timeLeft = this.waiteTime;
     clearInterval(this.interval);
-    this.dataService.updateProcessBarStatus('stop');
   }
 
 

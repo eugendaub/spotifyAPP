@@ -10,9 +10,7 @@ import {Vibration} from '@ionic-native/vibration/ngx';
 import { Storage } from '@ionic/storage-angular';
 import { BehaviorSubject } from 'rxjs';
 
-
 const STORAGE_KEY = 'mylist';
-
 
 export interface IUserOrder {
   tempId?: number;
@@ -31,9 +29,9 @@ export interface IUserOrder {
 
 export class DataService {
 
-  userOrderId= null;
-  orderCount=0;
-  count =0;
+  userOrderId = null;
+  orderCount = 0;
+  count = 0;
   oneRoundNumber = 2;
   userOrderCount = 0;
   private tempOrder: IUserOrder[]=[];
@@ -44,18 +42,13 @@ export class DataService {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   restaurentFabButtonStatus: any;
 
-  // Process Bar Start/stop (WIRD NICHT MEHR VERWENDET ODER?)
-  private processBarSubject: BehaviorSubject<string> = new BehaviorSubject<string>('stop');
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  processBar$ = this.processBarSubject.asObservable();
-
   //restaurant Fab-Button Status
   private restaurantFabButtonSubject: BehaviorSubject<string> = new BehaviorSubject<string>('restaurantFabButtonNormal');
   // eslint-disable-next-line @typescript-eslint/member-ordering
   restaurantFabButtonStatus$ = this.restaurantFabButtonSubject.asObservable();
 
   // Timer
-  private timerSubject: BehaviorSubject<string> = new BehaviorSubject<string>('1000');
+  private timerSubject: BehaviorSubject<string> = new BehaviorSubject<string>('100');
   // eslint-disable-next-line @typescript-eslint/member-ordering
   timer$ = this.timerSubject.asObservable();
 
@@ -76,9 +69,7 @@ export class DataService {
     const notesRef = collection(this.firestore, 'orders');
     return collectionData(notesRef, { idField: 'id'});
   }
-  updateProcessBarStatus(status: string) {
-    this.processBarSubject.next(status);
-  }
+
   updateRestaurantFabButtonStatus(status: string) {
     this.restaurantFabButtonSubject.next(status);
   }
@@ -86,9 +77,11 @@ export class DataService {
   updateTimerStatus(status) {
     this.timerSubject.next(status);
   }
+
   updateOrderButtonStatus(status) {
     this.orderButtonSubject.next(status);
   }
+
   updateTotalOrderQuantityARound(status) {
     this.totalOrderQuantityARoundSubject.next(status);
   }
@@ -121,7 +114,6 @@ export class DataService {
       position: 'top',
       duration: 1500,
       cssClass: 'toast-custom-class-order',
-
     }).then((toast) => {
       toast.present();
     });
@@ -134,7 +126,6 @@ export class DataService {
       position: 'top',
       duration: 2500,
       cssClass: 'toast-custom-class',
-
     }).then((toast) => {
       toast.present();
     });
@@ -238,7 +229,6 @@ export class DataService {
     return this.storage.set(STORAGE_KEY, storedData);
   }
 
-
   // Hier wird eine Temporere Bestellung erfasst
   addTempOrder(logInUserId,logInUserEmail, text, title, sushiImageLink, userTableNr){
     const order: IUserOrder = {
@@ -274,13 +264,9 @@ export class DataService {
   }
 
   async addTempOrderToDB() {
-
     const ordersRef = collection(this.firestore, 'orders');
-    //const userOrdersRef = collection(this.firestore, 'userOrders');
     const logInUserId = this.authService.getUserId();
-
     for (const order of this.tempOrder) {
-
       addDoc(ordersRef, order).then(res => {
         // console.log('created order ADDDOC: ', res);
         const groupID = res.id;
@@ -323,7 +309,6 @@ export class DataService {
 
       // In der DB muss für jeden user der DB eintrag angepasst werden
       // (in diesem Fall in welchen Chats befindet sich der User)
-
       const userChatsRef = doc(this.firestore, `users/${logInUserId}`);
       const update = updateDoc(userChatsRef, {
         userOrders: arrayUnion(groupID)

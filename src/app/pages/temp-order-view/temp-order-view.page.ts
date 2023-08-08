@@ -45,7 +45,6 @@ export class TempOrderViewPage  {
     if(this.totalOrderQuantityARound >0) {
       this.orderNowButtonOnOff = true;
       this.orderTimerPause();
-      this.startProcessBar('start');
       this.dataService.addTempOrderToDB();
       this.dataService.deleteCompleteTempOrder();
       this.openTab1();
@@ -67,12 +66,7 @@ export class TempOrderViewPage  {
       });
       await alert.present();
     }
-
   }
-  startProcessBar(status) {
-      this.dataService.updateProcessBarStatus(status);
-  }
-
 
   async orderTimerPause() {
     this.interval = setInterval(() => {
@@ -87,7 +81,6 @@ export class TempOrderViewPage  {
       }
     },1000);
   }
-
 
   pauseOrderTimer() {
     this.dataService.updateTimerStatus(this.waiteTime);
@@ -104,11 +97,6 @@ export class TempOrderViewPage  {
   }
 
   openTab1(){
-    //this.orderTimerPause();
-    //this.tabsPage.orderTimerPause();
-    //this.navCtrl.navigateRoot('/tabs/tab1');
     this.router.navigate(['/tabs']);
   }
-
-
 }

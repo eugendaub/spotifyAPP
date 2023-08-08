@@ -11,7 +11,6 @@ export class Tab4Page implements OnInit {
   allUserOrders: any = [];
   events: any[] = [];
 
-
   constructor(private dataService: DataService, private storage: Storage) {}
 
   ngOnInit() {
@@ -25,7 +24,6 @@ export class Tab4Page implements OnInit {
   }
 
   async loadDates() {
-   // console.log('tab 4 loadDates');
     this.events = await this.dataService.getData();
   }
 
