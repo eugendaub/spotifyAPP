@@ -1,7 +1,7 @@
 <ion-header>
-  <ion-toolbar color="primary" >
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button text="" color="light"  (click)="openTab1()"></ion-back-button>
+      <ion-back-button text="" color="light" (click)="openTab1()"></ion-back-button>
     </ion-buttons>
     <ion-title color="light">Your Sushi order view {{totalOrderQuantityARound}}</ion-title>
   </ion-toolbar>
@@ -11,36 +11,36 @@
   <div *ngFor="let order of allTempOrders">
 
     <ion-list>
-        <ion-item>
-          <ion-col size="2" class="ion-no-padding">
-            <img [src]="'/assets/images/albums/'+order.imageLink+'.jpg'">
-          </ion-col>
-          <ion-col size="5">
-            <ion-label>
-              {{ order.title }}
-            </ion-label>
-          </ion-col>
-          <ion-col size="4" class="ion-text-right ion-no-padding">
-            <ion-button  fill="clear" (click)="deleteOneOrder(order)" >
-              <ion-icon slot="end"  name="close-circle" size="large" color="primary" slot="icon-only"></ion-icon>
-            </ion-button>
-          </ion-col>
-        </ion-item>
+      <ion-item>
+        <ion-col size="2" class="ion-no-padding">
+          <img alt="Images Album" [src]="'/assets/images/albums/'+order.imageLink+'.jpg'">
+        </ion-col>
+        <ion-col size="5">
+          <ion-label>
+            {{ order.title }}
+          </ion-label>
+        </ion-col>
+        <ion-col size="5.3" class="ion-text-right ion-no-padding">
+          <ion-button fill="clear" (click)="deleteOneOrder(order)">
+            <ion-icon name="close-circle" size="large" color="primary"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-item>
     </ion-list>
   </div>
 
 
   <div class="fab-button" [ngSwitch]="orderNowButtonOnOff">
       <span *ngSwitchCase="'orderNowButtonOn'">
-         <ion-button class="button-order"  expand="block" (click)="placeAnOrder()">
+         <ion-button class="button-order" expand="block" (click)="placeAnOrder()">
                 Order Now
          </ion-button>
       </span>
-      <span *ngSwitchCase="'orderNowButtonOff'">
+    <span *ngSwitchCase="'orderNowButtonOff'">
         <ion-button class="button-order" expand="block" disabled="true">
                Please wait
           {{timeLeftSubject}}
-           <ion-icon name="alarm-outline"></ion-icon>
+          <ion-icon name="alarm-outline"></ion-icon>
          </ion-button>
       </span>
     <span *ngSwitchDefault> default</span>

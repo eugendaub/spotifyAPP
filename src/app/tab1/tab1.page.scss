@@ -1,67 +1,72 @@
-ion-content{
+ion-content {
   --pading-top: 40px;
 }
 
 .select-header {
   color: #fff;
-  font-family: 'Spotify';
+  font-family: 'Spotify', serif;
   font-weight: bold;
   margin-left: 20px;
   margin-bottom: 30px;
 }
 
-ion-slides {
-    margion-buttom: 20px;
-}
+/*ion-slides {
+  margion-buttom: 20px;
+}*/
 
 .title {
   color: #fff;
-  font-family: 'Spotify';
-  font-size: small;
+  font-family: 'Spotify', serif;
   font-size: 100%;
 }
+
 .save-text {
   color: #fff;
-  font-family: 'Spotify';
+  font-family: 'Spotify', serif;
 }
+
 .image-box {
-  max-width:350px;
+  max-width: 350px;
+  border-radius: 4% !important;
+  overflow: hidden;
 }
 
 ion-slide {
   display: block;
   text-align: left;
-  max-width:100%;
-  max-height:100%;
+  max-width: 100%;
+  max-height: 100%;
 }
+
 ion-list {
   --background: var(--ion-color-dark);
 }
+
 .dark {
   background-color: #3f4041 !important;
   color: #52c925;
 }
+
 .item-content {
   background-color: #121212;
 }
 
-.save-button{
+.save-button {
   color: #fff;
-  font-family: 'Spotify';
+  font-family: 'Spotify', serif;
   font-weight: bold;
 
 }
 
-
 .fab-button-footer {
   position: absolute;
-  width:110%;
+  width: 110%;
   margin: -4vh;
-  margin-top:-6vh;
+  margin-top: -6vh;
   opacity: 0.6;
 }
 
-.icon-fab-color{
+.icon-fab-color {
   color: #ffffff;
 }
 

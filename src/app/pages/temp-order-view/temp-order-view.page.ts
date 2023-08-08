@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import {DataService} from '../../services/data.service';
-import {NavController} from '@ionic/angular';
+import {AlertController, NavController} from '@ionic/angular';
 import {AlbumPage} from '../../album/album.page';
 import {TabsPage} from '../../tabs/tabs.page';
 import {Tab4Page} from '../../tab4/tab4.page';
@@ -22,7 +22,8 @@ export class TempOrderViewPage  {
   totalOrderQuantityARound;
 
   constructor(private dataService: DataService, private navCtrl: NavController, private albumPage: AlbumPage,
-              private tabsPage: TabsPage, private tab4Page: Tab4Page, private router: Router) {
+              private tabsPage: TabsPage, private tab4Page: Tab4Page, private router: Router,
+              private alertCtrl: AlertController) {
     //Get All Temporary Orders now
       this.allTempOrders = this.dataService.getTemporaraOrder();
 
@@ -41,15 +42,31 @@ export class TempOrderViewPage  {
 
 
   async placeAnOrder(){
-    this.orderNowButtonOnOff=true;
-    this.orderTimerPause();
-    this.startProcessBar('start');
-    this.dataService.addTempOrderToDB();
-    this.dataService.deleteCompleteTempOrder();
-    this.openTab1();
-    //this.tab4Page.getUserOrders();
-    this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonCountDown');
-    //this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonNormal');
+    if(this.totalOrderQuantityARound >0) {
+      this.orderNowButtonOnOff = true;
+      this.orderTimerPause();
+      this.startProcessBar('start');
+      this.dataService.addTempOrderToDB();
+      this.dataService.deleteCompleteTempOrder();
+      this.openTab1();
+      this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonCountDown');
+    }else{
+      const alert = await this.alertCtrl.create({
+        cssClass: 'alt my-custom-class',
+        header: 'Order not Complete',
+        message: `You have not selected anything to order`,
+        buttons: [
+          {
+            text: 'OK',
+            role: 'cancel',
+            cssClass: 'danger',
+            handler: () => {
+            }
+          }
+        ]
+      });
+      await alert.present();
+    }
 
   }
   startProcessBar(status) {
@@ -73,7 +90,6 @@ export class TempOrderViewPage  {
 
 
   pauseOrderTimer() {
-    //this.timeLeft = this.waiteTime;
     this.dataService.updateTimerStatus(this.waiteTime);
     this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonNormal');
     this.dataService.updateOrderButtonStatus('orderNowButtonOn');

@@ -4,7 +4,7 @@ import {
   serverTimestamp, query, orderBy, docData, where,documentId
 } from '@angular/fire/firestore';
 import {AuthService} from './auth.service';
-import {switchMap,take} from 'rxjs/operators';
+import {switchMap} from 'rxjs/operators';
 import {ToastController} from '@ionic/angular';
 import {Vibration} from '@ionic-native/vibration/ngx';
 import { Storage } from '@ionic/storage-angular';
@@ -44,7 +44,7 @@ export class DataService {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   restaurentFabButtonStatus: any;
 
-  // Charts render
+  // Process Bar Start/stop (WIRD NICHT MEHR VERWENDET ODER?)
   private processBarSubject: BehaviorSubject<string> = new BehaviorSubject<string>('stop');
   // eslint-disable-next-line @typescript-eslint/member-ordering
   processBar$ = this.processBarSubject.asObservable();
@@ -55,7 +55,7 @@ export class DataService {
   restaurantFabButtonStatus$ = this.restaurantFabButtonSubject.asObservable();
 
   // Timer
-  private timerSubject: BehaviorSubject<string> = new BehaviorSubject<string>('100');
+  private timerSubject: BehaviorSubject<string> = new BehaviorSubject<string>('1000');
   // eslint-disable-next-line @typescript-eslint/member-ordering
   timer$ = this.timerSubject.asObservable();
 
@@ -94,7 +94,6 @@ export class DataService {
   }
 
   addUpUserOrder(){
-
     this.guestsNumber = this.authService.getGuestsNumber();
     this.oneOrderTotalNumber = this.guestsNumber * this.oneRoundNumber -1;
     if( this.oneOrderTotalNumber > this.userOrderCount){
@@ -104,34 +103,14 @@ export class DataService {
       console.log('user order count', this.userOrderCount);
       return false;
     }else{
-      //this.restaurentFabButtonStatus='restaurantFabButtonFull';
       this.userOrderCount++;
       this.orderFullToast();
      return true;
     }
   }
+
   oneOrderDeleteMinusCount(){
     this.userOrderCount--;
-    this.restaurentFabButtonStatus='restaurantFabButtonNormal';
-    //this.tabsPage.restaurantFabButtonEnDis('restaurantFabButtonNormal');
-  }
-
-  getRestaurantFubButtonStatus(){
-    console.log('Funktion in DataService getRestaurantFubButtonStatus');
-    return this.restaurentFabButtonStatus;
-  }
-
-  placeAnOrderButtonStatus(){
-    this.guestsNumber = this.authService.getGuestsNumber();
-    this.oneOrderTotalNumber = this.guestsNumber * this.oneRoundNumber -1;
-    if(this.userOrderCount <= this.oneOrderTotalNumber){
-      return false;
-    }else{
-      return true;
-    }
-  }
-  orderNowButtonStatus(){
-
   }
 
   orderToast() {
@@ -140,13 +119,14 @@ export class DataService {
     this.toastCtrl.create({
       message: 'Added order! still: '+ this.oneOrderTotalNumber,
       position: 'top',
-      duration: 800,
+      duration: 1500,
       cssClass: 'toast-custom-class-order',
 
     }).then((toast) => {
       toast.present();
     });
   }
+
   orderFullToast() {
     this.vibration.vibrate(75);
     this.toastCtrl.create({
@@ -185,14 +165,12 @@ export class DataService {
     return deleteDoc(noteDocRef);
   }
 
+  // Löscht eine Bestellung von der Küche (Tab3) aus.
   deleteOrderAndUserOrders(note) {
     const userId = this.authService.getUserId();
-    //console.log('uerID: ', userId);
-    //console.log('note: ', note);
-
     const orderRef = doc(this.firestore, `orders/${note.id}`);
     return deleteDoc(orderRef)
-      .then(res => {
+      .then(_res => {
         const userRef = doc(this.firestore, `users/${userId}`);
         return updateDoc(userRef, {
           userOrders: arrayRemove(note.id)
@@ -249,36 +227,11 @@ export class DataService {
     });
   }
 
-  async addDate(logInUserId,logInUserEmail, text, title, sushiImageLink, userTableNr) {
-    const order: IUserOrder = {
-      tempId: this.orderCount,
-      userid: logInUserId,
-      userEmail: logInUserEmail,
-      userTableNr,
-      title,
-      text,
-      //createdAt: serverTimestamp(),
-      imageLink: sushiImageLink
-    };
-    console.log('Problemi');
-    const dates = await this.storage.get(STORAGE_KEY) || [];
-    dates.push(order);
-    return this.storage.set(STORAGE_KEY, dates);
-  }
-
-  /*
-  async getDates(): Promise<IUserOrder[]> {
-    return this.storage.get(STORAGE_KEY).then((res: IUserOrder[]) =>
-      (res || []).map((entry) => {
-        return entry;
-      })
-    );
-  }*/
-
   getData() {
     return this.storage.get(STORAGE_KEY) || [];
   }
 
+  // löscht eine Bestellug von dem aktuellem User (wird in Tab4/All orders verwendet) (DIENT ZUR TESTZWECKEN )
   async remvoveItem(index) {
     const storedData = await this.storage.get(STORAGE_KEY) || [];
     storedData.splice(index, 1);
@@ -286,8 +239,8 @@ export class DataService {
   }
 
 
+  // Hier wird eine Temporere Bestellung erfasst
   addTempOrder(logInUserId,logInUserEmail, text, title, sushiImageLink, userTableNr){
-    //const chatsRef = collection(this.firestore, 'orders');
     const order: IUserOrder = {
       tempId: this.orderCount,
       userid: logInUserId,
@@ -298,29 +251,13 @@ export class DataService {
       //createdAt: serverTimestamp(),
       imageLink: sushiImageLink
     };
-    //console.log('orderCount: ',this.orderCount );
     this.tempOrder.push(order);
-    //this.tempOrderArray(this.userOrder[this.orderCount]);
     //console.log('Array: ', this.tempOrder);
     this.orderCount++;
 
-    /*
-    return addDoc(chatsRef, userOrder).then( res => {
-      // console.log('created order ADDDOC: ', res);
-      const groupID = res.id;
-      const promises = [];
-
-      // In der DB muss für jeden user der DB eintrag angepasst werden
-      // (in diesem Fall in welchen Chats befindet sich der User)
-
-      const userChatsRef = doc(this.firestore, `users/${logInUserId}`);
-      const update = updateDoc(userChatsRef, {
-        userOrders: arrayUnion(groupID)
-      });
-      promises.push(update);
-      return Promise.all(promises);
-    });*/
   }
+
+  // Hiermit wird eine Bestellung aus Temp-order-view-page gelöscht
   deleteTempOrder(deleteNumber){
     const index = this.tempOrder.findIndex((obj) =>obj.tempId ===deleteNumber);
     //console.log('index:', index);
@@ -330,6 +267,7 @@ export class DataService {
     //console.log('After Delete Temp Array: ', this.tempOrder);
   }
 
+  // Nach einer bestellung werden alle Temporeren Bestelluge storniert/gelöscht
   async deleteCompleteTempOrder() {
     this.tempOrder=[];
     this.userOrderCount=0;
@@ -342,10 +280,6 @@ export class DataService {
     const logInUserId = this.authService.getUserId();
 
     for (const order of this.tempOrder) {
-      //console.log('count: ', this.count);
-      //console.log('ORDER:', order);
-      //order.createdAt='datre'+serverTimestamp();
-
 
       addDoc(ordersRef, order).then(res => {
         // console.log('created order ADDDOC: ', res);
@@ -374,33 +308,6 @@ export class DataService {
     dates.push(order);
     return this.storage.set(STORAGE_KEY, dates);
   }
-/*
-  async addTempUserOrdersToDB(){
-    const ordersRef = collection(this.firestore, 'userOrders');
-    const logInUserId= this.authService.getUserId();
-
-    for(const order of this.tempOrder) {
-      //console.log('count: ', this.count);
-      //console.log('ORDER:', order);
-      //order.createdAt='datre'+serverTimestamp();
-
-      addDoc(ordersRef, order).then(res => {
-        // console.log('created order ADDDOC: ', res);
-        const groupID = res.id;
-        const promises = [];
-
-        // In der DB muss für jeden user der DB eintrag angepasst werden
-        // (in diesem Fall in welchen Chats befindet sich der User)
-
-        const userChatsRef = doc(this.firestore, `users/${logInUserId}`);
-        const update = updateDoc(userChatsRef, {
-          allUserOrders: arrayUnion(groupID)
-        });
-        promises.push(update);
-        return Promise.all(promises);
-      });
-    }
-  }*/
 
   createOrderForUser(logInUserId,logInUserEmail){
     const chatsRef = collection(this.firestore, 'orders');
@@ -431,6 +338,7 @@ export class DataService {
     const q = query(messages, orderBy('createdAt'));
     return collectionData(q, {idField: 'id'});
   }
+
   getTemporaraOrder(): IUserOrder[]{
     return this.tempOrder;
   }

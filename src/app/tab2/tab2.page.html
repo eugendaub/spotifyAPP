@@ -5,7 +5,7 @@
 </ion-header>
 
  <ion-content class="swiper-slide">
-    <swiper pager="true" id="introswiper"  [config]="config">
+    <swiper  id="introswiper"  [config]="config">
       <ng-template swiperSlide >
         <ion-content>
         <div *ngFor="let softDrink of softDrinkCollections">
@@ -13,7 +13,7 @@
           <ion-list *ngFor="let album of softDrink.albums" >
             <ion-item button="" (click)="openAlbum(album)">
               <ion-col size="2" class="ion-no-padding" >
-                <img [src]="'/assets/images/albums/'+dasherize(album.image)+'.jpg'">
+                <img alt="Softdrink Images" [src]="'/assets/images/albums/'+dasherize(album.image)+'.jpg'">
               </ion-col>
               <ion-col size="8">
                 <ion-label  class="title">
@@ -32,7 +32,7 @@
           <ion-list *ngFor="let album of softDrink.albums" >
             <ion-item button="" (click)="openAlbum(album)">
               <ion-col size="2" class="ion-no-padding" >
-                <img [src]="'/assets/images/albums/'+dasherize(album.image)+'.jpg'">
+                <img alt="Sake Images" [src]="'/assets/images/albums/'+dasherize(album.image)+'.jpg'">
               </ion-col>
               <ion-col size="8">
                 <ion-label  class="title">
@@ -51,7 +51,7 @@
           <ion-list *ngFor="let album of softDrink.albums"  >
             <ion-item button="" (click)="openAlbum(album)">
               <ion-col size="2" class="ion-no-padding" >
-                <img [src]="'/assets/images/albums/'+dasherize(album.image)+'.jpg'">
+                <img alt="Beer Images" [src]="'/assets/images/albums/'+dasherize(album.image)+'.jpg'">
               </ion-col>
               <ion-col size="8">
                 <ion-label  class="title">
@@ -65,64 +65,4 @@
       </ng-template>
       <div class="swiper-pagination"></div>
     </swiper>
-
-
-
-
-<!-- <ion-content >
-     <ion-slides pager="true" [options]="slideOpts">
-        <ion-slide >
-          <div *ngFor="let softDrink of softDrinkCollections">
-            <h2 class="select-header" >{{softDrink.title}}</h2>
-            <ion-list *ngFor="let album of softDrink.albums">
-                <ion-item button="" (click)="openAlbum(album)">
-                  <ion-col size="2" class="ion-no-padding" >
-                    <img [src]="'/assets/images/albums/'+dasherize(album.image)+'.jpg'">
-                  </ion-col>
-                  <ion-col size="8">
-                    <ion-label>
-                      {{ album.title }}
-                    </ion-label>
-                  </ion-col>
-                </ion-item>
-            </ion-list>
-          </div>
-        </ion-slide>
-        <ion-slide>
-          <div *ngFor="let softDrink of sakeCollections">
-            <h2 class="select-header" >{{softDrink.title}}</h2>
-            <ion-list *ngFor="let album of softDrink.albums" >
-              <ion-item button="" (click)="openAlbum(album)">
-                <ion-col size="2" class="ion-no-padding" >
-                  <img [src]="'/assets/images/albums/'+dasherize(album.image)+'.jpg'">
-                </ion-col>
-                <ion-col size="8">
-                  <ion-label>
-                    {{ album.title }}
-                  </ion-label>
-                </ion-col>
-              </ion-item>
-            </ion-list>
-          </div>
-        </ion-slide>
-        <ion-slide tappable="">
-          <div *ngFor="let softDrink of beerCollections">
-            <h2 class="select-header" >{{softDrink.title}}</h2>
-            <ion-list *ngFor="let album of softDrink.albums"  >
-              <ion-item button="" (click)="openAlbum(album)">
-                <ion-col size="2" class="ion-no-padding" >
-                  <img [src]="'/assets/images/albums/'+dasherize(album.image)+'.jpg'">
-                </ion-col>
-                <ion-col size="8">
-                  <ion-label>
-                    {{ album.title }}
-                  </ion-label>
-                </ion-col>
-              </ion-item>
-            </ion-list>
-          </div>
-        </ion-slide>
-      </ion-slides>-->
-
-
 </ion-content>

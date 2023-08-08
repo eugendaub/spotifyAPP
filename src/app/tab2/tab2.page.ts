@@ -15,20 +15,12 @@ SwiperCore.use([Pagination]);
 })
 
 export class Tab2Page {
-  slideOpts = {
-    initialSlide: 1,
-    speed: 400,
-    pagination: { clickable: true },
-    scrollbar: { draggable: true },
-  };
 
   config: SwiperOptions = {
     initialSlide:1,
     speed: 400,
     pagination: true
   };
-
-  drinkName = '';
 
   softDrinkCollections = [
     {
@@ -52,12 +44,12 @@ export class Tab2Page {
 
   constructor( private router: Router) {}
 
-  onSwiper([swiper]) {
+  /*onSwiper([swiper]) {
     console.log(swiper);
   }
   onSlideChange() {
     console.log('slide change');
-  }
+  }*/
 
   // Helper function for image names
   // eslint-disable-next-line id-blacklist

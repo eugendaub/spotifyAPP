@@ -4,30 +4,33 @@
 
 ion-title, ion-content{
   color: #fff;
-  font-family: 'Spotify';
+  font-family: 'Spotify', serif;
 }
 .select-header {
   color: #fff;
-  font-family: 'Spotify';
+  font-family: 'Spotify' , serif;;
   font-weight: bold;
   margin-left: 20px;
   margin-bottom: 30px;
 }
 
-
+.ion-no-padding {
+  //border-radius: 5% !important;
+  //overflow: hidden;
+}
 
 
 
 .title {
   color: #fff;
-  font-family: 'Spotify';
-  font-size: small;
+  font-family: 'Spotify' , serif;
   font-size: 100%;
 }
 
 ng-template {
   display: block;
   text-align: left;
+
 }
 ion-list {
   --ion-background-color: var(--ion-color-dark);
@@ -51,6 +54,7 @@ ion-item {
   .swiper-slide {
     overflow-y: scroll;
     display: block;
+
   }
   .swiper-pagination {
     bottom: 95%;

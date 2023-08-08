@@ -11,8 +11,6 @@ export class Tab3Page {
   allOrdersByTime = [];
 
   constructor(private dataService: DataService) {
-
-    console.log('constructor tab 3');
     //Get All Order ID
     this.dataService.getAllOrderId().subscribe(res => {
       this.allOrders = res;
@@ -22,12 +20,9 @@ export class Tab3Page {
     this.dataService.getOrderByCreatedTime().subscribe(res =>{
       this.allOrdersByTime = res;
     });
-
   }
 
   deleteOrder(order){
-
-    //console.log('order: ', order);
     this.dataService.deleteOrderAndUserOrders(order);
   }
 

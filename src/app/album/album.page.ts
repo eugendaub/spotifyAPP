@@ -3,11 +3,6 @@ import {ActivatedRoute} from '@angular/router';
 import albums from '../../assets/mockdata/albums';
 import {AuthService} from '../services/auth.service';
 import {DataService} from '../services/data.service';
-import {ToastController} from '@ionic/angular';
-import {Vibration} from '@ionic-native/vibration/ngx';
-import { Storage } from '@ionic/storage-angular';
-import {Tab4Page} from '../tab4/tab4.page';
-import {TabsPage} from '../tabs/tabs.page';
 
 
 @Component({
@@ -16,31 +11,19 @@ import {TabsPage} from '../tabs/tabs.page';
   styleUrls: ['./album.page.scss'],
 })
 export class AlbumPage implements OnInit {
-  data = null;
-  oneRoundNumber = 2;
-  userOrderCount = 0;
-  orderButtonDisabled;
-  events: any[] = [];
 
+  data = null;
+  orderButtonDisabled;
 
   constructor(private activatedRoute: ActivatedRoute, private authService: AuthService,
-              private dataService: DataService, private toastCtrl: ToastController,
-              private vibration: Vibration, private storage: Storage,
-              private tab4Page: Tab4Page , private tabsPage: TabsPage) {
-
+              private dataService: DataService) {
   }
 
   ngOnInit() {
     const title = this.activatedRoute.snapshot.paramMap.get('title');
     const decodedTitle = decodeURIComponent(title);
     this.data = albums [decodedTitle];
-    this.orderButtonDisabled = this.dataService.placeAnOrderButtonStatus();
-    //console.log('button in ngInit', this.orderButtonDisabled);
-
-
   }
-
-
 
   // Helper function for image names
   dasherize(stri) {
@@ -50,95 +33,16 @@ export class AlbumPage implements OnInit {
     });
   };
 
-  placeAnOrder(order){
+  placeAnOrderTemp(order) {
     const logInUserEmail = this.authService.getUserEmail();
-    const logInUserId= this.authService.getUserId();
+    const logInUserId = this.authService.getUserId();
     const usertTableNr = this.authService.getUserTableNr();
-    const img= this.dasherize(order.image);
-    /*
-    if(this.userOrderCount !==0){
-      this.orderToast();
-      this.userOrderCount--;
-      console.log('oneOrderTotalNumber', this.oneOrderTotalNumber);
-      console.log('userOrderCount', this.userOrderCount);
-    }else{
-      this.orderFullToast();
-    }*/
-    this.orderToast();
-    this.dataService.addOrderToUser(logInUserId, logInUserEmail,  order.title,  order.title , img, usertTableNr);
-  }
-  async placeAnOrderInStorage(order){
-    const logInUserEmail = this.authService.getUserEmail();
-    const logInUserId= this.authService.getUserId();
-    const usertTableNr = this.authService.getUserTableNr();
-    const img= this.dasherize(order.image);
-
-    await this.dataService.addDate(logInUserId, logInUserEmail,  order.title,  order.title , img, usertTableNr);
-    this.tab4Page.loadDates();
-  }
-  async loadDates() {
-    console.log('loadData');
-    this.events = await this.dataService.getData();
-  }
-
-  placeAnOrderTemp(order){
-    const logInUserEmail = this.authService.getUserEmail();
-    const logInUserId= this.authService.getUserId();
-    const usertTableNr = this.authService.getUserTableNr();
-    const img= this.dasherize(order.image);
-    //this.countOrders();
-    //console.log('orderButtonDisabled:', this.orderButtonDisabled);
-
-    this.dataService.addTempOrder(logInUserId, logInUserEmail,  order.title,  order.title , img, usertTableNr);
-    this.orderButtonDisabled=this.dataService.addUpUserOrder();
-    if(this.orderButtonDisabled===true){
+    const img = this.dasherize(order.image);
+    this.dataService.addTempOrder(logInUserId, logInUserEmail, order.title, order.title, img, usertTableNr);
+    this.orderButtonDisabled = this.dataService.addUpUserOrder();
+    if (this.orderButtonDisabled === true) {
       this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonFull');
-     //this.tabsPage.restaurantFabButtonNormalFullCountdown('restaurantFabButtonFull');
     }
   }
-
-  countOrders(){
-    const userOrderCount = this.authService.getGuestsNumber();
-    const oneOrderTotalNumber = userOrderCount * this.oneRoundNumber -1;
-    if( oneOrderTotalNumber > this.userOrderCount){
-      this.orderToast();
-      this.userOrderCount++;
-      console.log('user order count', this.userOrderCount);
-    }else{
-      this.userOrderCount=0;
-      this.orderFullToast();
-      this.orderButtonDisabled=true;
-
-    }
-  }
-
-  orderToast() {
-    this.vibration.vibrate(75);
-    this.toastCtrl.create({
-      message: 'Added order!',
-      position: 'top',
-      duration: 800,
-      cssClass: 'toast-custom-class-order',
-
-    }).then((toast) => {
-      toast.present();
-    });
-  }
-  orderFullToast() {
-    this.vibration.vibrate(75);
-    this.toastCtrl.create({
-      message: 'Order Full!',
-      position: 'top',
-      duration: 2500,
-      cssClass: 'toast-custom-class',
-
-    }).then((toast) => {
-      toast.present();
-    });
-   // this.userOrderCount = this.authService.getGuestsNumber();
-
-  }
-
-
 
 }
