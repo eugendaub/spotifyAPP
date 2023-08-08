@@ -1,11 +1,3 @@
-import comeAroundSundown from './comeAroundSundown.json';
-import exRe from './exRe.json';
-import extraordinaryMachine from './extraordinaryMachine.json';
-import manOnTheMoon2 from './manOnTheMoon2.json';
-import seaOfCowards from './seaOfCowards.json';
-import swimming from './swimming.json';
-import whenWeAllFallAsleep from './whenWeAllFallAsleep.json';
-import wishYouWereHere from './wishYouWereHere.json';
 import soulfoodBoxVegan from './soulfoodBoxVegan.json';
 import FuyoSpicyYuna from './fuyoSpicyYuna.json';
 import CaliforniaSpicySalmonCrunch from './californiaSpicySalmonCrunch.json';
@@ -47,14 +39,7 @@ import sapporoPremiumBier from './beer/sapporoPremiumBier.json';
 
 
 export default {
-  'Come Around Sundown': comeAroundSundown,
-  'Ex:Re': exRe,
-  'Extraordinary Machine': extraordinaryMachine,
-  'Man On The Moon II: The Legend of Mr. Rager': manOnTheMoon2,
-  'Sea Of Cowards': seaOfCowards,
-  Swimming: swimming,
-  'WHEN WE ALL FALL ASLEEP, WHERE DO WE GO?': whenWeAllFallAsleep,
-  'Wish You Were Here': wishYouWereHere,
+  //SUSHI
   'Soulfood Box Vegan': soulfoodBoxVegan,
   'Fuyo Spicy Yuna': FuyoSpicyYuna,
   'California Spicy Salmon Crunch': CaliforniaSpicySalmonCrunch,
@@ -69,9 +54,8 @@ export default {
   'Futomaki' : futomaki,
   'Futoebi' : futoebi,
   'Maguro Sashimi' : maguroSashimi,
+  //SAKE
   'Sake Wa Hyakuyakucho' : sakeWaHyakuyakucho,
-  'Spritzig' : spritzig,
-  'Lech' : lech,
   'Ozeki Nigori' : ozekiNigori,
   'Tamanohikari Junmai' : tamanohikariJunmai,
   'Ozeki Karatanba Honjozo' : ozekiKaratanbaHonjozo,
@@ -79,7 +63,8 @@ export default {
   'King Umeshu' : kingUmeshu,
   'Chiyomusubi Kitaro' : chiyomusubiKitaro,
   'Ozeki Sake' : ozekiSake,
-
+  // SOFT DRINKS
+  'Spritzig' : spritzig,
   'Suntory Mountain Dew' : suntoryMountainDew,
   'Suntory Ichigo' : suntoryIchigo,
   'Sangaria Tsubumi' : sangariaTsubumi,
@@ -88,7 +73,8 @@ export default {
   'Hata Kosen Musk Melon' : hataKosenMuskMelon,
   'Hata Kosen' : hataKosen,
   'Dragon Boost' : dragonBoost,
-
+  //BEER
+  'Lech' : lech,
   'Asahi Dry Black' : asahiDryBlack,
   'Bira 91 Blonde' : bira91Blonde,
   'Kirin Ichiban' : kirinIchiban,

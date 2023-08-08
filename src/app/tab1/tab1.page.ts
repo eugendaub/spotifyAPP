@@ -46,21 +46,21 @@ export class Tab1Page {
 
   constructor(private router: Router, private authService: AuthService, private dataService: DataService,
               private storage: Storage, private uiService: UiService, private tabsPage: TabsPage) {
-    console.log('TAB 1 Constructor:');
+    //console.log('TAB 1 Constructor:');
     this.authService.ngInit();
     this.loadSettings();
   }
 
   async loadSettings() {
     this.allTabs = await this.uiService.getAvailableTabs();
-    console.log('load Tabs ',this.allTabs);
+    //console.log('load Tabs ',this.allTabs);
 
   }
 
   saveTabSelection(){
     const selected = this.allTabs.filter((tab)=>tab.selected);
     this.uiService.setSelectedTabs(selected);
-    console.log('Save klick', selected);
+    //console.log('Save klick', selected);
   }
 
   openAlbum(album) {

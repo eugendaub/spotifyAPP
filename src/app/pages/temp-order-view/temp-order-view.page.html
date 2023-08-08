@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text="" color="light"  (click)="openTab1()"></ion-back-button>
     </ion-buttons>
-    <ion-title color="light">Your Sushi order view</ion-title>
+    <ion-title color="light">Your Sushi order view {{totalOrderQuantityARound}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -38,8 +38,9 @@
       </span>
       <span *ngSwitchCase="'orderNowButtonOff'">
         <ion-button class="button-order" expand="block" disabled="true">
-            <ion-icon name="alarm-outline"></ion-icon>
-               Please wait {{timeLeftSubject}}
+               Please wait
+          {{timeLeftSubject}}
+           <ion-icon name="alarm-outline"></ion-icon>
          </ion-button>
       </span>
     <span *ngSwitchDefault> default</span>

@@ -63,7 +63,7 @@ export class LoginPage implements OnInit {
     await loading.present();
 
     this.authService.login(this.credentialsForm.value).then(user => {
-      console.log(user);
+      //console.log(user);
 
       loading.dismiss();
       this.router.navigateByUrl('/tabs', { replaceUrl: true });
@@ -80,9 +80,9 @@ export class LoginPage implements OnInit {
   }
 
   async storageCreate() {
-    console.log('create()');
+    //console.log('create Storage');
     await this.storage.create();
-    console.log('create() end');
+    //console.log('create Storage end');
   }
 
 

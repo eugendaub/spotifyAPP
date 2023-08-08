@@ -14,23 +14,23 @@ export class Tab4Page implements OnInit {
 
 
   constructor(private dataService: DataService, private storage: Storage) {
-    console.log('constructor tab 4 allUserOrders: ', this.allUserOrders );
+   // console.log('constructor tab 4 allUserOrders: ', this.allUserOrders );
     //this.loadDates();
   }
 
   ngOnInit() {
-    console.log('ngOnInit TAB 4', this.dataService.getRestaurantFubButtonStatus());
+    //console.log('ngOnInit TAB 4', this.dataService.getRestaurantFubButtonStatus());
     this.storageCreate();
   }
 
   getUserOrders(){
     this.dataService.getAllUserOrders().subscribe(res => {
       this.allUserOrders = res;
-      console.log('Get User:', this.allUserOrders);
+      //console.log('Get User:', this.allUserOrders);
     });
   }
   async loadDates() {
-    console.log('tab 4 loadDates');
+   // console.log('tab 4 loadDates');
     this.events = await this.dataService.getData();
   }
 
@@ -39,7 +39,7 @@ export class Tab4Page implements OnInit {
     this.events.splice(index, 1);
   }
   async ionViewWillEnter() {
-    console.log('ionViewWillEnter');
+    //console.log('ionViewWillEnter');
     this.loadDates();
   }
   async storageCreate() {

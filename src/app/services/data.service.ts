@@ -59,6 +59,11 @@ export class DataService {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   timer$ = this.timerSubject.asObservable();
 
+  // Total Order Quantity A Round
+  private totalOrderQuantityARoundSubject: BehaviorSubject<string> = new BehaviorSubject<string>('0');
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  totalOrderQuantityARound$ = this.totalOrderQuantityARoundSubject.asObservable();
+
   // Order Button
   private orderButtonSubject: BehaviorSubject<string> = new BehaviorSubject<string>('orderNowButtonOn');
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -84,6 +89,9 @@ export class DataService {
   updateOrderButtonStatus(status) {
     this.orderButtonSubject.next(status);
   }
+  updateTotalOrderQuantityARound(status) {
+    this.totalOrderQuantityARoundSubject.next(status);
+  }
 
   addUpUserOrder(){
 
@@ -92,10 +100,11 @@ export class DataService {
     if( this.oneOrderTotalNumber > this.userOrderCount){
       this.orderToast();
       this.userOrderCount++;
+      this.updateTotalOrderQuantityARound(this.userOrderCount);
       console.log('user order count', this.userOrderCount);
       return false;
     }else{
-      this.restaurentFabButtonStatus='restaurantFabButtonFull';
+      //this.restaurentFabButtonStatus='restaurantFabButtonFull';
       this.userOrderCount++;
       this.orderFullToast();
      return true;
@@ -314,11 +323,11 @@ export class DataService {
   }
   deleteTempOrder(deleteNumber){
     const index = this.tempOrder.findIndex((obj) =>obj.tempId ===deleteNumber);
-    console.log('index:', index);
+    //console.log('index:', index);
     if (index > -1) {
       this.tempOrder.splice(index, 1);
     }
-    console.log('After Delete Temp Array: ', this.tempOrder);
+    //console.log('After Delete Temp Array: ', this.tempOrder);
   }
 
   async deleteCompleteTempOrder() {

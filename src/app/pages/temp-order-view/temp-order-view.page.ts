@@ -19,6 +19,7 @@ export class TempOrderViewPage  {
   timeLeftSubject;
   interval;
   orderNowButtonOnOff;
+  totalOrderQuantityARound;
 
   constructor(private dataService: DataService, private navCtrl: NavController, private albumPage: AlbumPage,
               private tabsPage: TabsPage, private tab4Page: Tab4Page, private router: Router) {
@@ -32,6 +33,10 @@ export class TempOrderViewPage  {
     this.dataService.orderButton$.subscribe(status => {
       this.orderNowButtonOnOff = status;
     });
+
+    this.dataService.totalOrderQuantityARound$.subscribe(status => {
+      this.totalOrderQuantityARound = status;
+    });
   }
 
 
@@ -41,7 +46,6 @@ export class TempOrderViewPage  {
     this.startProcessBar('start');
     this.dataService.addTempOrderToDB();
     this.dataService.deleteCompleteTempOrder();
-    this.tabsPage.startExpiryTimer();
     this.openTab1();
     //this.tab4Page.getUserOrders();
     this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonCountDown');
@@ -54,15 +58,14 @@ export class TempOrderViewPage  {
 
 
   async orderTimerPause() {
-    console.log('PAUSE overview temp order'   );
     this.interval = setInterval(() => {
       if(this.timeLeft > 0) {
-        console.log('time: ', this.timeLeft);
+        //console.log('time: ', this.timeLeft);
         this.timeLeft = this.timeLeft-10;
         this.dataService.updateTimerStatus(this.timeLeft);
         this.dataService.updateOrderButtonStatus('orderNowButtonOff');
       } else {
-        console.log('else Pause');
+        //console.log('else Pause');
         this.pauseOrderTimer();
       }
     },1000);

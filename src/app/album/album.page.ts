@@ -35,7 +35,7 @@ export class AlbumPage implements OnInit {
     const decodedTitle = decodeURIComponent(title);
     this.data = albums [decodedTitle];
     this.orderButtonDisabled = this.dataService.placeAnOrderButtonStatus();
-    console.log('button in ngInit', this.orderButtonDisabled);
+    //console.log('button in ngInit', this.orderButtonDisabled);
 
 
   }

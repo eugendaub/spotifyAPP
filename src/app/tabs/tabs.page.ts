@@ -50,9 +50,9 @@ export class TabsPage {
 
     this.dataService.restaurantFabButtonStatus$.subscribe( status => {
       this.restaurantFabButtonStatus = status;
-      console.log('this.restaurantFabButtonStatus', this.restaurantFabButtonStatus );
+      //console.log('this.restaurantFabButtonStatus', this.restaurantFabButtonStatus );
     });
-    console.log('TABS COSNTRUKTOR');
+    //console.log('TABS COSNTRUKTOR');
 
     this.dataService.timer$.subscribe(status => {
       this.timeLeftProgressBar = status;
@@ -81,21 +81,6 @@ export class TabsPage {
     },1000);*/
   }
 
-  startExpiryTimer(){
-    console.log('Processbar Status: ', this.processBarStartOrStop);
-    if(this.processBarStartOrStop === 'start'){
-      this.interval = setInterval(() => {
-        if(this.timeLeft > 0) {
-          console.log('startExpiryTimer time left : ', this.timeLeft);
-          this.timeLeft = this.timeLeft-10;
-        } else {
-          //console.log('else Pause');
-          this.pauseOrderTimer();
-        }
-      },1000);
-    }
-  }
-
 
   pauseOrderTimer() {
     this.orderSet= false;
@@ -111,7 +96,7 @@ export class TabsPage {
   }
 
   openTab(tabPath){
-    console.log('TAB:',tabPath );
+    //console.log('TAB:',tabPath );
     if(tabPath==='tab1'){
       this.navCtrl.navigateRoot('/tabs/tab1');
     }else if(tabPath==='tab2'){
