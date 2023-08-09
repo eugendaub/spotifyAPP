@@ -71,7 +71,6 @@ export class TempOrderViewPage  {
   async orderTimerPause() {
     this.interval = setInterval(() => {
       if(this.timeLeft > 0) {
-        //console.log('time: ', this.timeLeft);
         this.timeLeft = this.timeLeft-10;
         this.dataService.updateTimerStatus(this.timeLeft);
         this.dataService.updateOrderButtonStatus('orderNowButtonOff');

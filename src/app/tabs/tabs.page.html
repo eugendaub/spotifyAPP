@@ -1,32 +1,8 @@
-
-
-
-  <!--<div class="container" *ngIf="orderSet ;then orderGiven; else noOrder">
-  </div>
-  <ng-template #orderGiven>
-    <ion-fab  horizontal="end" vertical="top" slot="fixed" >
-      <div class="button-flash">
-      <ion-fab-button fab-but="button" (click)="orderTimerPause()">
-            <ion-icon color="light" name="restaurant-outline"></ion-icon>
-            <ion-label color="light">{{timeLeft}}</ion-label>
-      </ion-fab-button>
-      </div>
-    </ion-fab>
-  </ng-template>
-  <ng-template #noOrder>
-    <ion-fab  horizontal="end" vertical="top" slot="fixed" >
-      <div >
-      <ion-fab-button  [disabled]="orderSet" fab-but="button" (click)="orderTimerPause()" >
-            <ion-icon color="light" name="restaurant-outline"></ion-icon>
-      </ion-fab-button>
-      </div>
-    </ion-fab>
-  </ng-template>-->
   <div class="fab-button" [ngSwitch]="restaurantFabButtonStatus">
       <span *ngSwitchCase="'restaurantFabButtonNormal'">
         <ion-fab  horizontal="end" vertical="end" slot="fixed" >
         <div >
-          <ion-fab-button  fab-but="button" (click)="orderTimerPause()" >
+          <ion-fab-button  fab-but="button" (click)="temOrderView()" >
             <ion-icon color="light" name="restaurant-outline"></ion-icon>
           </ion-fab-button>
         </div>
@@ -35,7 +11,7 @@
     <span *ngSwitchCase="'restaurantFabButtonFull'">
       <ion-fab  horizontal="end" vertical="end" slot="fixed" >
       <div class="button-flash">
-        <ion-fab-button fab-but="button" (click)="orderTimerPause()" >
+        <ion-fab-button fab-but="button" (click)="temOrderView()" >
           <ion-icon color="light" name="restaurant-outline"></ion-icon>
         </ion-fab-button>
       </div>
@@ -45,7 +21,7 @@
       <ion-fab  horizontal="end" vertical="end" slot="fixed" >
       <div >
         <ion-fab-button  fab-but="button" >
-          <ion-icon color="light" name="restaurant" (click)="orderTimerPause()"></ion-icon>
+          <ion-icon color="light" name="restaurant" (click)="temOrderView()"></ion-icon>
           <ion-label color="light">{{timeLeftProgressBar}}</ion-label>
         </ion-fab-button>
       </div>
@@ -53,13 +29,6 @@
     </span>
     <span *ngSwitchDefault> default</span>
   </div>
-
-
-  <!--<ion-fab  horizontal="center" vertical="top" slot="fixed" >
-    <ion-fab-button  fab-but="button" (click)="temOrderView()">
-      <ion-icon color="light" name="clipboard-outline"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>-->
 
 <ion-tabs (ionTabsDidChange)="setSelectedTab()">
 
@@ -71,10 +40,7 @@
 
   <!-- The Ionic tab bar -->
   <ion-tab-bar slot="bottom">
-
-
     <ion-tab-button *ngFor="let tab of selectedTabs" [tab]="tab.path" (click)="openTab(tab.path)" >
-    <!--  <ion-icon [name]="tab.icon"></ion-icon>-->
       <ion-icon [name]="selected === tab.path ? tab.icon : tab.iconAlt"></ion-icon>
       <ion-label>{{ tab.name }}</ion-label>
     </ion-tab-button>

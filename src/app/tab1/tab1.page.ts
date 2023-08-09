@@ -8,7 +8,6 @@ import {AuthService} from '../services/auth.service';
 import {DataService} from '../services/data.service';
 import {Storage} from '@ionic/storage-angular';
 import {UiService} from '../services/ui.service';
-import {TabsPage} from '../tabs/tabs.page';
 
 @Component({
   selector: 'app-tab1',
@@ -45,7 +44,7 @@ export class Tab1Page {
   };
 
   constructor(private router: Router, private authService: AuthService, private dataService: DataService,
-              private storage: Storage, private uiService: UiService, private tabsPage: TabsPage) {
+              private storage: Storage, private uiService: UiService) {
     //console.log('TAB 1 Constructor:');
     this.authService.ngInit();
     this.loadSettings();
@@ -69,7 +68,6 @@ export class Tab1Page {
     this.router.navigateByUrl(`/tabs/tab1/${titleEscaped}`);
   }
 
-
   // Helper function for image names
   // eslint-disable-next-line id-blacklist
   dasherize(string) {
@@ -78,11 +76,13 @@ export class Tab1Page {
       return (index !== 0 ? '-' : '') + char.toLowerCase();
     });
   };
+
   logout(){
     this.storage.clear();
     this.dataService.deleteCompleteTempOrder();
     this.authService.logout();
   }
+
   deleteUser(){
     this.dataService.deleteCompleteTempOrder();
     this.storage.clear();

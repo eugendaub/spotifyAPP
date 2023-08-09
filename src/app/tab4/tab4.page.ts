@@ -24,7 +24,7 @@ export class Tab4Page implements OnInit {
   }
 
   async loadDates() {
-    this.events = await this.dataService.getData();
+    this.events = await this.dataService.getLocalTableOrders();
   }
 
   // Löscht eine Bestellung (wird zur Testzweken benötigt)

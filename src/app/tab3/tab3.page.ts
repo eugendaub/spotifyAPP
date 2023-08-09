@@ -11,6 +11,7 @@ export class Tab3Page {
   allOrdersByTime = [];
 
   constructor(private dataService: DataService) {
+
     //Get All Order ID
     this.dataService.getAllOrderId().subscribe(res => {
       this.allOrders = res;
@@ -26,6 +27,7 @@ export class Tab3Page {
     this.dataService.deleteOrderAndUserOrders(order);
   }
 
+  // löscht alle Bestellugen.
   deleteAllUserOrders(){
     this.dataService.deleteAllUserOrdersFromDB();
   }

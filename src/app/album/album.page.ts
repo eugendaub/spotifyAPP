@@ -14,9 +14,26 @@ export class AlbumPage implements OnInit {
 
   data = null;
   orderButtonDisabled;
+  restaurantFabButtonStatus;
 
   constructor(private activatedRoute: ActivatedRoute, private authService: AuthService,
               private dataService: DataService) {
+
+    this.dataService.restaurantFabButtonStatus$.subscribe( status => {
+      this.restaurantFabButtonStatus = status;
+      this.onOffAddButton(this.restaurantFabButtonStatus);
+      console.log('this.restaurantFabButtonStatus', this.restaurantFabButtonStatus );
+    });
+  }
+
+  // Aus-/Einschalter aktivieren/deaktivieren.
+  onOffAddButton(status){
+    console.log('on');
+    if(status === 'restaurantFabButtonFull'){
+      this.orderButtonDisabled='true';
+    }else if(status === 'restaurantFabButtonNormal' ) {
+      this.orderButtonDisabled = 'false';
+    }
   }
 
   ngOnInit() {

@@ -10,6 +10,7 @@ import {Vibration} from '@ionic-native/vibration/ngx';
 import { Storage } from '@ionic/storage-angular';
 import { BehaviorSubject } from 'rxjs';
 
+// wird für die zwischen bestellungen verwendet in Tab4
 const STORAGE_KEY = 'mylist';
 
 export interface IUserOrder {
@@ -19,7 +20,7 @@ export interface IUserOrder {
   userTableNr: string;
   title: string;
   text: string;
-  //createdAt: serverTimestamp() ;
+  createdAt: string;
   imageLink: string;
 }
 
@@ -34,6 +35,7 @@ export class DataService {
   count = 0;
   oneRoundNumber = 2;
   userOrderCount = 0;
+  currentDate: string;
   private tempOrder: IUserOrder[]=[];
   // eslint-disable-next-line @typescript-eslint/member-ordering
   guestsNumber;
@@ -65,6 +67,7 @@ export class DataService {
   constructor(private firestore: Firestore, private authService: AuthService, private toastCtrl: ToastController,
               private vibration: Vibration, private storage: Storage) { }
 
+  // Holt alle Bestellunge aus Db für die Küche
   getAllOrderId(){
     const notesRef = collection(this.firestore, 'orders');
     return collectionData(notesRef, { idField: 'id'});
@@ -86,7 +89,9 @@ export class DataService {
     this.totalOrderQuantityARoundSubject.next(status);
   }
 
+  // Hier werden die bestellungen pro Runde erfasst.
   addUpUserOrder(){
+    console.log('addUpUser');
     this.guestsNumber = this.authService.getGuestsNumber();
     this.oneOrderTotalNumber = this.guestsNumber * this.oneRoundNumber -1;
     if( this.oneOrderTotalNumber > this.userOrderCount){
@@ -102,10 +107,12 @@ export class DataService {
     }
   }
 
+  // Sollte eine Bestelung aus dem Temp-order-view-page enfernt werden so wird es hier erfasst.
   oneOrderDeleteMinusCount(){
     this.userOrderCount--;
   }
 
+  // Poppt bei jeder hinzugefügten ware auf und zeigt die verbliebende Bestellanzahl an.
   orderToast() {
     this.oneOrderTotalNumber = (this.guestsNumber * this.oneRoundNumber -1) - (this.userOrderCount) ;
     this.vibration.vibrate(75);
@@ -119,8 +126,9 @@ export class DataService {
     });
   }
 
+  // Poppt auf falls die Bestellanzahl erreicht ist.
   orderFullToast() {
-    this.vibration.vibrate(75);
+    this.vibration.vibrate(275);
     this.toastCtrl.create({
       message: 'Order Full!',
       position: 'top',
@@ -129,7 +137,6 @@ export class DataService {
     }).then((toast) => {
       toast.present();
     });
-    // this.userOrderCount = this.authService.getGuestsNumber();
   }
 
   getAllUserOrders(){
@@ -151,7 +158,9 @@ export class DataService {
     );
   }
 
+  // Hier wird der User/Table mit Bestellugen gelöscht
   deleteUserDocument(userId) {
+    console.log('deleteUserDoc');
     const noteDocRef = doc(this.firestore, `users/${userId}`);
     return deleteDoc(noteDocRef);
   }
@@ -169,8 +178,8 @@ export class DataService {
       });
   }
 
+  // Löscht alle Bestellugen von der DB (wird zur Testzwecken in Tab3/Küche benutzt )
   deleteAllUserOrdersFromDB(){
-    console.log('deleteAllUserOrdersFromDB');
     const userId= this.authService.getUserId();
     const userRef = doc(this.firestore, `users/${userId}`);
     console.log('userId: ', userId);
@@ -190,6 +199,7 @@ export class DataService {
   }
 
   addOrderToUser(logInUserId,logInUserEmail, text, title, sushiImageLink, usertTableNr){
+    console.log('addOrderToUser');
     const chatsRef = collection(this.firestore, 'orders');
     const userOrder = {
       userid: logInUserId,
@@ -218,7 +228,8 @@ export class DataService {
     });
   }
 
-  getData() {
+  // Hier werden alle Bestellugen von einem Tisch aufgerufen (Tab 4)
+  getLocalTableOrders() {
     return this.storage.get(STORAGE_KEY) || [];
   }
 
@@ -231,6 +242,7 @@ export class DataService {
 
   // Hier wird eine Temporere Bestellung erfasst
   addTempOrder(logInUserId,logInUserEmail, text, title, sushiImageLink, userTableNr){
+    //this.currentDate = new Date().toISOString();
     const order: IUserOrder = {
       tempId: this.orderCount,
       userid: logInUserId,
@@ -238,23 +250,20 @@ export class DataService {
       userTableNr,
       title,
       text,
-      //createdAt: serverTimestamp(),
+      createdAt: new Date().toISOString(),
       imageLink: sushiImageLink
     };
     this.tempOrder.push(order);
     //console.log('Array: ', this.tempOrder);
     this.orderCount++;
-
   }
 
   // Hiermit wird eine Bestellung aus Temp-order-view-page gelöscht
   deleteTempOrder(deleteNumber){
     const index = this.tempOrder.findIndex((obj) =>obj.tempId ===deleteNumber);
-    //console.log('index:', index);
     if (index > -1) {
       this.tempOrder.splice(index, 1);
     }
-    //console.log('After Delete Temp Array: ', this.tempOrder);
   }
 
   // Nach einer bestellung werden alle Temporeren Bestelluge storniert/gelöscht
@@ -263,20 +272,15 @@ export class DataService {
     this.userOrderCount=0;
   }
 
+  // Hiermit werden alle Bestellungen die in Temp-order-view-page vorhanden sind in der DB abgespeichert
   async addTempOrderToDB() {
     const ordersRef = collection(this.firestore, 'orders');
     const logInUserId = this.authService.getUserId();
     for (const order of this.tempOrder) {
       addDoc(ordersRef, order).then(res => {
-        // console.log('created order ADDDOC: ', res);
         const groupID = res.id;
         const promises = [];
-        //addDoc(userOrdersRef,order);
-        this.addDats(order);
-
-        // In der DB muss für jeden user der DB eintrag angepasst werden
-        // (in diesem Fall in welchen Chats befindet sich der User)
-
+        this.addLocalTableOrders(order);
         const userChatsRef = doc(this.firestore, `users/${logInUserId}`);
         const update = updateDoc(userChatsRef, {
           userOrders: arrayUnion(groupID)
@@ -285,16 +289,16 @@ export class DataService {
         return Promise.all(promises);
       });
     }
-    //this.addTempUserOrdersToDB();
   }
 
-  async addDats(order: IUserOrder) {
-
+  // Hiermit werden die Bestellungen von einem Tisch lockal abgespeichert.
+  async addLocalTableOrders(order: IUserOrder) {
     const dates = await this.storage.get(STORAGE_KEY) || [];
     dates.push(order);
     return this.storage.set(STORAGE_KEY, dates);
   }
 
+  //  !!!!!!! ACHTUNG  wird nicht verwendet (muss einmal benutzt werden)  ACHTUNG !!!!!!!!
   createOrderForUser(logInUserId,logInUserEmail){
     const chatsRef = collection(this.firestore, 'orders');
     const chat = {
@@ -307,8 +311,6 @@ export class DataService {
       const groupID = res.id;
       const promises = [];
 
-      // In der DB muss für jeden user der DB eintrag angepasst werden
-      // (in diesem Fall in welchen Chats befindet sich der User)
       const userChatsRef = doc(this.firestore, `users/${logInUserId}`);
       const update = updateDoc(userChatsRef, {
         userOrders: arrayUnion(groupID)
@@ -318,12 +320,14 @@ export class DataService {
     });
   }
 
+  // Holt alle Bestellunge aus Db mit Zeitstempel für die Küche
   getOrderByCreatedTime(){
     const messages = collection(this.firestore, `orders`);
     const q = query(messages, orderBy('createdAt'));
     return collectionData(q, {idField: 'id'});
   }
 
+  // Holt alle Temporere Bestellungen (benutzt in Temp-order-view-page)
   getTemporaraOrder(): IUserOrder[]{
     return this.tempOrder;
   }
