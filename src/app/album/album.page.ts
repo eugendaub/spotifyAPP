@@ -15,6 +15,7 @@ export class AlbumPage implements OnInit {
   data = null;
   orderButtonDisabled;
   restaurantFabButtonStatus;
+  timerOnOff;
 
   constructor(private activatedRoute: ActivatedRoute, private authService: AuthService,
               private dataService: DataService) {
@@ -23,6 +24,10 @@ export class AlbumPage implements OnInit {
       this.restaurantFabButtonStatus = status;
       this.onOffAddButton(this.restaurantFabButtonStatus);
       console.log('this.restaurantFabButtonStatus', this.restaurantFabButtonStatus );
+    });
+
+    this.dataService.timeStatus$.subscribe( status => {
+      this.timerOnOff = status;
     });
   }
 
@@ -57,7 +62,8 @@ export class AlbumPage implements OnInit {
     const img = this.dasherize(order.image);
     this.dataService.addTempOrder(logInUserId, logInUserEmail, order.title, order.title, img, userTableNr);
     this.orderButtonDisabled = this.dataService.addUpUserOrder();
-    if (this.orderButtonDisabled === true) {
+    if (this.orderButtonDisabled === true && this.timerOnOff === 'off') {
+      console.log('FUll');
       this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonFull');
     }
   }

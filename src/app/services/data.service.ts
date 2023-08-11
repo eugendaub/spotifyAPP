@@ -49,13 +49,18 @@ export class DataService {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   restaurantFabButtonStatus$ = this.restaurantFabButtonSubject.asObservable();
 
-  // Timer
-  private timerSubject: BehaviorSubject<string> = new BehaviorSubject<string>('100');
+  // Laufzeit
+  private runningTime: BehaviorSubject<string> = new BehaviorSubject<string>('100');
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  timer$ = this.timerSubject.asObservable();
+  runningTime$ = this.runningTime.asObservable();
+
+  // Laufzeit status an/aus
+  private timeStatus: BehaviorSubject<string> = new BehaviorSubject<string>('off');
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  timeStatus$ = this.timeStatus.asObservable();
 
   // Total Order Quantity A Round
-  private totalOrderQuantityARoundSubject: BehaviorSubject<string> = new BehaviorSubject<string>('0');
+  private totalOrderQuantityARoundSubject: BehaviorSubject<string> = new BehaviorSubject<string>('orderRoundNotFull');
   // eslint-disable-next-line @typescript-eslint/member-ordering
   totalOrderQuantityARound$ = this.totalOrderQuantityARoundSubject.asObservable();
 
@@ -77,8 +82,12 @@ export class DataService {
     this.restaurantFabButtonSubject.next(status);
   }
 
+  updateRunningTime(status) {
+    this.runningTime.next(status);
+  }
+
   updateTimerStatus(status) {
-    this.timerSubject.next(status);
+    this.timeStatus.next(status);
   }
 
   updateOrderButtonStatus(status) {
@@ -91,17 +100,18 @@ export class DataService {
 
   // Hier werden die bestellungen pro Runde erfasst.
   addUpUserOrder(){
-    console.log('addUpUser');
     this.guestsNumber = this.authService.getGuestsNumber();
     this.oneOrderTotalNumber = this.guestsNumber * this.oneRoundNumber -1;
     if( this.oneOrderTotalNumber > this.userOrderCount){
       this.orderToast();
       this.userOrderCount++;
+      console.log(this.userOrderCount);
       this.updateTotalOrderQuantityARound(this.userOrderCount);
-      console.log('user order count', this.userOrderCount);
       return false;
     }else{
       this.userOrderCount++;
+      console.log(this.userOrderCount);
+      this.updateTotalOrderQuantityARound('orderRoundFull');
       this.orderFullToast();
      return true;
     }

@@ -27,7 +27,7 @@ export class TempOrderViewPage  {
     //Get All Temporary Orders now
       this.allTempOrders = this.dataService.getTemporaraOrder();
 
-    this.dataService.timer$.subscribe(status => {
+    this.dataService.runningTime$.subscribe(status => {
       this.timeLeftSubject = status;
     });
 
@@ -48,6 +48,7 @@ export class TempOrderViewPage  {
       this.dataService.addTempOrderToDB();
       this.dataService.deleteCompleteTempOrder();
       this.openTab1();
+      this.dataService.updateTotalOrderQuantityARound('orderRoundNotFull');
       this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonCountDown');
     }else{
       const alert = await this.alertCtrl.create({
@@ -72,8 +73,9 @@ export class TempOrderViewPage  {
     this.interval = setInterval(() => {
       if(this.timeLeft > 0) {
         this.timeLeft = this.timeLeft-10;
-        this.dataService.updateTimerStatus(this.timeLeft);
+        this.dataService.updateRunningTime(this.timeLeft);
         this.dataService.updateOrderButtonStatus('orderNowButtonOff');
+        this.dataService.updateTimerStatus('on');
       } else {
         //console.log('else Pause');
         this.pauseOrderTimer();
@@ -82,9 +84,10 @@ export class TempOrderViewPage  {
   }
 
   pauseOrderTimer() {
-    this.dataService.updateTimerStatus(this.waiteTime);
+    this.dataService.updateRunningTime(this.waiteTime);
     this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonNormal');
     this.dataService.updateOrderButtonStatus('orderNowButtonOn');
+    this.dataService.updateTimerStatus('off');
     clearInterval(this.interval);
   }
 
@@ -92,6 +95,7 @@ export class TempOrderViewPage  {
     console.log('ID :', order.tempId);
     this.dataService.deleteTempOrder(order.tempId);
     this.dataService.oneOrderDeleteMinusCount();
+    this.dataService.updateTotalOrderQuantityARound('orderRoundNotFull');
     this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonNormal');
   }
 

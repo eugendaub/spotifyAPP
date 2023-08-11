@@ -48,7 +48,7 @@ export class TabsPage {
     });
     //console.log('TABS COSNTRUKTOR');
 
-    this.dataService.timer$.subscribe(status => {
+    this.dataService.runningTime$.subscribe(status => {
       this.timeLeftProgressBar = status;
     });
 

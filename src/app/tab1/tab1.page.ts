@@ -53,7 +53,6 @@ export class Tab1Page {
   async loadSettings() {
     this.allTabs = await this.uiService.getAvailableTabs();
     //console.log('load Tabs ',this.allTabs);
-
   }
 
   saveTabSelection(){
