@@ -42,7 +42,9 @@ export class TempOrderViewPage  {
 
 
   async placeAnOrder(){
-    if(this.totalOrderQuantityARound >0) {
+    console.log('placeAnOrder ',this.totalOrderQuantityARound );
+    // Wenn eine oder volle Bestellugnen in Temp-Order sind dann bestellung aufgeben.
+    if(this.totalOrderQuantityARound >= 1 || this.totalOrderQuantityARound >= 'orderRoundFull' ) {
       this.orderNowButtonOnOff = true;
       this.orderTimerPause();
       this.dataService.addTempOrderToDB();
@@ -85,10 +87,14 @@ export class TempOrderViewPage  {
 
   pauseOrderTimer() {
     this.dataService.updateRunningTime(this.waiteTime);
-    this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonNormal');
-    this.dataService.updateOrderButtonStatus('orderNowButtonOn');
     this.dataService.updateTimerStatus('off');
+    this.dataService.updateOrderButtonStatus('orderNowButtonOn');
     clearInterval(this.interval);
+    if(this.totalOrderQuantityARound === 'orderRoundFull') {
+      this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonFull');
+    }else{
+      this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonNormal');
+    }
   }
 
   deleteOneOrder(order){
