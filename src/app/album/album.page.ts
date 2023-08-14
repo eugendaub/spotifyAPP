@@ -23,7 +23,7 @@ export class AlbumPage implements OnInit {
     this.dataService.restaurantFabButtonStatus$.subscribe( status => {
       this.restaurantFabButtonStatus = status;
       this.onOffAddButton(this.restaurantFabButtonStatus);
-      console.log('this.restaurantFabButtonStatus', this.restaurantFabButtonStatus );
+      //console.log('this.restaurantFabButtonStatus', this.restaurantFabButtonStatus );
     });
 
     this.dataService.timeStatus$.subscribe( status => {
@@ -33,7 +33,7 @@ export class AlbumPage implements OnInit {
 
   // Aus-/Einschalter aktivieren/deaktivieren.
   onOffAddButton(status){
-    console.log('on');
+    //console.log('on');
     if(status === 'restaurantFabButtonFull'){
       this.orderButtonDisabled='true';
     }else if(status === 'restaurantFabButtonNormal' ) {

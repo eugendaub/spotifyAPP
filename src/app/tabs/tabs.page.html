@@ -22,7 +22,7 @@
       <div >
         <ion-fab-button  fab-but="button" >
           <ion-icon color="light" name="restaurant" (click)="temOrderView()"></ion-icon>
-          <ion-label color="light">{{timeLeftProgressBar}}</ion-label>
+          <ion-label color="light">{{timeLeftFormatted}}<!--{{ (timeLeftProgressBar | async)*1000 | date:'mm:ss'}}--></ion-label>
         </ion-fab-button>
       </div>
     </ion-fab>

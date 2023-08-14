@@ -10,6 +10,7 @@ import {filter} from 'rxjs/operators';
 
 
 
+
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
@@ -21,13 +22,9 @@ export class TabsPage {
   selectedTabs = [];
 
   selected = '';
-  progress = 47;
-  waiteTime = 100;
-  timeLeft: number = this.waiteTime;
-  interval;
-  orderSet = false;
   selectedTab = '';
   timeLeftProgressBar;
+  timeLeftFormatted;
 
   restaurantFabButtonStatus='restaurantFabButtonNormal';
 
@@ -49,9 +46,18 @@ export class TabsPage {
     //console.log('TABS COSNTRUKTOR');
 
     this.dataService.runningTime$.subscribe(status => {
-      this.timeLeftProgressBar = status;
+      this.timeLeftProgressBar = status ;
+      // Umwandlung in "mm:ss"-Format
+      const minutes = Math.floor(this.timeLeftProgressBar / 60);
+      const seconds = this.timeLeftProgressBar % 60;
+      this.timeLeftFormatted = `${this.padZero(minutes)}:${this.padZero(seconds)}`;
+      console.log(this.timeLeftProgressBar);
     });
 
+  }
+
+  padZero(num: number): string {
+    return (num < 10) ? `0${num}` : `${num}`;
   }
 
   setSelectedTab(){

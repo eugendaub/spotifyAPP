@@ -28,6 +28,7 @@
       </ion-item>
     </ion-list>
   </div>
+  <ion-button (click)="newTimer()"><p>Countdown Timer: {{ timeLeftFormatted }}</p></ion-button>
 
 
   <div class="fab-button" [ngSwitch]="orderNowButtonOnOff">
@@ -39,7 +40,7 @@
     <span *ngSwitchCase="'orderNowButtonOff'">
         <ion-button class="button-order" expand="block" disabled="true">
                Please wait
-          {{timeLeftSubject}}
+          {{timeLeftFormatted }}
           <ion-icon name="alarm-outline"></ion-icon>
          </ion-button>
       </span>

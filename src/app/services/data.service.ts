@@ -43,6 +43,8 @@ export class DataService {
   oneOrderTotalNumber;
   // eslint-disable-next-line @typescript-eslint/member-ordering
   restaurentFabButtonStatus: any;
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  aRoundTime = 10;
 
   //restaurant Fab-Button Status
   private restaurantFabButtonSubject: BehaviorSubject<string> = new BehaviorSubject<string>('restaurantFabButtonNormal');
@@ -50,7 +52,7 @@ export class DataService {
   restaurantFabButtonStatus$ = this.restaurantFabButtonSubject.asObservable();
 
   // Laufzeit
-  private runningTime: BehaviorSubject<string> = new BehaviorSubject<string>('100');
+  private runningTime: BehaviorSubject<string> = new BehaviorSubject<string>('aRoundTime');
   // eslint-disable-next-line @typescript-eslint/member-ordering
   runningTime$ = this.runningTime.asObservable();
 
@@ -83,6 +85,7 @@ export class DataService {
   }
 
   updateRunningTime(status) {
+    console.log('updateRunningTime: ', status);
     this.runningTime.next(status);
   }
 
