@@ -39,7 +39,7 @@ export class TempOrderViewPage  {
       const minutes = Math.floor(this.timeLeftSubject / 60);
       const seconds = this.timeLeftSubject % 60;
       this.timeLeftFormatted = `${this.padZero(minutes)}:${this.padZero(seconds)}`;
-      console.log('timeLeftSubject; ', this.timeLeftFormatted);
+      //console.log('timeLeftSubject; ', this.timeLeftFormatted);
     });
 
     this.dataService.orderButton$.subscribe(status => {
@@ -106,9 +106,9 @@ export class TempOrderViewPage  {
 
 
   async placeAnOrder(){
-    //console.log('placeAnOrder ',this.totalOrderQuantityARound );
+    console.log('placeAnOrder ',this.totalOrderQuantityARound );
     // Wenn eine oder volle Bestellugnen in Temp-Order sind dann bestellung aufgeben.
-    if(this.totalOrderQuantityARound >= 1 || this.totalOrderQuantityARound >= 'orderRoundFull' ) {
+    if(this.totalOrderQuantityARound >= 1 || this.totalOrderQuantityARound === 'orderRoundFull' ) {
       this.orderNowButtonOnOff = true;
       this.countdownTimer.next(this.countdownOrderWaitTime);
       //this.orderTimerPause();

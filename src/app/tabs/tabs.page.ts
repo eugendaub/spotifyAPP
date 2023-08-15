@@ -25,6 +25,7 @@ export class TabsPage {
   selectedTab = '';
   timeLeftProgressBar;
   timeLeftFormatted;
+  runningTime;
 
   restaurantFabButtonStatus='restaurantFabButtonNormal';
 
@@ -46,12 +47,16 @@ export class TabsPage {
     //console.log('TABS COSNTRUKTOR');
 
     this.dataService.runningTime$.subscribe(status => {
-      this.timeLeftProgressBar = status ;
+      const waitTime = this.dataService.aRoundTime;
+      this.runningTime = status;
+
+      // @ts-ignore
+      this.timeLeftProgressBar = ( status / waitTime ) * 100 ;
       // Umwandlung in "mm:ss"-Format
-      const minutes = Math.floor(this.timeLeftProgressBar / 60);
-      const seconds = this.timeLeftProgressBar % 60;
+      const minutes = Math.floor(this.runningTime / 60);
+      const seconds = this.runningTime % 60;
       this.timeLeftFormatted = `${this.padZero(minutes)}:${this.padZero(seconds)}`;
-      console.log(this.timeLeftProgressBar);
+      //console.log(this.runningTime);
     });
 
   }

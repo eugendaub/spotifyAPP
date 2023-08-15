@@ -12,7 +12,7 @@ ion-tab-button{
   img {
     height: 55px;
   }
-  font-family: 'Spotify';
+  font-family: 'Spotify' , serif;
   color: #fff;
   font-size: small;
 
@@ -26,6 +26,14 @@ ion-tab-button{
       height: 100%;
     }
   }
+}
+
+.fab-icon {
+  font-size: 25px;
+}
+
+.row-position-icon {
+  padding-left: 10px;
 }
 
 .button-flash {

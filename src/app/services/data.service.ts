@@ -43,6 +43,7 @@ export class DataService {
   oneOrderTotalNumber;
   // eslint-disable-next-line @typescript-eslint/member-ordering
   restaurentFabButtonStatus: any;
+  // Angabe in secunden
   // eslint-disable-next-line @typescript-eslint/member-ordering
   aRoundTime = 10;
 
@@ -85,7 +86,6 @@ export class DataService {
   }
 
   updateRunningTime(status) {
-    console.log('updateRunningTime: ', status);
     this.runningTime.next(status);
   }
 
