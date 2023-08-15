@@ -76,3 +76,23 @@ ion-tab-button{
   margin-top:1vh;
   background: transparent;
 }
+
+.title {
+  color: #fff;
+  font-family: 'Spotify', serif;
+  font-size: 100%;
+}
+
+.save-text {
+  color: #fff;
+  font-family: 'Spotify', serif;
+}
+
+ion-item {
+  --background: var(--ion-color-dark);
+  --color: white;
+}
+
+.item-content {
+  background-color: #121212;
+}

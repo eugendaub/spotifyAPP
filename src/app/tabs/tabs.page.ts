@@ -6,6 +6,7 @@ import {AuthService} from '../services/auth.service';
 import {DataService} from '../services/data.service';
 import {UiService} from '../services/ui.service';
 import {filter} from 'rxjs/operators';
+import {Storage} from '@ionic/storage-angular';
 
 
 
@@ -20,6 +21,8 @@ export class TabsPage {
   @ViewChild(IonTabs) tabs: IonTabs;
 
   selectedTabs = [];
+  allTabs= [];
+  newWaitTime: number;
 
   selected = '';
   selectedTab = '';
@@ -31,7 +34,8 @@ export class TabsPage {
 
 
   constructor(private navCtrl: NavController, private router: Router, private tab4Page: Tab4Page,
-              private authService: AuthService , private dataService: DataService, private uiService: UiService) {
+              private authService: AuthService , private dataService: DataService, private uiService: UiService,
+              private storage: Storage ) {
 
     this.uiService
       .getActiveTabs()
@@ -39,6 +43,9 @@ export class TabsPage {
       .subscribe((tabs) => {
         this.selectedTabs = tabs;
       });
+
+    this.authService.ngInit();
+    this.loadSettings();
 
     this.dataService.restaurantFabButtonStatus$.subscribe( status => {
       this.restaurantFabButtonStatus = status;
@@ -58,6 +65,20 @@ export class TabsPage {
       this.timeLeftFormatted = `${this.padZero(minutes)}:${this.padZero(seconds)}`;
       //console.log(this.runningTime);
     });
+
+  }
+  async loadSettings() {
+    this.allTabs = await this.uiService.getAvailableTabs();
+    //console.log('load Tabs ',this.allTabs);
+  }
+
+  saveTabSelection(){
+    const selected = this.allTabs.filter((tab)=>tab.selected);
+    this.uiService.setSelectedTabs(selected);
+    //console.log('Save klick', selected);
+  }
+
+  saveNewOrderWaitTime(){
 
   }
 
@@ -85,5 +106,19 @@ export class TabsPage {
     }else if(tabPath==='tab4'){
       this.tab4Page.loadDates();
     }
+  }
+
+  logout(){
+    this.storage.clear();
+    this.dataService.deleteCompleteTempOrder();
+    this.authService.logout();
+  }
+
+  deleteUser(){
+    this.dataService.deleteCompleteTempOrder();
+    this.storage.clear();
+    const userId = this.authService.getUserId();
+    this.authService.deleteUser();
+    this.dataService.deleteUserDocument(userId);
   }
 }

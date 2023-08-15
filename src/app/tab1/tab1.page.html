@@ -1,45 +1,3 @@
-<ion-menu contentId="main-content"  >
-  <ion-header >
-    <ion-toolbar color="primary">
-      <ion-title color="light">
-        My config
-      </ion-title>
-      <ion-buttons slot="end">
-        <ion-button (click)="logout()">
-          <ion-icon color="light"  slot="start" name="log-out-outline" slot="icon-only"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-
-
-
-
-
-
-  <ion-list class="item-content"  >
-    <ion-item  color="dark" *ngFor="let tab of allTabs">
-      <ion-icon slot="start" [name]="tab.icon"></ion-icon>
-      <ion-label >{{tab.name}}</ion-label>
-      <ion-checkbox  slot="end" [(ngModel)]="tab.selected"
-                    [disabled]="tab.path ==='tab1'">
-      </ion-checkbox>
-    </ion-item>
-
-  </ion-list>
-
-
-  <ion-button  class="save-text"  (click)="saveTabSelection()" expand="full">
-    <ion-title size="small">Save tabs</ion-title>
-    <ion-icon color="light" slot="start" name="save"></ion-icon>
-  </ion-button>
-  <ion-button class="save-text" (click)="deleteUser()" expand="full">
-    <ion-icon color="light" slot="start" name="skull"></ion-icon>
-    <ion-title size="small">Kill User</ion-title>
-  </ion-button>
-
-
-</ion-menu>
 
 <ion-header id="main-content">
   <ion-toolbar color="primary">
@@ -70,7 +28,7 @@
     <ion-slides [options]="optsHorizontalScroll">
       <ion-slide *ngFor="let album of entry.albums" tappable (click)="openAlbum(album)">
         <div class="image-box">
-        <img [src]="'/assets/images/albums/'+dasherize(album.image)+'.jpg'">
+        <img alt="sushis" [src]="'/assets/images/albums/'+dasherize(album.image)+'.jpg'">
         <!-- ADD Button die bestellung über diesen Knopf funktioniert noch nicht
           <div>
           <ion-fab  horizontal="end" vertical="button"  >

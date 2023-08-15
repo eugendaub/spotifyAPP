@@ -4,10 +4,6 @@ import nigiriSushi from '../../assets/mockdata/nigiriSushi.json';
 import uraMaki from '../../assets/mockdata/uraMaki.json';
 import specialRolls from '../../assets/mockdata/specialRolls.json';
 import {Router} from '@angular/router';
-import {AuthService} from '../services/auth.service';
-import {DataService} from '../services/data.service';
-import {Storage} from '@ionic/storage-angular';
-import {UiService} from '../services/ui.service';
 
 @Component({
   selector: 'app-tab1',
@@ -16,7 +12,7 @@ import {UiService} from '../services/ui.service';
 })
 export class Tab1Page {
 
-  allTabs= [];
+
   data =[
     {
       title: 'Suggested Sushi',
@@ -43,23 +39,8 @@ export class Tab1Page {
     freeMode: true
   };
 
-  constructor(private router: Router, private authService: AuthService, private dataService: DataService,
-              private storage: Storage, private uiService: UiService) {
-    //console.log('TAB 1 Constructor:');
-    this.authService.ngInit();
-    this.loadSettings();
-  }
 
-  async loadSettings() {
-    this.allTabs = await this.uiService.getAvailableTabs();
-    //console.log('load Tabs ',this.allTabs);
-  }
-
-  saveTabSelection(){
-    const selected = this.allTabs.filter((tab)=>tab.selected);
-    this.uiService.setSelectedTabs(selected);
-    //console.log('Save klick', selected);
-  }
+  constructor(private router: Router) {}
 
   openAlbum(album) {
     const titleEscaped = encodeURIComponent(album.title);
@@ -76,17 +57,5 @@ export class Tab1Page {
     });
   };
 
-  logout(){
-    this.storage.clear();
-    this.dataService.deleteCompleteTempOrder();
-    this.authService.logout();
-  }
 
-  deleteUser(){
-    this.dataService.deleteCompleteTempOrder();
-    this.storage.clear();
-    const userId = this.authService.getUserId();
-    this.authService.deleteUser();
-    this.dataService.deleteUserDocument(userId);
-  }
 }

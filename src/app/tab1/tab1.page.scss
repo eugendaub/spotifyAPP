@@ -25,6 +25,11 @@ ion-content {
   font-family: 'Spotify', serif;
 }
 
+ion-item {
+  --background: var(--ion-color-dark);
+  --color: white;
+}
+
 .image-box {
   max-width: 350px;
   border-radius: 4% !important;

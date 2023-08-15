@@ -1,48 +1,105 @@
-  <div class="fab-button" [ngSwitch]="restaurantFabButtonStatus" >
-      <span *ngSwitchCase="'restaurantFabButtonNormal'" >
-        <ion-fab  horizontal="end" vertical="end" slot="fixed"  >
-        <div >
-          <ion-fab-button (click)="temOrderView()">
-            <ion-icon color="light" name="restaurant-outline"></ion-icon>
-          </ion-fab-button>
-        </div>
-      </ion-fab>
-      </span>
-    <span *ngSwitchCase="'restaurantFabButtonFull'">
-      <ion-fab  horizontal="end" vertical="end" slot="fixed" >
-      <div class="button-flash">
-        <ion-fab-button (click)="temOrderView()" >
-          <ion-icon color="light" name="restaurant-outline"></ion-icon>
-        </ion-fab-button>
-      </div>
-    </ion-fab>
-    </span>
-    <span *ngSwitchCase="'restaurantFabButtonCountDown'">
-      <ion-fab  horizontal="end" vertical="end" slot="fixed" >
-      <div >
-        <ion-fab-button  >
-          <ion-row class="row-position-icon" >
-            <ion-icon class="fab-icon"  color="light" name="fast-food" (click)="temOrderView()"></ion-icon>
-              <ion-row >
-                <ion-label color="light">{{timeLeftFormatted}}</ion-label>
-              </ion-row>
-          </ion-row>
-        </ion-fab-button>
-      </div>
-    </ion-fab>
-    </span>
-    <span *ngSwitchDefault> default</span>
-  </div>
+<ion-menu contentId="main-content"  >
+  <ion-header >
+    <ion-toolbar color="primary">
+      <ion-title color="light">
+        My config
+      </ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="logout()">
+          <ion-icon color="light" name="log-out-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-tabs (ionTabsDidChange)="setSelectedTab()">
 
-  <div class="player">
-    <div class="progress-bar">
-      <div class="progress"  [style.width]="timeLeftProgressBar + '%'" ></div>
-    </div>
-  </div>
 
-  <!-- The Ionic tab bar -->
+  <ion-content>
+  <div>
+    <ion-list class="item-content"  >
+      <ion-item  color="dark" *ngFor="let tab of allTabs">
+        <ion-icon slot="start" [name]="tab.icon"></ion-icon>
+        <ion-label >{{tab.name}}</ion-label>
+        <ion-checkbox  slot="end" [(ngModel)]="tab.selected"></ion-checkbox>
+        <!-- <ion-checkbox  slot="end" [(ngModel)]="tab.selected"
+                        [disabled]="tab.path ==='tab1'">
+         </ion-checkbox>-->
+       </ion-item>
+     </ion-list>
+     <ion-button  class="save-text"  (click)="saveTabSelection()" expand="block">
+       <ion-title size="small">Save tabs</ion-title>
+       <ion-icon color="light" slot="start" name="save"></ion-icon>
+     </ion-button>
+   </div>
+
+   <div>
+     <ion-item>
+       <ion-label position="floating">Enter a new waiting time in seconds</ion-label>
+       <ion-input [(ngModel)]="newWaitTime"></ion-input>
+     </ion-item>
+
+     <ion-button class="save-text" expand="block" (click)="saveNewOrderWaitTime()">
+       <ion-title size="small">Save new Order Time</ion-title>
+       <ion-icon color="light" slot="start" name="save"></ion-icon>
+     </ion-button>
+   </div>
+
+   <ion-button class="save-text" (click)="deleteUser()" expand="block">
+     <ion-icon color="light" slot="start" name="skull"></ion-icon>
+     <ion-title size="small">Kill User</ion-title>
+   </ion-button>
+
+  </ion-content>
+ </ion-menu>
+
+ <ion-router-outlet id="main-content"></ion-router-outlet>
+
+
+ <div class="fab-button" [ngSwitch]="restaurantFabButtonStatus" >
+       <span *ngSwitchCase="'restaurantFabButtonNormal'" >
+         <ion-fab  horizontal="end" vertical="end" slot="fixed"  >
+         <div >
+           <ion-fab-button (click)="temOrderView()">
+             <ion-icon color="light" name="restaurant-outline"></ion-icon>
+           </ion-fab-button>
+         </div>
+       </ion-fab>
+       </span>
+     <span *ngSwitchCase="'restaurantFabButtonFull'">
+       <ion-fab  horizontal="end" vertical="end" slot="fixed" >
+       <div class="button-flash">
+         <ion-fab-button (click)="temOrderView()" >
+           <ion-icon color="light" name="restaurant-outline"></ion-icon>
+         </ion-fab-button>
+       </div>
+     </ion-fab>
+     </span>
+     <span *ngSwitchCase="'restaurantFabButtonCountDown'">
+       <ion-fab  horizontal="end" vertical="end" slot="fixed" >
+       <div >
+         <ion-fab-button  >
+           <ion-row class="row-position-icon" >
+             <ion-icon class="fab-icon"  color="light" name="fast-food" (click)="temOrderView()"></ion-icon>
+               <ion-row >
+                 <ion-label color="light">{{timeLeftFormatted}}</ion-label>
+               </ion-row>
+           </ion-row>
+         </ion-fab-button>
+       </div>
+     </ion-fab>
+     </span>
+     <span *ngSwitchDefault> default</span>
+   </div>
+
+ <ion-tabs (ionTabsDidChange)="setSelectedTab()">
+
+   <div class="player">
+     <div class="progress-bar">
+       <div class="progress"  [style.width]="timeLeftProgressBar + '%'" ></div>
+     </div>
+   </div>
+
+   <!-- The Ionic tab bar -->
   <ion-tab-bar slot="bottom">
     <ion-tab-button *ngFor="let tab of selectedTabs" [tab]="tab.path" (click)="openTab(tab.path)" >
       <ion-icon [name]="selected === tab.path ? tab.icon : tab.iconAlt"></ion-icon>
