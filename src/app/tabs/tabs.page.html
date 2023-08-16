@@ -34,8 +34,8 @@
 
    <div>
      <ion-item>
-       <ion-label position="floating">Enter a new waiting time in seconds</ion-label>
-       <ion-input [(ngModel)]="newWaitTime"></ion-input>
+       <ion-label position="floating">Actual wait time : {{actualWaitTime}} s. - {{timeInMin}} m. </ion-label>
+       <ion-input placeholder="Input in sec." [(ngModel)]="newWaitTime"></ion-input>
      </ion-item>
 
      <ion-button class="save-text" expand="block" (click)="saveNewOrderWaitTime()">

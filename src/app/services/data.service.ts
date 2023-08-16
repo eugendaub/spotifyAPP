@@ -9,9 +9,11 @@ import {ToastController} from '@ionic/angular';
 import {Vibration} from '@ionic-native/vibration/ngx';
 import { Storage } from '@ionic/storage-angular';
 import { BehaviorSubject } from 'rxjs';
+import {Preferences} from '@capacitor/preferences';
 
 // wird für die zwischen bestellungen verwendet in Tab4
 const STORAGE_KEY = 'mylist';
+const STORAGE_TIME_KEY = 'wait-Time';
 
 export interface IUserOrder {
   tempId?: number;
@@ -45,7 +47,9 @@ export class DataService {
   restaurentFabButtonStatus: any;
   // Angabe in secunden
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  aRoundTime = 10;
+  aRoundTime = 60;
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  defaultWaitTime = 10;
 
   //restaurant Fab-Button Status
   private restaurantFabButtonSubject: BehaviorSubject<string> = new BehaviorSubject<string>('restaurantFabButtonNormal');
@@ -72,8 +76,14 @@ export class DataService {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   orderButton$ = this.orderButtonSubject.asObservable();
 
+  private waitARoundTimeSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  waitTimeSubject = this.waitARoundTimeSubject.asObservable();
+
   constructor(private firestore: Firestore, private authService: AuthService, private toastCtrl: ToastController,
-              private vibration: Vibration, private storage: Storage) { }
+              private vibration: Vibration, private storage: Storage) {
+    this.loadWaitTime();
+  }
 
   // Holt alle Bestellunge aus Db für die Küche
   getAllOrderId(){
@@ -343,5 +353,31 @@ export class DataService {
   // Holt alle Temporere Bestellungen (benutzt in Temp-order-view-page)
   getTemporaraOrder(): IUserOrder[]{
     return this.tempOrder;
+  }
+
+  async setWaitTime(time: any) {
+    await Preferences.set({ key: STORAGE_TIME_KEY, value: JSON.stringify(time) });
+    this.waitARoundTimeSubject.next(time);
+    this.aRoundTime = time;
+  }
+
+
+  async getWaitTime() {
+    const { value } = await Preferences.get({ key: STORAGE_TIME_KEY });
+    if (value) {
+      return JSON.parse(value);
+    } else {
+      return this.defaultWaitTime;
+    }
+  }
+
+  getActiveWaitTime(){
+    return this.waitTimeSubject;
+  }
+
+  async loadWaitTime(){
+    const time = await this.getWaitTime();
+    this.waitARoundTimeSubject.next(time);
+    this.aRoundTime = time;
   }
 }

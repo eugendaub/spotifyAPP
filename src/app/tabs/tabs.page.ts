@@ -22,13 +22,15 @@ export class TabsPage {
 
   selectedTabs = [];
   allTabs= [];
-  newWaitTime: number;
+  newWaitTime;
 
   selected = '';
   selectedTab = '';
   timeLeftProgressBar;
   timeLeftFormatted;
   runningTime;
+  actualWaitTime;
+  timeInMin;
 
   restaurantFabButtonStatus='restaurantFabButtonNormal';
 
@@ -69,6 +71,7 @@ export class TabsPage {
   }
   async loadSettings() {
     this.allTabs = await this.uiService.getAvailableTabs();
+    this.getTime();
     //console.log('load Tabs ',this.allTabs);
   }
 
@@ -79,7 +82,26 @@ export class TabsPage {
   }
 
   saveNewOrderWaitTime(){
+    console.log( this.newWaitTime);
+    this.dataService.setWaitTime(this.newWaitTime);
+    this.getTime();
+    this.formatTime(this.newWaitTime);
+    this.newWaitTime='';
+  }
 
+  formatTime(time){
+    // Umwandlung in "mm:ss"-Format
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    this.timeInMin = `${this.padZero(minutes)}:${this.padZero(seconds)}`;
+  }
+
+  getTime(){
+    const time = this.dataService.getWaitTime().then(data =>{
+      console.log(data);
+      this.actualWaitTime = data;
+      this.formatTime(data);
+    });
   }
 
   padZero(num: number): string {

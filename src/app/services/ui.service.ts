@@ -3,6 +3,7 @@ import { Preferences } from '@capacitor/preferences';
 import {BehaviorSubject} from 'rxjs';
 
 const STORAGE_TABS_KEY = 'selected-tabs';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -32,6 +33,7 @@ export class UiService {
     },
   ];
 
+
   optionalTabs = [
     {
       path: 'tab3',
@@ -43,6 +45,11 @@ export class UiService {
   ];
 
   private tabsSubject = new BehaviorSubject(null);
+
+ // private waitTimeSubject = new BehaviorSubject(null);
+
+
+
 
   constructor() {
     this.loadSettings();
@@ -72,10 +79,15 @@ export class UiService {
     this.tabsSubject.next(tabs);
   }
   getActiveTabs(){
+    console.log(this.tabsSubject);
     return this.tabsSubject.asObservable();
   }
+
   async loadSettings(){
     const tabs = await this.getSelectedTabs();
     this.tabsSubject.next(tabs);
+
   }
+
+
 }
