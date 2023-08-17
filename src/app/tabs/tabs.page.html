@@ -43,13 +43,11 @@
        <ion-icon color="light" slot="start" name="save"></ion-icon>
      </ion-button>
    </div>
-
-   <ion-button class="save-text" (click)="deleteUser()" expand="block">
-     <ion-icon color="light" slot="start" name="skull"></ion-icon>
-     <ion-title size="small">Kill User</ion-title>
-   </ion-button>
-
   </ion-content>
+  <ion-button class="save-text" (click)="deleteUser()" expand="block">
+    <ion-icon color="light" slot="start" name="skull"></ion-icon>
+    <ion-title size="small">Kill User</ion-title>
+  </ion-button>
  </ion-menu>
 
  <ion-router-outlet id="main-content"></ion-router-outlet>

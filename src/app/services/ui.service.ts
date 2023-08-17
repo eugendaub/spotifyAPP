@@ -79,7 +79,6 @@ export class UiService {
     this.tabsSubject.next(tabs);
   }
   getActiveTabs(){
-    console.log(this.tabsSubject);
     return this.tabsSubject.asObservable();
   }
 

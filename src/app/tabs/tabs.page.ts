@@ -65,10 +65,9 @@ export class TabsPage {
       const minutes = Math.floor(this.runningTime / 60);
       const seconds = this.runningTime % 60;
       this.timeLeftFormatted = `${this.padZero(minutes)}:${this.padZero(seconds)}`;
-      //console.log(this.runningTime);
     });
-
   }
+
   async loadSettings() {
     this.allTabs = await this.uiService.getAvailableTabs();
     this.getTime();
@@ -98,7 +97,6 @@ export class TabsPage {
 
   getTime(){
     const time = this.dataService.getWaitTime().then(data =>{
-      console.log(data);
       this.actualWaitTime = data;
       this.formatTime(data);
     });

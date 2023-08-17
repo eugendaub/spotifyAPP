@@ -22,7 +22,6 @@ export class TempOrderViewPage  {
   orderNowButtonOnOff;
   totalOrderQuantityARound;
   countdownTimer = new BehaviorSubject(0);
-  countdownOrderWaitTime = 70;
 
   timeLeftFormatted: string;
   private timerSubscription: Subscription;
@@ -71,29 +70,13 @@ export class TempOrderViewPage  {
     });
   }
 
-  /*async orderTimerPause() {
-    console.log('oderTimePause ' , this.countdownTimer.value);
-    setTimeout(() => {
-      // eslint-disable-next-line eqeqeq
-      if(this.countdownTimer.value == 0) {
-        console.log('else Pause');
-        this.pauseOrderTimer();
-      } else {
-        this.countdownTimer.next(this.countdownTimer.value - 10);
-        //this.timeLeft = this.timeLeft-1;
-        this.dataService.updateRunningTime(this.countdownTimer.value);
-        this.dataService.updateOrderButtonStatus('orderNowButtonOff');
-        this.dataService.updateTimerStatus('on');
-        this.orderTimerPause();
-      }
-    },1000);
-  }*/
-
   pauseOrderTimer() {
     this.timerSubscription.unsubscribe();
-    this.countdownTimer.next(this.countdownOrderWaitTime);
-    //this.dataService.updateRunningTime(this.waiteTime);
-    this.dataService.updateRunningTime(this.countdownTimer);
+    this.dataService.getWaitTime().then(data =>{
+      console.log(data);
+      this.dataService.updateRunningTime(data);
+    });
+    //console.log('this.countdownTimer : ', this.countdownTimer);
     this.dataService.updateTimerStatus('off');
     this.dataService.updateOrderButtonStatus('orderNowButtonOn');
     clearInterval(this.interval);
@@ -104,14 +87,11 @@ export class TempOrderViewPage  {
     }
   }
 
-
   async placeAnOrder(){
     console.log('placeAnOrder ',this.totalOrderQuantityARound );
     // Wenn eine oder volle Bestellugnen in Temp-Order sind dann bestellung aufgeben.
     if(this.totalOrderQuantityARound >= 1 || this.totalOrderQuantityARound === 'orderRoundFull' ) {
       this.orderNowButtonOnOff = true;
-      this.countdownTimer.next(this.countdownOrderWaitTime);
-      //this.orderTimerPause();
       this.newTimer();
       this.dataService.addTempOrderToDB();
       this.dataService.deleteCompleteTempOrder();
@@ -136,7 +116,6 @@ export class TempOrderViewPage  {
       await alert.present();
     }
   }
-
 
   deleteOneOrder(order){
     console.log('ID :', order.tempId);

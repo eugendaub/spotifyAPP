@@ -22,8 +22,9 @@ export interface IUserOrder {
   userTableNr: string;
   title: string;
   text: string;
-  createdAt: string;
+  createdAt: number;
   imageLink: string;
+  expired: boolean;
 }
 
 @Injectable({
@@ -140,9 +141,9 @@ export class DataService {
     this.oneOrderTotalNumber = (this.guestsNumber * this.oneRoundNumber -1) - (this.userOrderCount) ;
     this.vibration.vibrate(75);
     this.toastCtrl.create({
-      message: 'Added order! still: '+ this.oneOrderTotalNumber,
+      message:  this.oneOrderTotalNumber + ' orders left',
       position: 'top',
-      duration: 1500,
+      duration: 1000,
       cssClass: 'toast-custom-class-order',
     }).then((toast) => {
       toast.present();
@@ -273,8 +274,9 @@ export class DataService {
       userTableNr,
       title,
       text,
-      createdAt: new Date().toISOString(),
-      imageLink: sushiImageLink
+      createdAt: Date.now(),
+      imageLink: sushiImageLink,
+      expired: false
     };
     this.tempOrder.push(order);
     //console.log('Array: ', this.tempOrder);
