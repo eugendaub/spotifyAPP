@@ -73,7 +73,7 @@ export class TempOrderViewPage  {
   pauseOrderTimer() {
     this.timerSubscription.unsubscribe();
     this.dataService.getWaitTime().then(data =>{
-      console.log(data);
+      //console.log(data);
       this.dataService.updateRunningTime(data);
     });
     //console.log('this.countdownTimer : ', this.countdownTimer);

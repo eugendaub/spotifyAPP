@@ -12,8 +12,8 @@ export class Tab3Page implements OnInit, OnDestroy{
   allOrdersByTime = [];
 
   items = [
-    { name: 'Item 1', timestamp: Date.now() - 10000, expired: false }, // Initialize expired status
-    { name: 'Item 2', timestamp: Date.now() - 20000, expired: false }, // Initialize expired status
+    { name: 'Item 1', timestamp: Date.now() - 10000, expired: false, status: 'active' }, // Initialize expired status
+    { name: 'Item 2', timestamp: Date.now() - 20000, expired: false, status: 'active' }, // Initialize expired status
     // ... other items
   ];
   private subscription: Subscription;
@@ -28,10 +28,11 @@ export class Tab3Page implements OnInit, OnDestroy{
     //Get All orders sort by order time
     this.dataService.getOrderByCreatedTime().subscribe(res =>{
       this.allOrdersByTime = res;
+      this.updateExpiryTime();
     });
   }
   ngOnInit() {
-    this.subscription = interval(5000).subscribe(() => {
+    this.subscription = interval(60000).subscribe(() => {
       // Call a method to update the expired status of items
       this.updateExpiredStatus();
       this.updateExpiryTime();
@@ -42,11 +43,12 @@ export class Tab3Page implements OnInit, OnDestroy{
   updateExpiredStatus() {
     const currentTime = Date.now();
     this.items.forEach(item => {
-      //console.log('item', item);
       const timeDifference = (currentTime - item.timestamp) / 1000; // Convert to seconds
-      //console.log('time', timeDifference);
-      item.expired = timeDifference > 30;
-      console.log('item: ', item.expired );
+      if (timeDifference > 30) {
+        item.status = 'expired';
+      } else {
+        item.status = 'active';
+      }
     });
   }
 
@@ -62,15 +64,21 @@ export class Tab3Page implements OnInit, OnDestroy{
       // eslint-disable-next-line @typescript-eslint/no-shadow
       this.allOrdersByTime.forEach(allOrders => {
         //console.log('Date ', allOrders.createdAt);
-        const date = new Date(allOrders.createdAt);
+        const date = new Date(allOrders.timeExpired);
         const timestampSeconds = Math.floor(date.getTime() / 1000);
        // console.log('timestampSeconds '+timestampSeconds);
 
        const timeDifference = (currenTimeCutNumber - timestampSeconds); // Convert to seconds
-        console.log('timeDifference ' +timeDifference);
-        allOrders.expired = timeDifference > 30;
-        console.log('all:', allOrders.expired);
-        console.log('GIVEN: ', allOrders);
+        //console.log('timeDifference ' +timeDifference);
+        if( timeDifference > 120){
+          allOrders.expired = 'expired';
+        }else if(timeDifference > 60){
+          allOrders.expired = 'medium';
+        }else {
+          allOrders.expired = 'active';
+        }
+       // console.log('all:', allOrders.expired);
+        //console.log('GIVEN: ', allOrders);
       });
     }
   }

@@ -1,5 +1,35 @@
-ion-item.expired {
+/*ion-item.expired {
   --ion-item-background: linear-gradient(to left, #3ab60b, #000000 30%);
+
+  color: #fff;
+
+  p {
+    color: #949494;
+  }
+}*/
+
+ion-item.active {
+  --ion-item-background: linear-gradient(to left, #3ab60b, #000000 30%);
+
+  color: #fff;
+
+  p {
+    color: #949494;
+  }
+}
+
+ion-item.medium {
+  --ion-item-background: linear-gradient(to left, #d9b917, #000000 30%);
+
+  color: #fff;
+
+  p {
+    color: #949494;
+  }
+}
+
+ion-item.expired {
+  --ion-item-background: linear-gradient(to left, #9f1818, #000000 30%);
 
   color: #fff;
 

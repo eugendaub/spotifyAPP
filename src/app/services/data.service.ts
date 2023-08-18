@@ -22,9 +22,10 @@ export interface IUserOrder {
   userTableNr: string;
   title: string;
   text: string;
-  createdAt: number;
+  createdAt: string;
+  timeExpired: number;
   imageLink: string;
-  expired: boolean;
+  expired: string;
 }
 
 @Injectable({
@@ -274,9 +275,10 @@ export class DataService {
       userTableNr,
       title,
       text,
-      createdAt: Date.now(),
+      timeExpired : Date.now(),
+      createdAt: new Date().toISOString(),
       imageLink: sushiImageLink,
-      expired: false
+      expired: 'active'
     };
     this.tempOrder.push(order);
     //console.log('Array: ', this.tempOrder);
