@@ -9,9 +9,6 @@ import {filter} from 'rxjs/operators';
 import {Storage} from '@ionic/storage-angular';
 
 
-
-
-
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
@@ -31,7 +28,8 @@ export class TabsPage {
   runningTime;
   actualWaitTime;
   timeInMin;
-
+  timerOnOff;
+  orderStatus;
   restaurantFabButtonStatus='restaurantFabButtonNormal';
 
 
@@ -71,6 +69,7 @@ export class TabsPage {
   async loadSettings() {
     this.allTabs = await this.uiService.getAvailableTabs();
     this.getTime();
+    this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonHidden');
     //console.log('load Tabs ',this.allTabs);
   }
 
@@ -116,15 +115,47 @@ export class TabsPage {
   }
 
   openTab(tabPath){
-    //console.log('TAB:',tabPath );
+
+
     if(tabPath==='tab1'){
+      this. checkRestaurantFabButtonStatus();
       this.navCtrl.navigateRoot('/tabs/tab1');
     }else if(tabPath==='tab2'){
+      this. checkRestaurantFabButtonStatus();
       this.navCtrl.navigateRoot('/tabs/tab2');
     }else if(tabPath==='tab3'){
+      this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonHidden');
+      console.log(this.dataService.getRestaurantFabButtonStatus());
       this.router.navigateByUrl('/tabs/tab3');
     }else if(tabPath==='tab4'){
+      this. checkRestaurantFabButtonStatus();
       this.tab4Page.loadDates();
+    }
+  }
+  //Diese funktion hat nur einen zweck den Restaurant Fab-Button in der Küche zu deaktivieren
+  checkRestaurantFabButtonStatus(){
+
+    this.dataService.timeStatus$.subscribe( status => {
+      console.log('TIMER ', status);
+      this.timerOnOff = status;
+    });
+
+    this.dataService.totalOrderQuantityARound$.subscribe( status => {
+      this.orderStatus = status;
+      console.log('Status: ', this.orderStatus);
+    });
+
+    if (this.orderStatus  === 'orderRoundFull' && this.timerOnOff === 'off') {
+      console.log('restaurantFabButtonFull');
+      this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonFull');
+    }
+    if (this.orderStatus  === 'orderRoundNotFull' || this.orderStatus  === 1  && this.timerOnOff === 'off') {
+      console.log('restaurantFabButtonNormal');
+      this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonNormal');
+    }
+    if (this.orderStatus  === 'orderRoundFull' && this.timerOnOff === 'on') {
+      console.log('restaurantFabButtonCountDown');
+      this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonCountDown');
     }
   }
 

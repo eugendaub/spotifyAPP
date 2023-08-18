@@ -11,11 +11,6 @@ export class Tab3Page implements OnInit, OnDestroy{
   allOrders = [];
   allOrdersByTime = [];
 
-  items = [
-    { name: 'Item 1', timestamp: Date.now() - 10000, expired: false, status: 'active' }, // Initialize expired status
-    { name: 'Item 2', timestamp: Date.now() - 20000, expired: false, status: 'active' }, // Initialize expired status
-    // ... other items
-  ];
   private subscription: Subscription;
 
   constructor(private dataService: DataService) {
@@ -32,15 +27,15 @@ export class Tab3Page implements OnInit, OnDestroy{
     });
   }
   ngOnInit() {
-    this.subscription = interval(60000).subscribe(() => {
+    // Alle 30 Sekunden werden alle Bestellungen nach zu langen liegenden bestellungne geprüft.
+    this.subscription = interval(30000).subscribe(() => {
       // Call a method to update the expired status of items
-      this.updateExpiredStatus();
+      //this.updateExpiredStatus();
       this.updateExpiryTime();
     });
   }
 
-
-  updateExpiredStatus() {
+ /* updateExpiredStatus() {
     const currentTime = Date.now();
     this.items.forEach(item => {
       const timeDifference = (currentTime - item.timestamp) / 1000; // Convert to seconds
@@ -50,7 +45,7 @@ export class Tab3Page implements OnInit, OnDestroy{
         item.status = 'active';
       }
     });
-  }
+  }*/
 
   updateExpiryTime() {
 

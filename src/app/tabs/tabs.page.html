@@ -57,7 +57,7 @@
        <span *ngSwitchCase="'restaurantFabButtonNormal'" >
          <ion-fab  horizontal="end" vertical="end" slot="fixed"  >
          <div >
-           <ion-fab-button (click)="temOrderView()">
+           <ion-fab-button (click)="temOrderView()" >
              <ion-icon color="light" name="restaurant-outline"></ion-icon>
            </ion-fab-button>
          </div>
@@ -75,13 +75,21 @@
      <span *ngSwitchCase="'restaurantFabButtonCountDown'">
        <ion-fab  horizontal="end" vertical="end" slot="fixed" >
        <div >
-         <ion-fab-button  >
+         <ion-fab-button >
            <ion-row class="row-position-icon" >
              <ion-icon class="fab-icon"  color="light" name="fast-food" (click)="temOrderView()"></ion-icon>
                <ion-row >
                  <ion-label color="light">{{timeLeftFormatted}}</ion-label>
                </ion-row>
            </ion-row>
+         </ion-fab-button>
+       </div>
+     </ion-fab>
+     </span>
+   <span *ngSwitchCase="'restaurantFabButtonHidden'">
+       <ion-fab  horizontal="end" vertical="end" slot="fixed" >
+       <div >
+         <ion-fab-button class="ion-fab-button-hidden" >
          </ion-fab-button>
        </div>
      </ion-fab>

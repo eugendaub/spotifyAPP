@@ -97,6 +97,10 @@ export class DataService {
     this.restaurantFabButtonSubject.next(status);
   }
 
+  getRestaurantFabButtonStatus() {
+    return this.restaurantFabButtonSubject.value;
+  }
+
   updateRunningTime(status) {
     this.runningTime.next(status);
   }
@@ -128,7 +132,7 @@ export class DataService {
       console.log(this.userOrderCount);
       this.updateTotalOrderQuantityARound('orderRoundFull');
       this.orderFullToast();
-     return true;
+      return true;
     }
   }
 
