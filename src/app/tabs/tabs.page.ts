@@ -69,7 +69,7 @@ export class TabsPage {
   async loadSettings() {
     this.allTabs = await this.uiService.getAvailableTabs();
     this.getTime();
-    this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonHidden');
+    //this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonHidden');
     //console.log('load Tabs ',this.allTabs);
   }
 
@@ -95,7 +95,7 @@ export class TabsPage {
   }
 
   getTime(){
-    const time = this.dataService.getWaitTime().then(data =>{
+    this.dataService.getWaitTime().then(data =>{
       this.actualWaitTime = data;
       this.formatTime(data);
     });
@@ -149,11 +149,15 @@ export class TabsPage {
       console.log('restaurantFabButtonFull');
       this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonFull');
     }
-    if (this.orderStatus  === 'orderRoundNotFull' || this.orderStatus  === 1  && this.timerOnOff === 'off') {
+    if (this.orderStatus  === 'orderRoundNotFull' || this.orderStatus  >= 1  && this.timerOnOff === 'off') {
       console.log('restaurantFabButtonNormal');
       this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonNormal');
     }
     if (this.orderStatus  === 'orderRoundFull' && this.timerOnOff === 'on') {
+      console.log('restaurantFabButtonCountDown');
+      this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonCountDown');
+    }
+    if (this.orderStatus  === 'orderRoundNotFull' && this.timerOnOff === 'on') {
       console.log('restaurantFabButtonCountDown');
       this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonCountDown');
     }
