@@ -36,12 +36,19 @@ export class UiService {
 
   optionalTabs = [
     {
+      path: 'tabSeeAllTabel',
+      name: 'All Tabel',
+      icon: 'people',
+      iconAlt: 'people-outline',
+      selected: false,
+    },
+    {
       path: 'tab3',
       name: 'Kitchen order',
       icon: 'fast-food',
       iconAlt: 'fast-food-outline',
       selected: false,
-    },
+    }
   ];
 
   private tabsSubject = new BehaviorSubject(null);

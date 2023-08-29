@@ -4,7 +4,7 @@ import {
   serverTimestamp, query, orderBy, docData, where,documentId
 } from '@angular/fire/firestore';
 import {AuthService} from './auth.service';
-import {switchMap} from 'rxjs/operators';
+import {switchMap, map, take} from 'rxjs/operators';
 import {ToastController} from '@ionic/angular';
 import {Vibration} from '@ionic-native/vibration/ngx';
 import { Storage } from '@ionic/storage-angular';
@@ -387,5 +387,16 @@ export class DataService {
     const time = await this.getWaitTime();
     this.waitARoundTimeSubject.next(time);
     this.aRoundTime = time;
+  }
+
+  //Zeigt alle Angemeldeten Tische an.
+  getAllTables(){
+    //const userId = this.authService.getUserId();
+
+    const userRef = collection(this.firestore, 'users');
+    return collectionData(userRef,{idField: 'id'}).pipe(
+      take(1),
+      map( users => users.filter(user => user.id))
+    );
   }
 }

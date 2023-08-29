@@ -24,6 +24,10 @@ const routes: Routes = [
         loadChildren: () => import('../tab4/tab4.module').then(m => m.Tab4PageModule)
       },
       {
+        path: 'tabSeeAllTabel',
+        loadChildren: () => import('../tab-see-all-tabel/tab-see-all-tabel.module').then( m => m.TabSeeAllTabelPageModule)
+      },
+      {
         path: 'tab1/:title',
         loadChildren: () => import('../album/album.module').then( m => m.AlbumPageModule)
       },

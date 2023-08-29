@@ -18,8 +18,11 @@ const routes: Routes = [
   {
     path: 'tempOrderView',
     loadChildren: () => import('./pages/temp-order-view/temp-order-view.module').then( m => m.TempOrderViewPageModule)
+  },
+  {
+    path: 'tableOverview',
+    loadChildren: () => import('./table-overview/table-overview.module').then( m => m.TableOverviewPageModule)
   }
-
 
 ];
 @NgModule({

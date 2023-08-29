@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Overview all Table</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-item *ngFor="let table of allTabel" (click)="openTableOrder(table)">
+      <ion-label  class="title">
+       Table: {{ table.email }}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+    <!--<ion-list *ngFor="let album of allTabel" >
+      <ion-item button="" (click)="openTableOrder(album)">
+          <ion-label  >
+            {{ album.title }}
+          </ion-label>
+      </ion-item>
+    </ion-list>-->
+</ion-content>
