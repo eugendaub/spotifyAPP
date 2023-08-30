@@ -4,7 +4,7 @@ import {
   serverTimestamp, query, orderBy, docData, where,documentId
 } from '@angular/fire/firestore';
 import {AuthService} from './auth.service';
-import {switchMap, map, take} from 'rxjs/operators';
+import {switchMap} from 'rxjs/operators';
 import {ToastController} from '@ionic/angular';
 import {Vibration} from '@ionic-native/vibration/ngx';
 import { Storage } from '@ionic/storage-angular';
@@ -178,6 +178,7 @@ export class DataService {
         if(!data){
           //console.log('Data leer: ');
         }
+        // Falsch oder data.allUserOrders;??
         const allUserOrders = data.allUserOrders;
         const chatsRef = collection(this.firestore, 'userOrders');
         const q = query(chatsRef, where(documentId(), 'in', allUserOrders));
@@ -186,6 +187,8 @@ export class DataService {
       //take(1)
     );
   }
+
+
 
   // Hier wird der User/Table mit Bestellugen gelöscht
   deleteUserDocument(userId) {
@@ -321,6 +324,17 @@ export class DataService {
       });
     }
   }
+  //Beispiel aus chat (ohne funktion)
+  addMessage(chatId,msg){
+    console.log('addMessage');
+    const userId = this.authService.getUserId();
+    const messages = collection(this.firestore, `chats/${chatId}/messages`);
+    return addDoc( messages, {
+      from: userId,
+      msg,
+      createdAt: serverTimestamp()
+    });
+  }
 
   // Hiermit werden die Bestellungen von einem Tisch lockal abgespeichert.
   async addLocalTableOrders(order: IUserOrder) {
@@ -394,9 +408,40 @@ export class DataService {
     //const userId = this.authService.getUserId();
 
     const userRef = collection(this.firestore, 'users');
-    return collectionData(userRef,{idField: 'id'}).pipe(
-      take(1),
-      map( users => users.filter(user => user.id))
+    return collectionData(userRef,{idField: 'id'});
+  }
+
+  //holt eizelne Bestell Infos raus
+  getOrderInfo(orderId){
+    const order = doc(this.firestore, `orders/${orderId}`);
+    return docData(order);
+  }
+
+  //holt alle bestellungen aus User/userOrders raus
+  getTableOrders(userId){
+    console.log('getTableOrders');
+
+    const userRef = doc(this.firestore, `users/${userId}`);
+    return docData(userRef).pipe(
+      switchMap(data => {
+        console.log('Data: ', data.userOrders);
+        if(!data){
+          console.log('Data leer: ');
+        }
+        const allUserOrders = data.userOrders;
+        const chatsRef = collection(this.firestore, 'userOrders');
+        const q = query(chatsRef, where(documentId(), 'in', allUserOrders));
+        return collectionData(q, { idField: 'id' });
+      }),
+      //take(1)
     );
+  }
+
+  //holt alle bestellungen aus User/userOrders raus
+  getTableOrders2(userId){
+    console.log('getTableOrders');
+
+    const userRef = doc(this.firestore, `users/${userId}`);
+    return docData(userRef);
   }
 }

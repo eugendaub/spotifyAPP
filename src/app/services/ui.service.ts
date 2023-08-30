@@ -38,8 +38,8 @@ export class UiService {
     {
       path: 'tabSeeAllTabel',
       name: 'All Tabel',
-      icon: 'people',
-      iconAlt: 'people-outline',
+      icon: 'id-card',
+      iconAlt: 'id-card-outline',
       selected: false,
     },
     {

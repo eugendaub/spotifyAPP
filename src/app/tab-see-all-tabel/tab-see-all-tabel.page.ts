@@ -23,7 +23,7 @@ export class TabSeeAllTabelPage implements OnInit {
   }
 
   async storageCreate() {
-    //console.log('create Storage');
+    console.log('create Storage');
     await this.storage.create();
     //console.log('create Storage end');
   }

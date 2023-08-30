@@ -36,6 +36,10 @@ const routes: Routes = [
         loadChildren: () => import('../album/album.module').then( m => m.AlbumPageModule)
       },
       {
+        path: 'tabSeeAllTabel/:id',
+        loadChildren: () => import('../table-overview/table-overview.module').then( m => m.TableOverviewPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'
