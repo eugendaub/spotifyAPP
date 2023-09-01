@@ -14,7 +14,7 @@
 
   <div *ngFor="let order of allTableOrders" >
     <ion-list>
-        <ion-item [ngClass]="order.expired">
+        <ion-item>
           <ion-col size="2" class="ion-no-padding">
             <img alt="Kitchen Images" [src]="'/assets/images/albums/'+order.imageLink+'.jpg'">
           </ion-col>
@@ -32,7 +32,7 @@
 
 <ion-fab  horizontal="end" vertical="bottom" slot="fixed"  >
   <div >
-    <ion-fab-button (click)="callWaitress()" >
+    <ion-fab-button >
       <ion-label color="light"> {{orderPriceToFixed}} €</ion-label>
     </ion-fab-button>
   </div>

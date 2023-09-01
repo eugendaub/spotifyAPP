@@ -463,4 +463,13 @@ export class DataService {
     const userRef = doc(this.firestore, `users/${userId}`);
     return docData(userRef);
   }
+
+  //holt alle bestellungen aus User/userOrders raus
+  getTableOrdersForUser(){
+    //console.log('getTableOrders');
+    const userId= this.authService.getUserId();
+    console.log('userId', userId);
+    const userRef = doc(this.firestore, `users/${userId}`);
+    return docData(userRef);
+  }
 }

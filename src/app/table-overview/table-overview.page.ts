@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DataService} from '../services/data.service';
-import {AlertController} from '@ionic/angular';
 
 @Component({
   selector: 'app-table-overview',
@@ -15,8 +14,7 @@ export class TableOverviewPage implements OnInit {
   orderPrice: number = null;
   orderPriceToFixed: any = null;
 
-  constructor(private router: Router, private dataService: DataService, private route: ActivatedRoute,
-              private alertCtrl: AlertController) {
+  constructor(private router: Router, private dataService: DataService, private route: ActivatedRoute) {
     this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonHidden');
   }
 
@@ -42,25 +40,5 @@ export class TableOverviewPage implements OnInit {
         }
     });
   }
-
-  async callWaitress(){
-
-      const alert = await this.alertCtrl.create({
-        cssClass: 'alt my-custom-class',
-        header: 'Call Waitress ',
-        message: `Do you want to complete and pay for your order?`,
-        buttons: [
-          {
-            text: 'OK',
-            role: 'cancel',
-            cssClass: 'danger',
-            handler: () => {
-            }
-          }
-        ]
-      });
-      await alert.present();
-    }
-
 
 }

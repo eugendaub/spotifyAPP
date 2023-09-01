@@ -9,7 +9,8 @@ ion-list {
   --ion-background-color: var(--ion-color-dark);
 }
 ion-title, ion-content{
-  font-family: 'Spotify';
+  color: #fff;
+  font-family: 'Spotify', serif;
 }
 .album-info {
   color: #fff;
@@ -35,5 +36,13 @@ ion-row {
   z-index: 2;
   background: linear-gradient(var(--custombg) 20%, var(--ion-color-dark) 30%);
 }
+
+.title {
+  color: #fff;
+  font-family: 'Spotify' , serif;
+  font-size: 100%;
+}
+
+
 
 
