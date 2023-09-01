@@ -2,7 +2,7 @@
   "artist": "Asahi Dry Black",
   "backgroundColor": "#efc955",
   "image": "asahiDryBlack",
-  "released": "5,98 €",
+  "released": 5.98,
   "title": "Asahi Dry Black",
   "tracks": [
     { "title": "Asahi Super Dry Black Dose 350ml", "seconds": 251 }

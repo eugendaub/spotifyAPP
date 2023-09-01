@@ -2,7 +2,7 @@
   "artist": "Suntory Ichigo",
   "backgroundColor": "#d02840",
   "image": "suntoryIchigo",
-  "released": "2,49 €",
+  "released": 2.49,
   "title": "Suntory Ichigo",
   "tracks": [
     { "title": "Suntory Ichigo Milk 190g", "seconds": 251 }

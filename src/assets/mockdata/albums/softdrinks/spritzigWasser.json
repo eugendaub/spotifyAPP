@@ -2,7 +2,7 @@
   "artist": "Spritzig",
   "backgroundColor": "#93a4bf",
   "image": "spritzigWasser",
-  "released": "3,99 €",
+  "released": 3.99,
   "title": "Spritzig",
   "tracks": [
     { "title": "330 ml Wasserflasche spritzig", "seconds": 251 }

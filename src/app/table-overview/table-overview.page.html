@@ -12,4 +12,28 @@
 
 <ion-content>
 
+  <div *ngFor="let order of allTableOrders" >
+    <ion-list>
+        <ion-item [ngClass]="order.expired">
+          <ion-col size="2" class="ion-no-padding">
+            <img alt="Kitchen Images" [src]="'/assets/images/albums/'+order.imageLink+'.jpg'">
+          </ion-col>
+          <ion-col size="7.3">
+            <ion-label class="title">
+              {{ order.title }}
+              <p>{{order.price}}€</p>
+              <p>{{order.createdAt | date:'HH:mm:ss dd/MM/yy'}}</p>
+            </ion-label>
+          </ion-col>
+        </ion-item>
+    </ion-list>
+  </div>
 </ion-content>
+
+<ion-fab  horizontal="end" vertical="bottom" slot="fixed"  >
+  <div >
+    <ion-fab-button (click)="callWaitress()" >
+      <ion-label color="light"> {{orderPriceToFixed}} €</ion-label>
+    </ion-fab-button>
+  </div>
+</ion-fab>

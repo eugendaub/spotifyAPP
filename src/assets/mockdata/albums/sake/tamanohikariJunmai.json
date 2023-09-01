@@ -2,7 +2,7 @@
   "artist": "Tamanohikari Junmai",
   "backgroundColor": "#46971d",
   "image": "tamanohikariJunmai",
-  "released": "23,98 €",
+  "released": 23.98,
   "title": "Tamanohikari Junmai",
   "tracks": [
     { "title": "Tamanohikari Junmai Ginjo Tokusen Sake 720ml", "seconds": 251 }

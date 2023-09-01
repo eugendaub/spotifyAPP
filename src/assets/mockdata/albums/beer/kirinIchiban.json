@@ -2,7 +2,7 @@
   "artist": "Kirin Ichiban",
   "backgroundColor": "#e0d7b3",
   "image": "kirinIchiban",
-  "released": "1,98 €",
+  "released": 1.98,
   "title": "Kirin Ichiban",
   "tracks": [
     { "title": "Kirin Ichiban Bier Dose 500ml", "seconds": 251 }

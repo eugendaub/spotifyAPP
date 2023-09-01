@@ -2,7 +2,7 @@
   "artist": "Ozeki Sake",
   "backgroundColor": "#110f82",
   "image": "ozekiSake",
-  "released": "3,19 €",
+  "released": 3.19,
   "title": "Ozeki Sake",
   "tracks": [
     { "title": "Ozeki Sake Cup Mini 100ml", "seconds": 251 }

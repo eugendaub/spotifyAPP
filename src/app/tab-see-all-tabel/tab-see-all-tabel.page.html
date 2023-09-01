@@ -6,14 +6,34 @@
 
 <ion-content>
 
-  <ion-list>
-    <ion-item *ngFor="let table of allTabel" [routerLink]="[table.id]" >
-      <ion-label  class="title">
-        Table: {{table.tableNr}}
-         <p>  User: {{ table.email }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+  <div *ngFor="let table of allTabel" [routerLink]="[table.id]">
+  <ion-item-sliding>
+      <ion-item >
+        <ion-col size="9">
+          <ion-label class="title">
+            Table: {{table.tableNr}}
+            <p>  User: {{ table.email }}</p>
+            <p>  Guest: {{ table.guests }}</p>
+          </ion-label>
+        </ion-col>
+        <ion-col size="3" >
+          <div>
+            <!-- {{order.createdAt | date:'HH:mm:ss dd/MM/yy'}}-->
+            <ion-label class="dateColor">{{table.tableCreateTime| date:'HH:mm:ss'}}</ion-label>
+            <ion-label class="dateColor">{{table.tableCreateTime| date:'dd/MM/yy'}}</ion-label>
+          </div>
+        </ion-col>
+      </ion-item>
+    <ion-item-options side="start">
+      <ion-item-option (click)="deleteTable(table)" color="primary">
+        <ion-title size="small" color="light">DELETE TABLE</ion-title>
+      </ion-item-option>
+    </ion-item-options>
+    </ion-item-sliding>
+  </div>
+
+
+
 
     <!--<ion-list *ngFor="let album of allTabel" >
       <ion-item button="" (click)="openTableOrder(album)">

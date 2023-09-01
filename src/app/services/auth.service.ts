@@ -42,7 +42,9 @@ export class AuthService {
       const credentials = await createUserWithEmailAndPassword(this.auth, email, password);
       const userDoc = doc(this.firestore, `users/${credentials.user.uid}`);
 
-      await setDoc(userDoc, {email, tableNr, guests});
+      const tableCreateTime = new Date().toISOString();
+
+      await setDoc(userDoc, {email, tableNr, guests, tableCreateTime});
       console.log('signup');
       return credentials;
     } catch (err) {

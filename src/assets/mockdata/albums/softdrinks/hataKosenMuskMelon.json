@@ -2,7 +2,7 @@
   "artist": "Hata Kosen Musk Melon",
   "backgroundColor": "#b2e47a",
   "image": "hataKosenMuskMelon",
-  "released": "2,50 €",
+  "released": 2.50,
   "title": "Hata Kosen Musk Melon",
   "tracks": [
     { "title": "Hata Kosen Musk Melon Soda 300ml", "seconds": 251 }

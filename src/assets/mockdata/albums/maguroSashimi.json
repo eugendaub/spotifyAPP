@@ -2,7 +2,7 @@
   "artist": "Maguro Sashimi",
   "backgroundColor": "#954844",
   "image": "maguro-sashimi",
-  "released": "13,90 €",
+  "released": 13.99,
   "title": "Maguro Sashimi",
   "tracks": [
     { "title": "6 x Scheiben Maguro Sashimi", "seconds": 251 }

@@ -44,7 +44,7 @@ export class UiService {
     },
     {
       path: 'tab3',
-      name: 'Kitchen order',
+      name: 'Kitchen',
       icon: 'fast-food',
       iconAlt: 'fast-food-outline',
       selected: false,

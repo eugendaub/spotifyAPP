@@ -2,7 +2,7 @@
   "artist": "Lech",
   "backgroundColor": "#50860f",
   "image": "lechBier",
-  "released": "1,30 €",
+  "released": 1.30,
   "title": "Lech",
   "tracks": [
     { "title": "Lech Premium Bier 5% (0,5l)", "seconds": 251 }

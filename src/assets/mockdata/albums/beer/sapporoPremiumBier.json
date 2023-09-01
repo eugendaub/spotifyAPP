@@ -2,7 +2,7 @@
   "artist": "Sapporo Premium Bier",
   "backgroundColor": "#d3dcdc",
   "image": "sapporoPremiumBier",
-  "released": "4,49 €",
+  "released": 4.49,
   "title": "Sapporo Premium Bier",
   "tracks": [
     { "title": "Sapporo Premium Bier Silver Can 650ml", "seconds": 251 }

@@ -2,7 +2,7 @@
   "artist": "Grilled Salmon Roll",
   "backgroundColor": "#f4d198",
   "image": "GrilledSalmonRoll",
-  "released": "12,50 €",
+  "released": 12.59,
   "title": "Grilled Salmon Roll",
   "tracks": [
     { "title": "Rolle gefüllt mit Spargel und geb. Tempuragarnelen.", "seconds": 251 },

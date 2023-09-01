@@ -26,6 +26,14 @@ export interface IUserOrder {
   timeExpired: number;
   imageLink: string;
   expired: string;
+  price: number;
+}
+
+export interface IOrder {
+  title: string;
+  createdAt: string;
+  price: number;
+  imageLink: string;
 }
 
 @Injectable({
@@ -41,6 +49,7 @@ export class DataService {
   userOrderCount = 0;
   currentDate: string;
   private tempOrder: IUserOrder[]=[];
+  private userOrders: IOrder[]=[];
   // eslint-disable-next-line @typescript-eslint/member-ordering
   guestsNumber;
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -230,8 +239,8 @@ export class DataService {
     );
   }
 
-  addOrderToUser(logInUserId,logInUserEmail, text, title, sushiImageLink, usertTableNr){
-    console.log('addOrderToUser');
+ /* addOrderToUser(logInUserId,logInUserEmail, text, title, sushiImageLink, usertTableNr){
+  //  console.log('addOrderToUser');
     const chatsRef = collection(this.firestore, 'orders');
     const userOrder = {
       userid: logInUserId,
@@ -244,7 +253,7 @@ export class DataService {
     };
 
     return addDoc(chatsRef, userOrder).then( res => {
-     // console.log('created order ADDDOC: ', res);
+      console.log('created order ADDDOC: ', res);
       const groupID = res.id;
       const promises = [];
 
@@ -258,7 +267,7 @@ export class DataService {
       promises.push(update);
       return Promise.all(promises);
     });
-  }
+  }*/
 
   // Hier werden alle Bestellugen von einem Tisch aufgerufen (Tab 4)
   getLocalTableOrders() {
@@ -273,7 +282,7 @@ export class DataService {
   }
 
   // Hier wird eine Temporere Bestellung erfasst
-  addTempOrder(logInUserId,logInUserEmail, text, title, sushiImageLink, userTableNr){
+  addTempOrder(logInUserId,logInUserEmail, text, title, sushiImageLink, userTableNr ,price){
     //this.currentDate = new Date().toISOString();
     const order: IUserOrder = {
       tempId: this.orderCount,
@@ -285,10 +294,11 @@ export class DataService {
       timeExpired : Date.now(),
       createdAt: new Date().toISOString(),
       imageLink: sushiImageLink,
-      expired: 'active'
+      expired: 'active',
+      price
     };
     this.tempOrder.push(order);
-    //console.log('Array: ', this.tempOrder);
+    console.log('Array: ', this.tempOrder);
     this.orderCount++;
   }
 
@@ -301,7 +311,7 @@ export class DataService {
   }
 
   // Nach einer bestellung werden alle Temporeren Bestelluge storniert/gelöscht
-  async deleteCompleteTempOrder() {
+  async deleteCompleteTempOrder(){
     this.tempOrder=[];
     this.userOrderCount=0;
   }
@@ -312,12 +322,19 @@ export class DataService {
     const logInUserId = this.authService.getUserId();
     for (const order of this.tempOrder) {
       addDoc(ordersRef, order).then(res => {
-        const groupID = res.id;
+        console.log('res.id: ', res.id);
+        const underOrder: IOrder = {
+          title : order.title,
+          createdAt : new Date().toISOString(),
+          price: order.price,
+          imageLink: order.imageLink
+        };
+        //const groupID = res.id;
         const promises = [];
         this.addLocalTableOrders(order);
         const userChatsRef = doc(this.firestore, `users/${logInUserId}`);
         const update = updateDoc(userChatsRef, {
-          userOrders: arrayUnion(groupID)
+          userOrders: arrayUnion(underOrder)
         });
         promises.push(update);
         return Promise.all(promises);
@@ -413,8 +430,10 @@ export class DataService {
 
   //holt eizelne Bestell Infos raus
   getOrderInfo(orderId){
-    const order = doc(this.firestore, `orders/${orderId}`);
-    return docData(order);
+    //const order = doc(this.firestore, `orders/${orderId}`);
+    //return docData(order);
+    const orderRef = collection(this.firestore, `orders/${orderId}`);
+    return collectionData(orderRef,{idField: 'id'});
   }
 
   //holt alle bestellungen aus User/userOrders raus

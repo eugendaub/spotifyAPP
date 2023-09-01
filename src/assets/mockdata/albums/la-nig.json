@@ -2,7 +2,7 @@
   "artist": "Lachsavokado Nigiri",
   "backgroundColor": "#a9b367",
   "image": "la-nig",
-  "released": "3,90 €",
+  "released": 3.99,
   "title": "Nigiri",
   "tracks": [
     { "title": "Röstzwiebeln und scharfer Sriracha Sauce", "seconds": 320 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {DataService} from '../services/data.service';
 import {Storage} from '@ionic/storage-angular';
 import {Router} from '@angular/router';
+import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-tab-see-all-tabel',
@@ -12,7 +13,7 @@ export class TabSeeAllTabelPage implements OnInit {
   allTabel = [];
 
   constructor( private dataService: DataService,  private storage: Storage,
-               private router: Router) { }
+               private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
     this.storageCreate();
@@ -35,4 +36,19 @@ export class TabSeeAllTabelPage implements OnInit {
     this.router.navigateByUrl(`/tabs/tab2/${titleEscaped}`);
   }
 
+  // Lösche einen Tisch komplett
+  deleteTable(tableId){
+    console.log(tableId.id);
+   // this.authService.deleteUser();
+    this.dataService.deleteUserDocument(tableId.id);
+  }
+
+
+  deleteUser(){
+    this.dataService.deleteCompleteTempOrder();
+    this.storage.clear();
+    const userId = this.authService.getUserId();
+    this.authService.deleteUser();
+    this.dataService.deleteUserDocument(userId);
+  }
 }

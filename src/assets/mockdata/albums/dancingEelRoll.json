@@ -2,7 +2,7 @@
   "artist": "Dancing Eel Roll",
   "backgroundColor": "#d79946",
   "image": "dancingEelRoll",
-  "released": "12,50 €",
+  "released": 12.59,
   "title": "Dancing Eel Roll",
   "tracks": [
     { "title": "Aalscheiben, Sesam on top", "seconds": 251 },

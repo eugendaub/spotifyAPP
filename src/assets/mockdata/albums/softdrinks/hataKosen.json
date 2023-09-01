@@ -2,7 +2,7 @@
   "artist": "Hata Kosen",
   "backgroundColor": "#ef4a66",
   "image": "hataKosen",
-  "released": "2,50 €",
+  "released": 2.50,
   "title": "Hata Kosen",
   "tracks": [
     { "title": "Hata Kosen White Peach Soda 300ml", "seconds": 251 }

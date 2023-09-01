@@ -2,7 +2,7 @@
   "artist": "King Umeshu",
   "backgroundColor": "#eee591",
   "image": "kingUmeshu",
-  "released": "2,49 €",
+  "released": 2.49,
   "title": "King Umeshu",
   "tracks": [
     { "title": "King Umeshu Cup 180ml", "seconds": 251 }

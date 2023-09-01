@@ -60,7 +60,7 @@ export class AlbumPage implements OnInit {
     const logInUserId = this.authService.getUserId();
     const userTableNr = this.authService.getUserTableNr();
     const img = this.dasherize(order.image);
-    this.dataService.addTempOrder(logInUserId, logInUserEmail, order.title, order.title, img, userTableNr);
+    this.dataService.addTempOrder(logInUserId, logInUserEmail, order.title, order.title, img, userTableNr, order.released);
     this.orderButtonDisabled = this.dataService.addUpUserOrder();
     if (this.orderButtonDisabled === true && this.timerOnOff === 'off') {
       console.log('FUll');

@@ -16,3 +16,17 @@ ion-list {
   --ion-background-color: var(--ion-color-dark);
 
 }*/
+
+.dateColor{
+    color: #fff;
+}
+
+ion-item{
+  --ion-item-background: #000000;
+
+  color: #fff;
+
+  p {
+    color: #949494;
+  }
+}

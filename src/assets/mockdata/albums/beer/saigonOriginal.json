@@ -2,7 +2,7 @@
   "artist": "Saigon Original",
   "backgroundColor": "#dd6212",
   "image": "saigonOriginal",
-  "released": "2,19 €",
+  "released": 2.19,
   "title": "Saigon Original",
   "tracks": [
     { "title": "Saigon Original Bier 355ml", "seconds": 251 }
