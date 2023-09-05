@@ -1,0 +1,10 @@
+{
+  "artist": "Ruby Roll",
+  "backgroundColor": "#72353a",
+  "image": "rubyRoll",
+  "released": 9.99,
+  "title": "Ruby Roll",
+  "tracks": [
+    { "title": "8x Gurke, Avocado, Rettich, Frischkäse, umhüllt mit gekochter Rote Beete", "seconds": 251 }
+  ]
+}

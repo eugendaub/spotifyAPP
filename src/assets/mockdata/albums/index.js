@@ -5,6 +5,10 @@ import nigiriMenue from './nigirimenu.json';
 import maguro from './maguro.json';
 import lachsavokadoNigiri from './la-nig.json';
 import tako from './tako.json';
+import ebiTempura from './EbiTempura.json';
+import ebiTuna from './EbiTuna.json';
+import namSpecial from './NamSpecial.json';
+import rainbow from './Rainbow.json';
 import dancingEelRoll from './dancingEelRoll.json';
 import grilledSalmonRoll from './grilledSalmonRoll.json';
 import rainbowroll from './rainbowroll.json';
@@ -12,6 +16,12 @@ import lachsavokadoTobikko from './lachsavokadoTobikko.json';
 import futomaki from './futomaki.json';
 import futoebi from './futoebi.json';
 import maguroSashimi from './maguroSashimi.json';
+import unagi from './unagi.json';
+import avocado from './avocado.json';
+import tamago from './tamago.json';
+import rubyRoll from './rubyRoll.json';
+import sunKissed from './sunKissed.json';
+import sakeAvokado from './sakeAvokado.json';
 import sakeWaHyakuyakucho from './sake/sakeWaHyakuyakucho.json';
 import spritzig from './softdrinks/spritzigWasser.json';
 import lech from './beer/lechBier.json';
@@ -54,6 +64,16 @@ export default {
   'Futomaki' : futomaki,
   'Futoebi' : futoebi,
   'Maguro Sashimi' : maguroSashimi,
+  'Ebi Tempura' : ebiTempura,
+  'Ebi Tuna' : ebiTuna,
+  'Nam Special' : namSpecial,
+  'Rainbow' : rainbow,
+  'Unagi' : unagi,
+  'Avocado' : avocado,
+  'Tamago' : tamago,
+  'Ruby Roll' : rubyRoll,
+  'Sun Kissed' : sunKissed,
+  'Sake Avokado' : sakeAvokado,
   //SAKE
   'Sake Wa Hyakuyakucho' : sakeWaHyakuyakucho,
   'Ozeki Nigori' : ozekiNigori,

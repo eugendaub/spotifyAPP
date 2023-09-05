@@ -5,5 +5,9 @@
     "image": "GrilledSalmonRoll",
     "title": "Grilled Salmon Roll"
   },
-  { "id": 3, "image": "RainbowrollImg", "title": "Rainbowroll" }
+  { "id": 3, "image": "RainbowrollImg", "title": "Rainbowroll" },
+  { "id": 4, "image": "NamSpecial", "title": "Nam Special" },
+  { "id": 5, "image": "Rainbow", "title": "Rainbow" },
+  { "id": 6, "image": "EbiTuna", "title": "Ebi Tuna" },
+  { "id": 7, "image": "EbiTempura", "title": "Ebi Tempura" }
 ]

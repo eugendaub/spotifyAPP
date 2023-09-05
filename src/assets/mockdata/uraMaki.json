@@ -6,5 +6,9 @@
     "title": "Lachsavokado Tobikko"
   },
   { "id": 3, "image": "futoebi", "title": "Futoebi" },
-  { "id": 4, "image": "maguro-sashimi", "title": "Maguro Sashimi" }
+  { "id": 4, "image": "maguro-sashimi", "title": "Maguro Sashimi" },
+  { "id": 5, "image": "rubyRoll", "title": "Ruby Roll" },
+  { "id": 6, "image": "sunKissed", "title": "Sun Kissed" },
+  { "id": 7, "image": "sakeAvokado", "title": "Sake Avokado" }
+
 ]

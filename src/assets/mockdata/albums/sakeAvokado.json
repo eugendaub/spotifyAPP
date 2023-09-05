@@ -1,0 +1,10 @@
+{
+  "artist": "Sake Avokado",
+  "backgroundColor": "#fb5332",
+  "image": "sakeAvokado",
+  "released": 8.99,
+  "title": "Sake Avokado",
+  "tracks": [
+    { "title": "8x Lachs, Avocado, Tobiko, Sesam", "seconds": 251 }
+  ]
+}

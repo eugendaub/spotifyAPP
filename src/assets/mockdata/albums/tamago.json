@@ -1,0 +1,11 @@
+{
+  "artist": "Tamago",
+  "backgroundColor": "#fee495",
+  "image": "tamago",
+  "released": 3.99,
+  "title": "Tamago",
+  "tracks": [
+    { "title": " 2 x Ei ", "seconds": 248 }
+  ]
+}
+
