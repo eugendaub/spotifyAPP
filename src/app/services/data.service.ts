@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   Firestore, collection, collectionData, doc, addDoc, deleteDoc, updateDoc, arrayUnion, arrayRemove,
-  serverTimestamp, query, orderBy, docData, where,documentId
+  query, orderBy, docData, where,documentId
 } from '@angular/fire/firestore';
 import {AuthService} from './auth.service';
 import {switchMap} from 'rxjs/operators';
@@ -319,7 +319,6 @@ export class DataService {
   // Hiermit werden alle Bestellungen die in Temp-order-view-page vorhanden sind in der DB abgespeichert
   async addTempOrderToDB() {
     const ordersRef = collection(this.firestore, 'orders');
-    const logInUserId = this.authService.getUserId();
     for (const order of this.tempOrder) {
       addDoc(ordersRef, order).then(res => {
         console.log('res.id: ', res.id);
@@ -329,36 +328,26 @@ export class DataService {
           price: order.price,
           imageLink: order.imageLink
         };
-        //const groupID = res.id;
-        const promises = [];
-        this.addLocalTableOrders(order);
-        const userChatsRef = doc(this.firestore, `users/${logInUserId}`);
-        const update = updateDoc(userChatsRef, {
-          userOrders: arrayUnion(underOrder)
-        });
-        promises.push(update);
-        return Promise.all(promises);
+        return this.addUserOrders(underOrder );
       });
     }
   }
-  //Beispiel aus chat (ohne funktion)
-  addMessage(chatId,msg){
-    console.log('addMessage');
+
+  //Fügt bestellungen zu den User in einen zusätzlichen Dokument hinzu
+  addUserOrders(order){
     const userId = this.authService.getUserId();
-    const messages = collection(this.firestore, `chats/${chatId}/messages`);
-    return addDoc( messages, {
-      from: userId,
-      msg,
-      createdAt: serverTimestamp()
+    const userOrderRef = collection(this.firestore, `users/${userId}/orders`);
+    return addDoc( userOrderRef, {
+      order
     });
   }
 
   // Hiermit werden die Bestellungen von einem Tisch lockal abgespeichert.
-  async addLocalTableOrders(order: IUserOrder) {
+  /*async addLocalTableOrders(order: IUserOrder) {
     const dates = await this.storage.get(STORAGE_KEY) || [];
     dates.push(order);
     return this.storage.set(STORAGE_KEY, dates);
-  }
+  }*/
 
   //  !!!!!!! ACHTUNG  wird nicht verwendet (muss einmal benutzt werden)  ACHTUNG !!!!!!!!
   createOrderForUser(logInUserId,logInUserEmail){
@@ -438,27 +427,20 @@ export class DataService {
 
   //holt alle bestellungen aus User/userOrders raus
   getTableOrders(userId){
-    console.log('getTableOrders');
+    //console.log('getTableOrders');
+    //const userId= this.authService.getUserId();
+    const userOrderRef = collection(this.firestore, `users/${userId}/orders`);
+    return collectionData(userOrderRef, {idField: 'id'});
+  }
 
-    const userRef = doc(this.firestore, `users/${userId}`);
-    return docData(userRef).pipe(
-      switchMap(data => {
-        console.log('Data: ', data.userOrders);
-        if(!data){
-          console.log('Data leer: ');
-        }
-        const allUserOrders = data.userOrders;
-        const chatsRef = collection(this.firestore, 'userOrders');
-        const q = query(chatsRef, where(documentId(), 'in', allUserOrders));
-        return collectionData(q, { idField: 'id' });
-      }),
-      //take(1)
-    );
+  getUserOrderInfo(){
+    const userId= this.authService.getUserId();
+    const order = doc(this.firestore, `users/${userId}`);
+    return docData(order);
   }
 
   //holt alle bestellungen aus User/userOrders raus
   getTableOrders2(userId){
-    console.log('getTableOrders');
 
     const userRef = doc(this.firestore, `users/${userId}`);
     return docData(userRef);

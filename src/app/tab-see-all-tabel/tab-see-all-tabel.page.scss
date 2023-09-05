@@ -20,9 +20,19 @@ ion-list {
 .dateColor{
     color: #fff;
 }
-
+/*
 ion-item{
   --ion-item-background: #000000;
+
+  color: #fff;
+
+  p {
+    color: #949494;
+  }
+}*/
+
+ion-item {
+  --ion-item-background: linear-gradient(#000000 95%, #3ab60b);
 
   color: #fff;
 
