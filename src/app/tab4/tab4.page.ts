@@ -21,7 +21,7 @@ export class Tab4Page implements OnInit {
   {
     this.storageCreate();
     //this.getUserOrders();
-    this.getUserOrdersFromOrder();
+    //this.getUserOrdersFromOrder();
   }
 
   ngOnInit() {
@@ -46,6 +46,8 @@ export class Tab4Page implements OnInit {
 
   getUserOrdersFromOrder(){
     console.log('getUserOrdersFromOrder');
+    this.allUserOrders = [];
+    this.orderPrice = 0;
     this.userid = this.authService.getUserId();
     this.dataService.getTableOrders(this.userid).subscribe( res =>{
       this.allUserOrders = res;
@@ -63,6 +65,8 @@ export class Tab4Page implements OnInit {
 
   async loadDates() {
     //this.events = await this.dataService.getLocalTableOrders();
+    console.log('loadData tab4');
+    this.getUserOrdersFromOrder();
   }
 
   // Löscht eine Bestellung (wird zur Testzweken benötigt)
