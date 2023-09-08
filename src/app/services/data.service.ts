@@ -48,6 +48,7 @@ export class DataService {
   oneRoundNumber = 2;
   userOrderCount = 0;
   currentDate: string;
+  userOrderCountDownNumber=0;
   private tempOrder: IUserOrder[]=[];
   private userOrders: IOrder[]=[];
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -61,6 +62,9 @@ export class DataService {
   aRoundTime = 60;
   // eslint-disable-next-line @typescript-eslint/member-ordering
   defaultWaitTime = 10;
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  isTimerFinished = false;
 
   //restaurant Fab-Button Status
   private restaurantFabButtonSubject: BehaviorSubject<string> = new BehaviorSubject<string>('restaurantFabButtonNormal');
@@ -91,9 +95,15 @@ export class DataService {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   waitTimeSubject = this.waitARoundTimeSubject.asObservable();
 
+  // User Order Number
+  private userOrderNumberSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  userOrderNumber$ = this.userOrderNumberSubject.asObservable();
+
   constructor(private firestore: Firestore, private authService: AuthService, private toastCtrl: ToastController,
               private vibration: Vibration, private storage: Storage) {
     this.loadWaitTime();
+    this.loadUserOrderNumber();
   }
 
   // Holt alle Bestellunge aus Db für die Küche
@@ -126,19 +136,33 @@ export class DataService {
     this.totalOrderQuantityARoundSubject.next(status);
   }
 
+  //Aktualisiert die Bestellzahl
+  updateUserOrderNumber(status) {
+    //console.log('updateUserOrderNumber' , status);
+    this.userOrderNumberSubject.next(status);
+  }
+
   // Hier werden die bestellungen pro Runde erfasst.
   addUpUserOrder(){
     this.guestsNumber = this.authService.getGuestsNumber();
+    console.log(this.guestsNumber);
     this.oneOrderTotalNumber = this.guestsNumber * this.oneRoundNumber -1;
+    console.log(  this.oneOrderTotalNumber);
     if( this.oneOrderTotalNumber > this.userOrderCount){
+
       this.orderToast();
       this.userOrderCount++;
-      console.log(this.userOrderCount);
+     // console.log(this.userOrderCount);
+      this.userOrderCountDownNumber--;
       this.updateTotalOrderQuantityARound(this.userOrderCount);
+      this.updateUserOrderNumber(this.userOrderCountDownNumber);
       return false;
     }else{
+
       this.userOrderCount++;
       console.log(this.userOrderCount);
+      this.userOrderCountDownNumber--;
+      this.updateUserOrderNumber(this.userOrderCountDownNumber);
       this.updateTotalOrderQuantityARound('orderRoundFull');
       this.orderFullToast();
       return true;
@@ -148,7 +172,11 @@ export class DataService {
   // Sollte eine Bestelung aus dem Temp-order-view-page enfernt werden so wird es hier erfasst.
   oneOrderDeleteMinusCount(){
     this.userOrderCount--;
+    this.userOrderCountDownNumber++;
+    this.updateUserOrderNumber(this.userOrderCountDownNumber);
   }
+
+
 
   // Poppt bei jeder hinzugefügten ware auf und zeigt die verbliebende Bestellanzahl an.
   orderToast() {
@@ -321,7 +349,7 @@ export class DataService {
     const ordersRef = collection(this.firestore, 'orders');
     for (const order of this.tempOrder) {
       addDoc(ordersRef, order).then(res => {
-        console.log('res.id: ', res.id);
+       // console.log('res.id: ', res.id);
         const underOrder: IOrder = {
           title : order.title,
           createdAt : new Date().toISOString(),
@@ -407,6 +435,26 @@ export class DataService {
     const time = await this.getWaitTime();
     this.waitARoundTimeSubject.next(time);
     this.aRoundTime = time;
+  }
+  //wird nur einmal aufgerufen bei Tisch/Account erstellung  bzws. Login
+  async loadUserOrderNumber(){
+    // Timer starten ich muss den Timer hier einfügen ,weil die this.authService.getGuestsNumber()
+    // funktion erst später aufgerufen wird und es zu einem Error kommt.
+    setTimeout(() => {
+      console.log('Der Timer ist abgelaufen!');
+      this.guestsNumber = this.authService.getGuestsNumber();
+      console.log(this.guestsNumber);
+      this.userOrderCountDownNumber = this.guestsNumber * this.oneRoundNumber;
+      this.userOrderNumberSubject.next(this.userOrderCountDownNumber.toString());
+    }, 3000); // Timer läuft 1 Sekunde
+  }
+
+  // Wird nach jeder Bestellung aufgerufen.
+  async loadUserOrderNumberNow(){
+      this.guestsNumber = this.authService.getGuestsNumber();
+      console.log(this.guestsNumber);
+      this.userOrderCountDownNumber = this.guestsNumber * this.oneRoundNumber;
+      this.userOrderNumberSubject.next(this.userOrderCountDownNumber.toString());
   }
 
   //Zeigt alle Angemeldeten Tische an.

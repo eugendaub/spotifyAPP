@@ -2,7 +2,7 @@
   <ion-header >
     <ion-toolbar color="primary">
       <ion-title color="light">
-        My config
+        Привет Леончик
       </ion-title>
       <ion-buttons slot="end">
         <ion-button (click)="logout()">
@@ -43,6 +43,9 @@
        <ion-icon color="light" slot="start" name="save"></ion-icon>
      </ion-button>
    </div>
+    <div class="avatar-image-box">
+    <img alt="Avatar Images" [src]="'/assets/images/avatar.jpg'">
+    </div>
   </ion-content>
   <ion-button class="save-text" (click)="deleteUser()" expand="block">
     <ion-icon color="light" slot="start" name="skull"></ion-icon>
@@ -58,8 +61,15 @@
          <ion-fab  horizontal="end" vertical="end" slot="fixed"  >
          <div >
            <ion-fab-button (click)="temOrderView()" >
-             <ion-icon color="light" name="restaurant-outline"></ion-icon>
+             <ion-row >
+           <ion-label class="userOrders-label" color="light">{{userOrderCountNumber}}</ion-label>
+               <ion-row >
+
+                   <ion-icon class="fab-icon"  color="light" name="restaurant-outline" ></ion-icon>
+               </ion-row>
+           </ion-row>
            </ion-fab-button>
+
          </div>
        </ion-fab>
        </span>
@@ -75,9 +85,9 @@
      <span *ngSwitchCase="'restaurantFabButtonCountDown'">
        <ion-fab  horizontal="end" vertical="end" slot="fixed" >
        <div >
-         <ion-fab-button >
+         <ion-fab-button (click)="temOrderView()" >
            <ion-row class="row-position-icon" >
-             <ion-icon class="fab-icon"  color="light" name="fast-food" (click)="temOrderView()"></ion-icon>
+             <ion-icon class="fab-icon"  color="light" name="fast-food" ></ion-icon>
                <ion-row >
                  <ion-label color="light">{{timeLeftFormatted}}</ion-label>
                </ion-row>

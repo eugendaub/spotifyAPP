@@ -98,6 +98,7 @@ export class TempOrderViewPage  {
       this.openTab1();
       this.dataService.updateTotalOrderQuantityARound('orderRoundNotFull');
       this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonCountDown');
+      this.dataService.loadUserOrderNumberNow();
     }else{
       const alert = await this.alertCtrl.create({
         cssClass: 'alt my-custom-class',
@@ -118,7 +119,7 @@ export class TempOrderViewPage  {
   }
 
   deleteOneOrder(order){
-    console.log('ID :', order.tempId);
+    //console.log('ID :', order.tempId);
     this.dataService.deleteTempOrder(order.tempId);
     this.dataService.oneOrderDeleteMinusCount();
     this.dataService.updateTotalOrderQuantityARound('orderRoundNotFull');

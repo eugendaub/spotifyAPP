@@ -24,7 +24,7 @@ export class TableOverviewPage implements OnInit {
 
   ngOnInit() {
     this.tableId = this.route.snapshot.paramMap.get('id');
-    console.log(this.tableId);
+   // console.log(this.tableId);
     this.getTableOrders(this.tableId);
   }
 
@@ -33,10 +33,10 @@ export class TableOverviewPage implements OnInit {
   }
 
   getTableOrders(tableId){
-    console.log(tableId);
+   // console.log(tableId);
     this.orderPrice = 0;
     this.userid = this.authService.getUserId();
-    this.dataService.getTableOrders(this.userid).subscribe( res =>{
+    this.dataService.getTableOrders(tableId).subscribe( res =>{
       this.allTableOrders = res;
       // console.log('allUserOrders', res);
       for(const orderId of this.allTableOrders){

@@ -45,7 +45,7 @@ export class Tab4Page implements OnInit {
   }
 
   getUserOrdersFromOrder(){
-    console.log('getUserOrdersFromOrder');
+   // console.log('getUserOrdersFromOrder');
     this.allUserOrders = [];
     this.orderPrice = 0;
     this.userid = this.authService.getUserId();
@@ -65,7 +65,7 @@ export class Tab4Page implements OnInit {
 
   async loadDates() {
     //this.events = await this.dataService.getLocalTableOrders();
-    console.log('loadData tab4');
+   // console.log('loadData tab4');
     this.getUserOrdersFromOrder();
   }
 

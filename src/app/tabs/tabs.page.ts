@@ -31,6 +31,7 @@ export class TabsPage {
   timerOnOff;
   orderStatus;
   restaurantFabButtonStatus='restaurantFabButtonNormal';
+  userOrderCountNumber = '0';
 
 
   constructor(private navCtrl: NavController, private router: Router, private tab4Page: Tab4Page,
@@ -48,6 +49,7 @@ export class TabsPage {
     this.loadSettings();
 
     this.dataService.restaurantFabButtonStatus$.subscribe( status => {
+      console.log('restaurantFabButtonStatus', status);
       this.restaurantFabButtonStatus = status;
       //console.log('this.restaurantFabButtonStatus', this.restaurantFabButtonStatus );
     });
@@ -63,6 +65,10 @@ export class TabsPage {
       const minutes = Math.floor(this.runningTime / 60);
       const seconds = this.runningTime % 60;
       this.timeLeftFormatted = `${this.padZero(minutes)}:${this.padZero(seconds)}`;
+    });
+
+    this.dataService.userOrderNumber$.subscribe( orderNumber => {
+      this.userOrderCountNumber = orderNumber;
     });
   }
 

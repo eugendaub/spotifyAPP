@@ -100,3 +100,13 @@ ion-item {
 .ion-fab-button-hidden {
   visibility: hidden;
 }
+
+.avatar-image-box {
+  max-width: 450px;
+  border-radius: 10% !important;
+  overflow: hidden;
+}
+
+.userOrders-label {
+  font-size: 1.8em;
+}

@@ -33,7 +33,7 @@ export class Tab1Page {
   ];
   // mehrere Bilder pro Seite darstellen
   optsHorizontalScroll= {
-    slidesPerView: 2.4,
+    slidesPerView: 3.4,
     slidesOffsetBefore: 20,
     spaceBetween: 20,
     freeMode: true
