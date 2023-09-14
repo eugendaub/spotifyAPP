@@ -73,7 +73,18 @@ ion-menu {
   --border-width:1px;
   --background: var(--ion-color-dark);
   --button-color:#ffffff;
-  --width: 150px;
+  --width: 250px;
+  --max-hight: 10px;
+}
+.toast-custom-class-error {
+  --color: #000000;
+  --border-color:#000000;
+  --border-radius:3px;
+  --border-style:solid;
+  --border-width:1px;
+  --background: #fff;
+  --button-color:#ffffff;
+  --width: 200px;
   --max-hight: 10px;
 }
 

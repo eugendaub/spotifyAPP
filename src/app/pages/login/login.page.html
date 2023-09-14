@@ -1,12 +1,50 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>ADD Table Nr</ion-title>
+    <ion-title>Welcome</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
 
-  <form (ngSubmit)="login()" [formGroup]="credentialsForm">
+  <ion-segment color="light" value="login" (ionChange)="segmentChange($event)">
+    <ion-segment-button value="login">
+      <ion-label>Login</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="create">
+      <ion-label>Create Table</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="admin">
+      <ion-label>Create Admin Account</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+
+  <div class="fab-button" [ngSwitch]="segmentStatus" >
+       <span *ngSwitchCase="'login'" >
+            <form (ngSubmit)="login()" [formGroup]="credentialsLogin">
+    <ion-item>
+      <ion-input type="tableNr" placeholder="Table Nr"
+                 name="tableNr" formControlName="tableNr"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="email" placeholder="Email"
+                 name="email" formControlName="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="password" placeholder="Password"
+                 name="password" formControlName="password"></ion-input>
+    </ion-item>
+
+    <ion-button color="primary" expand="full" type="submit" expand="block" [disabled]="!credentialsLogin.valid">
+      <div class="title">Login</div>
+    </ion-button>
+
+  </form>
+       </span>
+    <span *ngSwitchCase="'create'">
+            <form  [formGroup]="credentialsForm">
     <ion-item>
       <ion-input type="tableNr" placeholder="Table Nr"
                  name="tableNr" formControlName="tableNr"></ion-input>
@@ -26,14 +64,33 @@
                  name="password" formControlName="password"></ion-input>
     </ion-item>
 
-    <ion-button color="primary" expand="full" type="submit" expand="block" [disabled]="!credentialsForm.valid">
-      Login
+
+    <ion-button color="warning" expand="full" type="button" expand="block" (click)="createTableAndlogin()" [disabled]="!credentialsForm.valid">
+      <div class="title">Create Table</div>
     </ion-button>
-    <ion-button color="secondary" expand="full" type="button" expand="block" (click)="register()" [disabled]="!credentialsForm.valid">
-      Create Table
+  </form>
+     </span>
+    <span *ngSwitchCase="'admin'">
+  <form [formGroup]="credentialsAdmin">
+
+    <ion-item>
+      <ion-input type="email" placeholder="Email"
+                 name="email" formControlName="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="password" placeholder="Password"
+                 name="password" formControlName="password"></ion-input>
+    </ion-item>
+    <ion-button color="secondary" expand="full" type="button" expand="block" (click)="registerAccount()" [disabled]="!credentialsAdmin.valid">
+      <div class="title">Create Admin Account</div>
     </ion-button>
 
   </form>
+     </span>
+    <span *ngSwitchDefault> default</span>
+  </div>
+
 
 
 

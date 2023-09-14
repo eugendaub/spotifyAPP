@@ -8,7 +8,7 @@ import {switchMap} from 'rxjs/operators';
 import {ToastController} from '@ionic/angular';
 import {Vibration} from '@ionic-native/vibration/ngx';
 import { Storage } from '@ionic/storage-angular';
-import { BehaviorSubject } from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {Preferences} from '@capacitor/preferences';
 
 // wird für die zwischen bestellungen verwendet in Tab4
@@ -42,6 +42,7 @@ export interface IOrder {
 
 export class DataService {
 
+  table: Observable<any>;
   userOrderId = null;
   orderCount = 0;
   count = 0;
@@ -102,6 +103,7 @@ export class DataService {
 
   constructor(private firestore: Firestore, private authService: AuthService, private toastCtrl: ToastController,
               private vibration: Vibration, private storage: Storage) {
+    this.table=null;
     this.loadWaitTime();
     this.loadUserOrderNumber();
   }
@@ -230,8 +232,19 @@ export class DataService {
   // Hier wird der User/Table mit Bestellugen gelöscht
   deleteUserDocument(userId) {
     console.log('deleteUserDoc');
-    const noteDocRef = doc(this.firestore, `users/${userId}`);
-    return deleteDoc(noteDocRef);
+    const noteDocRef = doc(this.firestore, `table/${userId}`);
+    //const noteCollectionRef = collection(this.firestore ,`table/${userId}`);
+    //return deleteDoc(noteDocRef);
+    return noteDocRef;
+  }
+
+  // Hier wird der User/Table mit Bestellugen gelöscht
+  deleteUserDocumentWithOrderID(userId, orderId) {
+    console.log('deleteUserDoc' ,orderId);
+    //const noteDocRef = doc(this.firestore, `table/${userId}/orders`);
+    const noteCollectionRef = collection(this.firestore ,`table/${userId}`);
+    //return deleteDoc(noteDocRef);
+    return noteCollectionRef;
   }
 
   // Löscht eine Bestellung von der Küche (Tab3) aus.
@@ -349,7 +362,7 @@ export class DataService {
     const ordersRef = collection(this.firestore, 'orders');
     for (const order of this.tempOrder) {
       addDoc(ordersRef, order).then(res => {
-       // console.log('res.id: ', res.id);
+        console.log('res.id: ', res.id);
         const underOrder: IOrder = {
           title : order.title,
           createdAt : new Date().toISOString(),
@@ -363,8 +376,9 @@ export class DataService {
 
   //Fügt bestellungen zu den User in einen zusätzlichen Dokument hinzu
   addUserOrders(order){
-    const userId = this.authService.getUserId();
-    const userOrderRef = collection(this.firestore, `users/${userId}/orders`);
+    const tableNr = this.authService.getTableNr();
+    console.log(tableNr);
+    const userOrderRef = collection(this.firestore, `table/${tableNr}/orders`);
     return addDoc( userOrderRef, {
       order
     });
@@ -461,7 +475,7 @@ export class DataService {
   getAllTables(){
     //const userId = this.authService.getUserId();
 
-    const userRef = collection(this.firestore, 'users');
+    const userRef = collection(this.firestore, 'table');
     return collectionData(userRef,{idField: 'id'});
   }
 
@@ -477,22 +491,13 @@ export class DataService {
   getTableOrders(userId){
     //console.log('getTableOrders');
     //const userId= this.authService.getUserId();
-    const userOrderRef = collection(this.firestore, `users/${userId}/orders`);
+    //const userOrderRef = collection(this.firestore, `users/${userId}/orders`);
+
+    const userOrderRef = collection(this.firestore, `table/${userId}`);
     return collectionData(userOrderRef, {idField: 'id'});
   }
 
-  getUserOrderInfo(){
-    const userId= this.authService.getUserId();
-    const order = doc(this.firestore, `users/${userId}`);
-    return docData(order);
-  }
 
-  //holt alle bestellungen aus User/userOrders raus
-  getTableOrders2(userId){
-
-    const userRef = doc(this.firestore, `users/${userId}`);
-    return docData(userRef);
-  }
 
   //holt alle bestellungen aus User/userOrders raus
   getTableOrdersForUser(){

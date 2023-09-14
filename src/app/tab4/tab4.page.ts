@@ -28,6 +28,7 @@ export class Tab4Page implements OnInit {
 
   }
 
+  // Überflüssig
   getUserOrders(){
     this.orderPrice=0;
     this.orderPriceToFixed =0;
@@ -48,7 +49,8 @@ export class Tab4Page implements OnInit {
    // console.log('getUserOrdersFromOrder');
     this.allUserOrders = [];
     this.orderPrice = 0;
-    this.userid = this.authService.getUserId();
+    //this.userid = this.authService.getUserId();
+    this.userid = this.authService.getTableNr();
     this.dataService.getTableOrders(this.userid).subscribe( res =>{
       this.allUserOrders = res;
      // console.log('allUserOrders', res);

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {DataService} from '../services/data.service';
 import {Storage} from '@ionic/storage-angular';
 import {Router} from '@angular/router';
-import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-tab-see-all-tabel',
@@ -11,23 +10,24 @@ import {AuthService} from '../services/auth.service';
 })
 export class TabSeeAllTabelPage implements OnInit {
   allTabel = [];
+  allTableOrders: any = [];
 
   constructor( private dataService: DataService,  private storage: Storage,
-               private router: Router, private authService: AuthService) { }
+               private router: Router) { }
 
   ngOnInit() {
-    this.storageCreate();
+    //this.storageCreate();
     this.dataService.getAllTables().subscribe(res => {
       this.allTabel = res;
       console.log(this.allTabel);
     });
   }
 
-  async storageCreate() {
+  /*async storageCreate() {
     console.log('create Storage');
     await this.storage.create();
     //console.log('create Storage end');
-  }
+  }*/
 
 
   openTableOrder(table) {
@@ -40,15 +40,30 @@ export class TabSeeAllTabelPage implements OnInit {
   deleteTable(tableId){
     console.log(tableId.id);
    // this.authService.deleteUser();
-    this.dataService.deleteUserDocument(tableId.id);
+    //this.dataService.deleteUserDocument(tableId.id);
+    this.getTableOrders(tableId.id);
+  }
+
+  getTableOrders(tableId){
+    console.log('gatTable Table : ',tableId);
+
+    this.dataService.getTableOrders(tableId).subscribe( res =>{
+      this.allTableOrders = res;
+      // console.log('allUserOrders', res);
+      for(const orderId of this.allTableOrders){
+        console.log('orderId: ', orderId.order);
+        //const orderID =  orderId.order;
+        //console.log('Price zusammen ' ,this.orderPrice);
+      }
+    });
   }
 
 
-  deleteUser(){
+  /*deleteUser(){
     this.dataService.deleteCompleteTempOrder();
-    this.storage.clear();
+    //this.storage.clear();
     const userId = this.authService.getUserId();
     this.authService.deleteUser();
     this.dataService.deleteUserDocument(userId);
-  }
+  }*/
 }

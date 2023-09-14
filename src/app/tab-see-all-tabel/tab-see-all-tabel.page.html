@@ -7,12 +7,12 @@
 <ion-content>
 
   <div *ngFor="let table of allTabel" [routerLink]="[table.id]">
-  <ion-item-sliding>
-      <ion-item >
+  <ion-item-sliding >
+      <ion-item>
         <ion-col size="9">
           <ion-label class="title">
+            Deleted {{table.isDeleted}}
             Table: {{table.tableNr}}
-            <p>  User: {{ table.email }}</p>
             <p>  Guest: {{ table.guests }}</p>
           </ion-label>
         </ion-col>
