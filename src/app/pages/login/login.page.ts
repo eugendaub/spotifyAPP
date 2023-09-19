@@ -5,7 +5,8 @@ import {AlertController, LoadingController, ToastController} from '@ionic/angula
 import {AuthService} from '../../services/auth.service';
 import {DataService} from '../../services/data.service';
 import {Storage} from '@ionic/storage-angular';
-import {Subscription} from 'rxjs';
+import {BehaviorSubject, Subscription} from 'rxjs';
+
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,7 @@ export class LoginPage implements OnInit {
   segmentStatus='login';
   private allLoginTables = [];
   private allTableObservable: Subscription;
+
 
   constructor(
     private router: Router,
@@ -86,6 +88,7 @@ export class LoginPage implements OnInit {
     const loginTableNr = this.credentialsLogin.value.tableNr;
 
     this.authService.updateLoginTableNumber(loginTableNr);
+    this.authService.setActiveTable(loginTableNr);
     this.allTableObservable = this.authService.getAllTables().subscribe(res => {
       this.allLoginTables = res;
       console.log(this.allLoginTables);
@@ -173,6 +176,7 @@ export class LoginPage implements OnInit {
     await this.storage.create();
     //console.log('create Storage end');
   }
+
 
 
 }

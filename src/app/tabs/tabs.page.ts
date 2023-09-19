@@ -33,11 +33,17 @@ export class TabsPage {
   restaurantFabButtonStatus='restaurantFabButtonNormal';
   userOrderCountNumber = '0';
   tableNr;
+  images = [
+    'assets/images/avatar.jpg',
+    'assets/images/avatar2.jpg'
+  ];
+  currentImage: string = this.getRandomImage();
+
 
 
   constructor(private navCtrl: NavController, private router: Router, private tab4Page: Tab4Page,
               private authService: AuthService , private dataService: DataService, private uiService: UiService,
-              private storage: Storage ) {
+              private storage: Storage) {
 
     this.uiService
       .getActiveTabs()
@@ -56,9 +62,11 @@ export class TabsPage {
     });
     //console.log('TABS COSNTRUKTOR');
 
-    this.authService.loginTableNumber$.subscribe( tableNr => {
+    /*this.authService.loginTableNumber$.subscribe( tableNr => {
       this.tableNr = tableNr;
-    });
+    });*/
+
+
 
     this.dataService.runningTime$.subscribe(status => {
       const waitTime = this.dataService.aRoundTime;
@@ -78,10 +86,29 @@ export class TabsPage {
   }
 
   async loadSettings() {
+    console.log('loadingSettings');
     this.allTabs = await this.uiService.getAvailableTabs();
+
+    // Rufe die Funktion zum Abrufen der Zahl auf und abonniere das Observable
+    this.authService.getActiveTable().subscribe(nr => {
+      if (nr !== null) {
+        // Hier kannst du die Zahl verwenden
+        console.log(`Die abgerufene Zahl ist: ${nr}`);
+        this.tableNr = nr;
+      } else {
+        console.log('Es wurde keine Zahl abgerufen.');
+      }
+    });
     this.getTime();
-    //this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonHidden');
-    //console.log('load Tabs ',this.allTabs);
+  }
+
+  changeImage() {
+    this.currentImage = this.getRandomImage();
+  }
+
+  getRandomImage(): string {
+    const randomIndex = Math.floor(Math.random() * this.images.length);
+    return this.images[randomIndex];
   }
 
   saveTabSelection(){

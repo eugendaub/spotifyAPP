@@ -4,7 +4,11 @@ import { Auth, createUserWithEmailAndPassword, UserCredential
 import {collection, collectionData, doc, docData, Firestore, setDoc} from '@angular/fire/firestore';
 import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import {BehaviorSubject, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject, from} from 'rxjs';
+import {Preferences} from '@capacitor/preferences';
+import { map } from 'rxjs/operators';
+
+const STORAGE_TABLE_KEY = 'active-table';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +16,7 @@ import {BehaviorSubject, Subject} from 'rxjs';
 export class AuthService {
   private currentUserData = null;
   logout$: Subject<boolean> = new Subject<boolean>();
+  private tableSubject = new BehaviorSubject(null);
 
   private loginTableSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -73,6 +78,7 @@ export class AuthService {
   }
 
   async logout() {
+    this.deleteTableNrStorage();
     await signOut(this.auth);
     this.logout$.next(true);
 
@@ -112,5 +118,43 @@ export class AuthService {
   getAllTables(){
     const userRef = collection(this.firestore, 'table');
     return collectionData(userRef,{idField: 'id'});
+  }
+  async setActiveTable(tabel: any) {
+    //await Preferences.set({ key: STORAGE_TABLE_KEY, value: tabel });
+    //this.tableSubject.next(tabel);
+
+    try {
+      await Preferences.set({ key: STORAGE_TABLE_KEY, value: tabel.toString() });
+      console.log(`Die Zahl ${tabel} wurde im Storage gespeichert.`);
+    } catch (error) {
+      console.error('Fehler beim Speichern der Zahl im Storage:', error);
+    }
+  }
+
+   getActiveTable(): Observable<number | null>{
+    //console.log('Get Activetable' ,this.tableSubject.asObservable());
+    //return this.tableSubject.asObservable();
+    return from(Preferences.get({ key: STORAGE_TABLE_KEY })).pipe(
+      map(result => {
+        if (result && result.value) {
+          const storedNumber = parseInt(result.value, 10);
+          console.log(`Gespeicherte Zahl: ${storedNumber}`);
+          return storedNumber;
+        } else {
+          console.log('Keine Zahl im Storage gefunden.');
+          return null;
+        }
+      })
+    );
+  }
+
+  // Funktion zum Löschen des Storage
+  async deleteTableNrStorage() {
+    try {
+      await Preferences.remove({ key: STORAGE_TABLE_KEY });
+      console.log(`Der Storage unter dem Schlüssel '${STORAGE_TABLE_KEY}' wurde gelöscht.`);
+    } catch (error) {
+      console.error('Fehler beim Löschen des Storage:', error);
+    }
   }
 }

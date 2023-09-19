@@ -44,8 +44,9 @@
      </ion-button>
    </div>
     <div class="avatar-image-box">
-    <img alt="Avatar Images" [src]="'/assets/images/avatar.jpg'">
+      <ion-img alt="Avatar Images" [src]="currentImage" (click)="changeImage()"></ion-img>
     </div>
+
   </ion-content>
   <ion-button class="save-text" (click)="deleteUser()" expand="block">
     <ion-icon color="light" slot="start" name="skull"></ion-icon>

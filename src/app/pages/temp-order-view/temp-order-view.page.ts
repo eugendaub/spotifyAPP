@@ -6,6 +6,7 @@ import {TabsPage} from '../../tabs/tabs.page';
 import {Tab4Page} from '../../tab4/tab4.page';
 import {Router} from '@angular/router';
 import {BehaviorSubject, Subscription, timer} from 'rxjs';
+import {AuthService} from '../../services/auth.service';
 
 
 @Component({
@@ -22,13 +23,14 @@ export class TempOrderViewPage  {
   orderNowButtonOnOff;
   totalOrderQuantityARound;
   countdownTimer = new BehaviorSubject(0);
+  tableNr;
 
   timeLeftFormatted: string;
   private timerSubscription: Subscription;
 
   constructor(private dataService: DataService, private navCtrl: NavController, private albumPage: AlbumPage,
               private tabsPage: TabsPage, private tab4Page: Tab4Page, private router: Router,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController, private authService: AuthService) {
     //Get All Temporary Orders now
       this.allTempOrders = this.dataService.getTemporaraOrder();
 
@@ -47,6 +49,17 @@ export class TempOrderViewPage  {
 
     this.dataService.totalOrderQuantityARound$.subscribe(status => {
       this.totalOrderQuantityARound = status;
+    });
+
+    // Rufe die Funktion zum Abrufen der Zahl auf und abonniere das Observable
+    this.authService.getActiveTable().subscribe(nr => {
+      if (nr !== null) {
+        // Hier kannst du die Zahl verwenden
+        console.log(`Die abgerufene Zahl ist: ${nr}`);
+        this.tableNr = nr;
+      } else {
+        console.log('Es wurde keine Zahl abgerufen.');
+      }
     });
   }
 

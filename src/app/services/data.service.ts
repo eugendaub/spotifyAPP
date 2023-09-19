@@ -105,7 +105,7 @@ export class DataService {
               private vibration: Vibration, private storage: Storage) {
     this.table=null;
     this.loadWaitTime();
-    this.loadUserOrderNumber();
+    //this.loadUserOrderNumber();
   }
 
   // Holt alle Bestellunge aus Db für die Küche
