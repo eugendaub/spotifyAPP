@@ -33,6 +33,7 @@ export class TabsPage {
   restaurantFabButtonStatus='restaurantFabButtonNormal';
   userOrderCountNumber = '0';
   tableNr;
+  guestsNumber;
   images = [
     'assets/images/avatar.jpg',
     'assets/images/avatar2.jpg'
@@ -56,7 +57,7 @@ export class TabsPage {
     this.loadSettings();
 
     this.dataService.restaurantFabButtonStatus$.subscribe( status => {
-      console.log('restaurantFabButtonStatus', status);
+      //console.log('restaurantFabButtonStatus', status);
       this.restaurantFabButtonStatus = status;
       //console.log('this.restaurantFabButtonStatus', this.restaurantFabButtonStatus );
     });
@@ -86,15 +87,26 @@ export class TabsPage {
   }
 
   async loadSettings() {
-    console.log('loadingSettings');
+    //console.log('loadingSettings');
     this.allTabs = await this.uiService.getAvailableTabs();
 
     // Rufe die Funktion zum Abrufen der Zahl auf und abonniere das Observable
     this.authService.getActiveTable().subscribe(nr => {
       if (nr !== null) {
         // Hier kannst du die Zahl verwenden
-        console.log(`Die abgerufene Zahl ist: ${nr}`);
+        //console.log(`Die abgerufene Zahl ist: ${nr}`);
         this.tableNr = nr;
+      } else {
+        console.log('Es wurde keine Zahl abgerufen.');
+      }
+    });
+
+    // Rufe die Funktion zum Abrufen der Zahl auf und abonniere das Observable
+    this.authService.getActiveGuestsNumber().subscribe(nr => {
+      if (nr !== null) {
+        // Hier kannst du die Zahl verwenden
+        //console.log(`Die abgerufene Zahl ist: ${nr}`);
+        this.guestsNumber = nr;
       } else {
         console.log('Es wurde keine Zahl abgerufen.');
       }

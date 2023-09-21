@@ -16,6 +16,8 @@ export class AlbumPage implements OnInit {
   orderButtonDisabled;
   restaurantFabButtonStatus;
   timerOnOff;
+  tableNr;
+  guestsNumber;
 
   constructor(private activatedRoute: ActivatedRoute, private authService: AuthService,
               private dataService: DataService) {
@@ -56,16 +58,38 @@ export class AlbumPage implements OnInit {
   };
 
   placeAnOrderTemp(order) {
-    const logInUserEmail = this.authService.getUserEmail();
-    const logInUserId = this.authService.getUserId();
-    const userTableNr = this.authService.getUserTableNr();
-    const img = this.dasherize(order.image);
-    this.dataService.addTempOrder(logInUserId, logInUserEmail, order.title, order.title, img, userTableNr, order.released);
-    this.orderButtonDisabled = this.dataService.addUpUserOrder();
-    if (this.orderButtonDisabled === true && this.timerOnOff === 'off') {
-      console.log('FUll');
-      this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonFull');
-    }
+
+    // Rufe die Funktion zum Abrufen der Zahl auf und abonniere das Observable
+    this.authService.getActiveTable().subscribe(tableNr => {
+      if (tableNr !== null) {
+        // Hier kannst du die Zahl verwenden
+        //console.log(`Die abgerufene Zahl ist: ${nr}`);
+        this.tableNr = tableNr;
+        // Rufe die Funktion zum Abrufen der Zahl auf und abonniere das Observable
+        this.authService.getActiveGuestsNumber().subscribe(guestsNumber => {
+          if (guestsNumber !== null) {
+            // Hier kannst du die Zahl verwenden
+            //console.log(`Die abgerufene Zahl ist: ${nr}`);
+            this.guestsNumber = guestsNumber;
+            // const logInUserEmail = this.authService.getUserEmail();
+            // const logInUserId = this.authService.getUserId();
+            // const userTableNr = this.authService.getUserTableNr();
+            const img = this.dasherize(order.image);
+            // this.dataService.addTempOrder(logInUserId, logInUserEmail, order.title, order.title, img, userTableNr, order.released);
+            this.dataService.addTempOrder( order.title, order.title, img, this.tableNr, order.released);
+            this.orderButtonDisabled = this.dataService.addUpUserOrder(this.tableNr, this.guestsNumber);
+            if (this.orderButtonDisabled === true && this.timerOnOff === 'off') {
+              console.log('FUll');
+              this.dataService.updateRestaurantFabButtonStatus('restaurantFabButtonFull');
+            }
+          } else {
+            console.log('Es wurde keine Zahl abgerufen.');
+          }
+        });
+      } else {
+        console.log('Es wurde keine Zahl abgerufen.');
+      }
+    });
   }
 
 }

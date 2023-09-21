@@ -17,8 +17,6 @@ const STORAGE_TIME_KEY = 'wait-Time';
 
 export interface IUserOrder {
   tempId?: number;
-  userid: string;
-  userEmail: string;
   userTableNr: string;
   title: string;
   text: string;
@@ -30,6 +28,7 @@ export interface IUserOrder {
 }
 
 export interface IOrder {
+  tableNr: string;
   title: string;
   createdAt: string;
   price: number;
@@ -145,9 +144,10 @@ export class DataService {
   }
 
   // Hier werden die bestellungen pro Runde erfasst.
-  addUpUserOrder(){
-    this.guestsNumber = this.authService.getGuestsNumber();
-    console.log(this.guestsNumber);
+  addUpUserOrder(tableNr, guestsNumber){
+    console.log('ADD UP');
+    //this.guestsNumber = this.authService.getGuestsNumber2(tableNr);
+    console.log(guestsNumber);
     this.oneOrderTotalNumber = this.guestsNumber * this.oneRoundNumber -1;
     console.log(  this.oneOrderTotalNumber);
     if( this.oneOrderTotalNumber > this.userOrderCount){
@@ -280,35 +280,7 @@ export class DataService {
     );
   }
 
- /* addOrderToUser(logInUserId,logInUserEmail, text, title, sushiImageLink, usertTableNr){
-  //  console.log('addOrderToUser');
-    const chatsRef = collection(this.firestore, 'orders');
-    const userOrder = {
-      userid: logInUserId,
-      userEmail: logInUserEmail,
-      userTableNr: usertTableNr,
-      title,
-      text,
-      createdAt: serverTimestamp(),
-      imageLink: sushiImageLink
-    };
 
-    return addDoc(chatsRef, userOrder).then( res => {
-      console.log('created order ADDDOC: ', res);
-      const groupID = res.id;
-      const promises = [];
-
-      // In der DB muss für jeden user der DB eintrag angepasst werden
-      // (in diesem Fall in welchen Chats befindet sich der User)
-
-      const userChatsRef = doc(this.firestore, `users/${logInUserId}`);
-      const update = updateDoc(userChatsRef, {
-        userOrders: arrayUnion(groupID)
-      });
-      promises.push(update);
-      return Promise.all(promises);
-    });
-  }*/
 
   // Hier werden alle Bestellugen von einem Tisch aufgerufen (Tab 4)
   getLocalTableOrders() {
@@ -323,12 +295,10 @@ export class DataService {
   }
 
   // Hier wird eine Temporere Bestellung erfasst
-  addTempOrder(logInUserId,logInUserEmail, text, title, sushiImageLink, userTableNr ,price){
+  addTempOrder(text, title, sushiImageLink, userTableNr ,price){
     //this.currentDate = new Date().toISOString();
     const order: IUserOrder = {
       tempId: this.orderCount,
-      userid: logInUserId,
-      userEmail: logInUserEmail,
       userTableNr,
       title,
       text,
@@ -339,7 +309,7 @@ export class DataService {
       price
     };
     this.tempOrder.push(order);
-    console.log('Array: ', this.tempOrder);
+    //console.log('Array: ', this.tempOrder);
     this.orderCount++;
   }
 
@@ -359,19 +329,46 @@ export class DataService {
 
   // Hiermit werden alle Bestellungen die in Temp-order-view-page vorhanden sind in der DB abgespeichert
   async addTempOrderToDB() {
+    console.log('addTempOrderToDB');
     const ordersRef = collection(this.firestore, 'orders');
     for (const order of this.tempOrder) {
+      console.log(order);
       addDoc(ordersRef, order).then(res => {
         console.log('res.id: ', res.id);
         const underOrder: IOrder = {
+          tableNr: order.userTableNr,
           title : order.title,
           createdAt : new Date().toISOString(),
           price: order.price,
           imageLink: order.imageLink
         };
-        return this.addUserOrders(underOrder );
+        return this.addOrderToTable(underOrder, order.userTableNr );
       });
     }
+  }
+  // Muss noch angepasst werden!!!
+  // Hier werden die Bestellungen in Collection Table  in jeweilligen Tischen
+  // als Array gespeichert
+  addOrderToTable(tableNr, order){
+    //  console.log('addOrderToUser');
+
+    const ordersRef = collection(this.firestore, 'orders');
+
+    return addDoc(ordersRef, order).then( res => {
+      console.log('created order ADDDOC: ', res);
+      const groupID = res.id;
+      const promises = [];
+
+      // In der DB muss für jeden user der DB eintrag angepasst werden
+      // (in diesem Fall in welchen Chats befindet sich der User)
+
+      const userChatsRef = doc(this.firestore, `table/${tableNr}`);
+      const update = updateDoc(userChatsRef, {
+        userOrders: arrayUnion(groupID)
+      });
+      promises.push(update);
+      return Promise.all(promises);
+    });
   }
 
   //Fügt bestellungen zu den User in einen zusätzlichen Dokument hinzu

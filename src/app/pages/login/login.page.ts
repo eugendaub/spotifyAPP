@@ -8,6 +8,11 @@ import {Storage} from '@ionic/storage-angular';
 import {BehaviorSubject, Subscription} from 'rxjs';
 
 
+export interface ITableSettings {
+  tableNr: string;
+  guestsNumber: number;
+}
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -40,11 +45,13 @@ export class LoginPage implements OnInit {
       email: ['a@a.de', [Validators.email, Validators.required]],
       password: ['111111', [Validators.minLength(6), Validators.required]]
     });
+
     this.credentialsLogin = this.fb.group({
       tableNr: ['44'],
       email: ['a@a.de', [Validators.email, Validators.required]],
       password: ['111111', [Validators.minLength(6), Validators.required]]
     });
+
     this.credentialsAdmin = this.fb.group({
       email: ['a@a.de', [Validators.email, Validators.required]],
       password: ['111111', [Validators.minLength(6), Validators.required]]
@@ -86,9 +93,17 @@ export class LoginPage implements OnInit {
     const loading = await this.loadingCtrl.create();
     await loading.present();
     const loginTableNr = this.credentialsLogin.value.tableNr;
+    let guestsNumber=0;
 
-    this.authService.updateLoginTableNumber(loginTableNr);
-    this.authService.setActiveTable(loginTableNr);
+    this.authService.getGuestsNumber2(loginTableNr).subscribe( data => {
+      console.log('Guest: ',data.guests);
+      guestsNumber= data.guests;
+      this.authService.setActiveTable(loginTableNr);
+      this.authService.setActiveGuestsNumber(guestsNumber);
+    });
+
+    //this.authService.updateLoginTableNumber(loginTableNr);
+
     this.allTableObservable = this.authService.getAllTables().subscribe(res => {
       this.allLoginTables = res;
       console.log(this.allLoginTables);
@@ -130,8 +145,17 @@ export class LoginPage implements OnInit {
     const loading = await this.loadingCtrl.create();
     await loading.present();
     const loginTableNr = this.credentialsForm.value.tableNr;
+    let guestsNumber=0;
 
-    this.authService.updateLoginTableNumber(loginTableNr);
+    this.authService.getGuestsNumber2(loginTableNr).subscribe( data => {
+      console.log('Guest: ',data.guests);
+      guestsNumber= data.guests;
+      this.authService.setActiveTable(loginTableNr);
+      this.authService.setActiveGuestsNumber(guestsNumber);
+    });
+
+    //this.authService.updateLoginTableNumber(loginTableNr);
+    //this.authService.setActiveTable(loginTableNr);
     this.allTableObservable = this.authService.getAllTables().subscribe(res => {
       this.allLoginTables = res;
       console.log(this.allLoginTables);

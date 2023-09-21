@@ -9,6 +9,7 @@ import {Preferences} from '@capacitor/preferences';
 import { map } from 'rxjs/operators';
 
 const STORAGE_TABLE_KEY = 'active-table';
+const STORAGE_GUEST_KEY = 'active-guest';
 
 @Injectable({
   providedIn: 'root'
@@ -110,8 +111,20 @@ export class AuthService {
   getUserTableNr() {
     return this.currentUserData.tableNr;
   }
+  getGuestsNumber2(tableNr) {
+    //return this.currentUserData.guests;
+    //const userRef = collection(this.firestore, `table/${tableNr}`);
+    //return collectionData(userRef,{idField: 'id'});
+
+    const order = doc(this.firestore, `table/${tableNr}`);
+    return docData(order);
+  }
+
+  //Kann bald gelöscht werdden
   getGuestsNumber() {
-    return this.currentUserData.guests;
+    //return this.currentUserData.guests;
+    const userRef = collection(this.firestore, `table`);
+    return collectionData(userRef,{idField: 'id'});
   }
 
   //Zeigt alle Angemeldeten/Erstellte Tische an.
@@ -119,13 +132,25 @@ export class AuthService {
     const userRef = collection(this.firestore, 'table');
     return collectionData(userRef,{idField: 'id'});
   }
+
   async setActiveTable(tabel: any) {
     //await Preferences.set({ key: STORAGE_TABLE_KEY, value: tabel });
     //this.tableSubject.next(tabel);
 
     try {
-      await Preferences.set({ key: STORAGE_TABLE_KEY, value: tabel.toString() });
+      await Preferences.set({ key: STORAGE_TABLE_KEY, value: tabel});
       console.log(`Die Zahl ${tabel} wurde im Storage gespeichert.`);
+    } catch (error) {
+      console.error('Fehler beim Speichern der Zahl im Storage:', error);
+    }
+  }
+  async setActiveGuestsNumber(guestsNumber: any) {
+    //await Preferences.set({ key: STORAGE_TABLE_KEY, value: tabel });
+    //this.tableSubject.next(tabel);
+
+    try {
+      await Preferences.set({ key: STORAGE_GUEST_KEY, value: guestsNumber});
+      console.log(`Die Zahl ${guestsNumber} wurde im Storage gespeichert.`);
     } catch (error) {
       console.error('Fehler beim Speichern der Zahl im Storage:', error);
     }
@@ -138,7 +163,25 @@ export class AuthService {
       map(result => {
         if (result && result.value) {
           const storedNumber = parseInt(result.value, 10);
-          console.log(`Gespeicherte Zahl: ${storedNumber}`);
+         // console.log(`Gespeicherte Zahl: ${storedNumber}`);
+          return storedNumber;
+        } else {
+          console.log('Keine Zahl im Storage gefunden.');
+          return null;
+        }
+      })
+    );
+  }
+
+  // Hier holle ich die aktuelle Geste anzahl.
+  getActiveGuestsNumber(): Observable<number | null>{
+    //console.log('Get Activetable' ,this.tableSubject.asObservable());
+    //return this.tableSubject.asObservable();
+    return from(Preferences.get({ key: STORAGE_GUEST_KEY })).pipe(
+      map(result => {
+        if (result && result.value) {
+          const storedNumber = parseInt(result.value, 10);
+          // console.log(`Gespeicherte Zahl: ${storedNumber}`);
           return storedNumber;
         } else {
           console.log('Keine Zahl im Storage gefunden.');
@@ -152,7 +195,8 @@ export class AuthService {
   async deleteTableNrStorage() {
     try {
       await Preferences.remove({ key: STORAGE_TABLE_KEY });
-      console.log(`Der Storage unter dem Schlüssel '${STORAGE_TABLE_KEY}' wurde gelöscht.`);
+      await Preferences.remove({ key: STORAGE_GUEST_KEY });
+      console.log(`Der Storage unter dem Schlüssel '${STORAGE_TABLE_KEY}' und '${STORAGE_GUEST_KEY}' wurde gelöscht.`);
     } catch (error) {
       console.error('Fehler beim Löschen des Storage:', error);
     }
