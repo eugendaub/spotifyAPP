@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   Firestore, collection, collectionData, doc, addDoc, deleteDoc, updateDoc, arrayUnion, arrayRemove,
-  query, orderBy, docData, where,documentId
+  query, orderBy, docData, where,documentId, getDocs
 } from '@angular/fire/firestore';
 import {AuthService} from './auth.service';
 import {switchMap} from 'rxjs/operators';
@@ -207,10 +207,10 @@ export class DataService {
     });
   }
 
-  getAllUserOrders(){
+  // Holt alle Bestellungen aus table Arrray
+  getAllUserOrders(tableId){
     console.log('getAllUserOrders');
-    const userId= this.authService.getUserId();
-    const userRef = doc(this.firestore, `users/${userId}`);
+    const userRef = doc(this.firestore, `table/${tableId}`);
     return docData(userRef).pipe(
       switchMap(data => {
        // console.log('Data: ', data.userOrders);
@@ -342,34 +342,18 @@ export class DataService {
           price: order.price,
           imageLink: order.imageLink
         };
-        return this.addOrderToTable(underOrder, order.userTableNr );
+        //return this.addOrderToTable(underOrder, order.userTableNr );
+        const promises = [];
+        const userChatsRef = doc(this.firestore, `table/${order.userTableNr}`);
+        const update = updateDoc(userChatsRef, {
+          userOrders: arrayUnion(underOrder)
+        });
+        promises.push(update);
+        return Promise.all(promises);
       });
     }
   }
-  // Muss noch angepasst werden!!!
-  // Hier werden die Bestellungen in Collection Table  in jeweilligen Tischen
-  // als Array gespeichert
-  addOrderToTable(tableNr, order){
-    //  console.log('addOrderToUser');
 
-    const ordersRef = collection(this.firestore, 'orders');
-
-    return addDoc(ordersRef, order).then( res => {
-      console.log('created order ADDDOC: ', res);
-      const groupID = res.id;
-      const promises = [];
-
-      // In der DB muss für jeden user der DB eintrag angepasst werden
-      // (in diesem Fall in welchen Chats befindet sich der User)
-
-      const userChatsRef = doc(this.firestore, `table/${tableNr}`);
-      const update = updateDoc(userChatsRef, {
-        userOrders: arrayUnion(groupID)
-      });
-      promises.push(update);
-      return Promise.all(promises);
-    });
-  }
 
   //Fügt bestellungen zu den User in einen zusätzlichen Dokument hinzu
   addUserOrders(order){

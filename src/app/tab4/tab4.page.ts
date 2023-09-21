@@ -15,6 +15,7 @@ export class Tab4Page implements OnInit {
   orderPrice: number = null;
   orderPriceToFixed: any = null;
   userid: any = null;
+  tableNr;
 
   constructor(private dataService: DataService, private storage: Storage,
               private alertCtrl: AlertController,  private authService: AuthService)
@@ -28,22 +29,35 @@ export class Tab4Page implements OnInit {
 
   }
 
-  // Überflüssig
+
   getUserOrders(){
-    this.orderPrice=0;
-    this.orderPriceToFixed =0;
-    this.dataService.getTableOrdersForUser().subscribe(res => {
-      this.allUserOrders = res.userOrders;
-      console.log('this.allUserOrders ', this.allUserOrders);
-      for(const orderId of this.allUserOrders){
-        console.log('price: ', orderId.price);
-        this.orderPrice = this.orderPrice + orderId.price;
-        console.log('Price zusammen ' ,this.orderPrice);
+    // Rufe die Funktion zum Abrufen der Zahl auf und abonniere das Observable
+    this.authService.getActiveTable().subscribe(nr => {
+      if (nr !== null) {
+        // Hier kannst du die Zahl verwenden
+        //console.log(`Die abgerufene Zahl ist: ${nr}`);
+        this.tableNr = nr;
+        this.orderPrice=0;
+        this.orderPriceToFixed =0;
+        this.dataService.getTableOrdersForUser().subscribe(res => {
+          this.allUserOrders = res.userOrders;
+          console.log('this.allUserOrders ', this.allUserOrders);
+          for(const orderId of this.allUserOrders){
+            console.log('price: ', orderId.price);
+            this.orderPrice = this.orderPrice + orderId.price;
+            //console.log('Price zusammen ' ,this.orderPrice);
+          }
+          this.orderPriceToFixed = this.orderPrice.toFixed(2);
+          //console.log('price orderPriceToFixed:', this.orderPriceToFixed);
+        });
+      } else {
+        console.log('Es wurde keine Zahl abgerufen.');
       }
-      this.orderPriceToFixed = this.orderPrice.toFixed(2);
-      console.log('price orderPriceToFixed:', this.orderPriceToFixed);
     });
+
   }
+
+
 
   getUserOrdersFromOrder(){
    // console.log('getUserOrdersFromOrder');
@@ -68,7 +82,8 @@ export class Tab4Page implements OnInit {
   async loadDates() {
     //this.events = await this.dataService.getLocalTableOrders();
    // console.log('loadData tab4');
-    this.getUserOrdersFromOrder();
+    //this.getUserOrdersFromOrder();
+    this.getUserOrders();
   }
 
   // Löscht eine Bestellung (wird zur Testzweken benötigt)
