@@ -134,12 +134,13 @@ export class DataService {
   }
 
   updateTotalOrderQuantityARound(status) {
+    console.log('Button Status : ', status);
     this.totalOrderQuantityARoundSubject.next(status);
   }
 
   //Aktualisiert die Bestellzahl
   updateUserOrderNumber(status) {
-    //console.log('updateUserOrderNumber' , status);
+    console.log('updateUserOrderNumber' , status);
     this.userOrderNumberSubject.next(status);
   }
 
@@ -147,24 +148,28 @@ export class DataService {
   addUpUserOrder(tableNr, guestsNumber){
     console.log('ADD UP');
     //this.guestsNumber = this.authService.getGuestsNumber2(tableNr);
+    const x: number =guestsNumber;
     console.log(guestsNumber);
-    this.oneOrderTotalNumber = this.guestsNumber * this.oneRoundNumber -1;
+    this.oneOrderTotalNumber = guestsNumber * this.oneRoundNumber -1;
+    const xCount = guestsNumber * this.oneRoundNumber;
     console.log(  this.oneOrderTotalNumber);
     if( this.oneOrderTotalNumber > this.userOrderCount){
-
       this.orderToast();
       this.userOrderCount++;
-     // console.log(this.userOrderCount);
+
+
       this.userOrderCountDownNumber--;
+      console.log('Count: ', xCount +  this.userOrderCountDownNumber);
       this.updateTotalOrderQuantityARound(this.userOrderCount);
-      this.updateUserOrderNumber(this.userOrderCountDownNumber);
+      console.log(this.userOrderCountDownNumber);
+      this.updateUserOrderNumber( xCount + this.userOrderCountDownNumber);
       return false;
     }else{
-
+      console.log('addUpUserOrder True:' ,this.userOrderCount);
       this.userOrderCount++;
       console.log(this.userOrderCount);
       this.userOrderCountDownNumber--;
-      this.updateUserOrderNumber(this.userOrderCountDownNumber);
+      this.updateUserOrderNumber(xCount + this.userOrderCountDownNumber);
       this.updateTotalOrderQuantityARound('orderRoundFull');
       this.orderFullToast();
       return true;
@@ -173,9 +178,26 @@ export class DataService {
 
   // Sollte eine Bestelung aus dem Temp-order-view-page enfernt werden so wird es hier erfasst.
   oneOrderDeleteMinusCount(){
-    this.userOrderCount--;
-    this.userOrderCountDownNumber++;
-    this.updateUserOrderNumber(this.userOrderCountDownNumber);
+    let userOrderCountNumber: any = 0;
+    this.userOrderNumber$.subscribe( orderNumber => {
+      userOrderCountNumber = orderNumber;
+    });
+    console.log('oneOrderTotalNumber: ',this.oneOrderTotalNumber);
+    console.log('ORDER NUMBER --', userOrderCountNumber);
+    if(userOrderCountNumber===0){
+      this.updateUserOrderNumber(1);
+      this.userOrderCount--;
+      console.log('Bestellung von null -1: ',this.oneOrderTotalNumber-1);
+      this.updateTotalOrderQuantityARound( this.oneOrderTotalNumber);
+    }else{
+      this.userOrderCount--;
+      this.updateUserOrderNumber(userOrderCountNumber+1);
+      console.log('Bestellung Minus: ',this.oneOrderTotalNumber-userOrderCountNumber+1);
+      this.updateTotalOrderQuantityARound( this.oneOrderTotalNumber-userOrderCountNumber+1);
+    }
+    //this.userOrderCount--;
+    //this.userOrderCountDownNumber++;
+    //this.updateUserOrderNumber(this.userOrderCountDownNumber);
   }
 
 

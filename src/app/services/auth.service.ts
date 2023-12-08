@@ -139,7 +139,7 @@ export class AuthService {
 
     try {
       await Preferences.set({ key: STORAGE_TABLE_KEY, value: tabel});
-      console.log(`Die Zahl ${tabel} wurde im Storage gespeichert.`);
+      //console.log(`Die Zahl ${tabel} wurde im Storage gespeichert.`);
     } catch (error) {
       console.error('Fehler beim Speichern der Zahl im Storage:', error);
     }
@@ -150,7 +150,7 @@ export class AuthService {
 
     try {
       await Preferences.set({ key: STORAGE_GUEST_KEY, value: guestsNumber});
-      console.log(`Die Zahl ${guestsNumber} wurde im Storage gespeichert.`);
+      //console.log(`Die Zahl ${guestsNumber} wurde im Storage gespeichert.`);
     } catch (error) {
       console.error('Fehler beim Speichern der Zahl im Storage:', error);
     }
@@ -196,7 +196,7 @@ export class AuthService {
     try {
       await Preferences.remove({ key: STORAGE_TABLE_KEY });
       await Preferences.remove({ key: STORAGE_GUEST_KEY });
-      console.log(`Der Storage unter dem Schlüssel '${STORAGE_TABLE_KEY}' und '${STORAGE_GUEST_KEY}' wurde gelöscht.`);
+     // console.log(`Der Storage unter dem Schlüssel '${STORAGE_TABLE_KEY}' und '${STORAGE_GUEST_KEY}' wurde gelöscht.`);
     } catch (error) {
       console.error('Fehler beim Löschen des Storage:', error);
     }

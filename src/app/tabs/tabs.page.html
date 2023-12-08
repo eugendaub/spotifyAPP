@@ -1,9 +1,12 @@
 <ion-menu contentId="main-content"  >
   <ion-header >
     <ion-toolbar color="primary">
-      <ion-title color="light">
-        Table Nr.: {{tableNr}} Guests: {{guestsNumber}}
-      </ion-title>
+      <ion-item color="transparent" lines="none" >
+        <ion-icon color="light" name="fast-food-outline"></ion-icon>
+        <ion-label color="light">  {{tableNr}}</ion-label>
+        <ion-icon color="light" name="people-outline"></ion-icon>
+        <ion-label color="light"> {{guestsNumber}}</ion-label>
+      </ion-item>
       <ion-buttons slot="end">
         <ion-button (click)="logout()">
           <ion-icon color="light" name="log-out-outline" slot="icon-only"></ion-icon>

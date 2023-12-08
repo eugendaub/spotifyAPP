@@ -88,7 +88,7 @@ export class LoginPage implements OnInit {
 
   // Logt sich mit entsprächenden Tisch nummer ein.
   async login() {
-    console.log('LOGIN');
+   // console.log('LOGIN');
     //await this.storageCreate();
     const loading = await this.loadingCtrl.create();
     await loading.present();
