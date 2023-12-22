@@ -35,20 +35,27 @@ export class Tab4Page implements OnInit {
     this.authService.getActiveTable().subscribe(nr => {
       if (nr !== null) {
         // Hier kannst du die Zahl verwenden
-        //console.log(`Die abgerufene Zahl ist: ${nr}`);
+       // console.log(`Die abgerufene Zahl ist: ${nr}`);
         this.tableNr = nr;
         this.orderPrice=0;
         this.orderPriceToFixed =0;
-        this.dataService.getTableOrdersForUser().subscribe(res => {
-          this.allUserOrders = res.userOrders;
-          console.log('this.allUserOrders ', this.allUserOrders);
-          for(const orderId of this.allUserOrders){
-            console.log('price: ', orderId.price);
-            this.orderPrice = this.orderPrice + orderId.price;
+        this.dataService.getTableOrdersForUser(nr).subscribe(res => {
+          console.log('RES: ', res);
+          //this.allUserOrders = res;
+          //console.log('this.allUserOrders ', this.allUserOrders);
+          /*for(const orderId of this.allUserOrders){
+            console.log('orderId: ', orderId.price);
+            //const orderID =  orderId.order;
             //console.log('Price zusammen ' ,this.orderPrice);
           }
-          this.orderPriceToFixed = this.orderPrice.toFixed(2);
-          //console.log('price orderPriceToFixed:', this.orderPriceToFixed);
+         /*
+            for(const orderId of this.allUserOrders){
+              console.log('price: ', orderId.price);
+              this.orderPrice = this.orderPrice + orderId.price;
+              //console.log('Price zusammen ' ,this.orderPrice);
+            }
+            this.orderPriceToFixed = this.orderPrice.toFixed(2);
+            //console.log('price orderPriceToFixed:', this.orderPriceToFixed);*/
         });
       } else {
         console.log('Es wurde keine Zahl abgerufen.');

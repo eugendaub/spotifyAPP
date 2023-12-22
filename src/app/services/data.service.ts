@@ -66,20 +66,12 @@ export class DataService {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   isTimerFinished = false;
 
+  ///////////||||||||| Vier Buttons Status brauchst du die alle oder reichen schon eins/zwei? |||||||||||/////////////
+
   //restaurant Fab-Button Status
   private restaurantFabButtonSubject: BehaviorSubject<string> = new BehaviorSubject<string>('restaurantFabButtonNormal');
   // eslint-disable-next-line @typescript-eslint/member-ordering
   restaurantFabButtonStatus$ = this.restaurantFabButtonSubject.asObservable();
-
-  // Laufzeit
-  private runningTime: BehaviorSubject<string> = new BehaviorSubject<string>('aRoundTime');
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  runningTime$ = this.runningTime.asObservable();
-
-  // Laufzeit status an/aus
-  private timeStatus: BehaviorSubject<string> = new BehaviorSubject<string>('off');
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  timeStatus$ = this.timeStatus.asObservable();
 
   // Total Order Quantity A Round
   private totalOrderQuantityARoundSubject: BehaviorSubject<string> = new BehaviorSubject<string>('orderRoundNotFull');
@@ -91,14 +83,26 @@ export class DataService {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   orderButton$ = this.orderButtonSubject.asObservable();
 
-  private waitARoundTimeSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  waitTimeSubject = this.waitARoundTimeSubject.asObservable();
-
   // User Order Number
   private userOrderNumberSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   // eslint-disable-next-line @typescript-eslint/member-ordering
   userOrderNumber$ = this.userOrderNumberSubject.asObservable();
+
+  //////////////////////////////////////////|||||||||ENDE|||||||||||///////////////////////////////////////////////////
+
+  private waitARoundTimeSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  waitTimeSubject = this.waitARoundTimeSubject.asObservable();
+
+  // Laufzeit
+  private runningTime: BehaviorSubject<string> = new BehaviorSubject<string>('aRoundTime');
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  runningTime$ = this.runningTime.asObservable();
+
+  // Laufzeit status an/aus
+  private timeStatus: BehaviorSubject<string> = new BehaviorSubject<string>('off');
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  timeStatus$ = this.timeStatus.asObservable();
 
   constructor(private firestore: Firestore, private authService: AuthService, private toastCtrl: ToastController,
               private vibration: Vibration, private storage: Storage) {
@@ -154,7 +158,7 @@ export class DataService {
     const xCount = guestsNumber * this.oneRoundNumber;
     console.log(  this.oneOrderTotalNumber);
     if( this.oneOrderTotalNumber > this.userOrderCount){
-      this.orderToast();
+      //this.orderToast();
       this.userOrderCount++;
 
 
@@ -503,11 +507,18 @@ export class DataService {
 
 
   //holt alle bestellungen aus User/userOrders raus
-  getTableOrdersForUser(){
+  getTableOrdersForUser(tableNr){
+
     //console.log('getTableOrders');
-    const userId= this.authService.getUserId();
-    console.log('userId', userId);
-    const userRef = doc(this.firestore, `users/${userId}`);
+
+    const userRef = doc(this.firestore, `users/${1}`);
     return docData(userRef);
+
+    //const userRef = collection(this.firestore, `table/${tableNr}/userOrders`);
+    //return collectionData(userRef);
+
+    //Holt alle tables
+   // const notesRef = collection(this.firestore, 'table');
+    //return collectionData(notesRef, { idField: 'id'}) ;
   }
 }
